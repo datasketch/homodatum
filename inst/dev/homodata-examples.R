@@ -3,7 +3,7 @@ devtools::document()
 devtools::install()
 
 
-library(homodata)
+library(homodatum)
 
 
 sampleCtypes(3)

@@ -131,7 +131,7 @@ sampleDay<- function(n, rep = TRUE, addNA = TRUE,...){
 
 sampleWdy<- function(n, rep = FALSE, lang = "en", locale = NULL, addNA = TRUE,...){
   dates <- sampleDat(n, addNA = addNA)
-  weekdaysLangs <- read_csv(system.file("data/weekdays-lang.csv",package = "homodata"))
+  weekdaysLangs <- read_csv(system.file("data/weekdays-lang.csv",package = "homodatum"))
   wd_translation <- weekdaysLangs %>%
     filter(language == lang) %>%
     select(-language) %>% as_vector()
@@ -179,7 +179,7 @@ sampleTxt <- function(n, addNA = TRUE,...){
 sampleMny <- sampleNum
 
 sampleGnm <- function(n,addNA = TRUE,...){
-  countries <- read_csv(system.file("data/countries.csv",package = "homodata"))[[1]]
+  countries <- read_csv(system.file("data/countries.csv",package = "homodatum"))[[1]]
   v <- sample2(countries,n)
   if(addNA) v[sample(n,round(n/10))] <- NA
   v

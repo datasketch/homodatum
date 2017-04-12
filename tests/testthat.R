@@ -1,4 +1,4 @@
 library(testthat)
-suppressMessages(library(homodata))
+suppressMessages(library(homodatum))
 
-test_check("homodata")
+test_check("homodatum")
