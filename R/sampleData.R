@@ -178,6 +178,13 @@ sampleTxt <- function(n, addNA = TRUE,...){
 
 sampleMny <- sampleNum
 
+sampleGcd <- function(n, addNA = TRUE,...){
+  countries <- read_csv(system.file("data/countries.csv",package = "homodatum"))[[3]]
+  v <- sample2(countries,n)
+  if(addNA) v[sample(n,round(n/10))] <- NA
+  v
+}
+
 sampleGnm <- function(n,addNA = TRUE,...){
   countries <- read_csv(system.file("data/countries.csv",package = "homodatum"))[[1]]
   v <- sample2(countries,n)

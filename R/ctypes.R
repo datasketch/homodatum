@@ -57,6 +57,7 @@ Grp,Group,1
 Txt,Text,1
 Mny,Money,1
 Gnm,Geo name,1
+Gcd,Geo code,1
 Glt,Geo latitude,1
 Gln,Geo longitude,1
 Img,Image,1
@@ -99,7 +100,7 @@ availableCformats <- function(){
     "Grp" = "label_code",
     "Txt" = c("plain","html","markdown"),
     "Mny" = "ISO-4217",
-    "Gco" = c("ISO 3166-1 alpha-2","ISO 3166-1 alpha-3","DANE"),
+    "Gcd" = c("ISO 3166-1 alpha-2","ISO 3166-1 alpha-3","DANE"),
     "Gnm" = "",
     "Glt" = c("degrees-decimal"),
     "Gln" = c("degrees-decimal"),
