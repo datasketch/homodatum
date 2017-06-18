@@ -24,6 +24,10 @@ test_that("Guess Ctypes",{
   #ctypesToFtype
   expect_equal(ctypesToFtype(c("Num-Yea-Num"), as_string = TRUE),"Num2-Yea")
   expect_equal(ctypesToFtype("Num-Yea-Num-Yea-Cat-Yea-___", as_string = TRUE),"___-Cat-Num2-Yea3")
+  #vectorized
+  ctps <- c("Num-Cat-Cat", "Yea-Yea")
+  expect_equal(ctypesToFtype(ctps, as_string = TRUE),c("Cat2-Num","Yea2"))
+
 
   ftype <- "Cat-Dat"
   d <- sampleData(ftype)

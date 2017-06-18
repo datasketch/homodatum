@@ -67,13 +67,17 @@ guessFtype <- function(df){
 
 #' @export
 ctypesToFtype <- function(ctypes, as_string = FALSE){
-  if(as_string){
-    ctypes <- strsplit(ctypes,"-")[[1]]
+  f <- function(ctypes){
+    ct <- count(data_frame(ctypes = ctypes),ctypes)
+    ct$n[ct$n == 1] <- ""
+    ctv <- unite(ct,ctype,ctypes,n,sep="") %>% .[[1]] %>% sort()
+    paste(ctv,collapse="-")
   }
-  ct <- count(data_frame(ctypes = ctypes),ctypes)
-  ct$n[ct$n == 1] <- ""
-  ctv <- unite(ct,ctype,ctypes,n,sep="") %>% .[[1]] %>% sort()
-  paste(ctv,collapse="-")
+  if(as_string){
+    ctps <- strsplit(ctypes,"-")
+    return(map_chr(ctps, f))
+  }
+  f(ctypes)
 }
 
 
