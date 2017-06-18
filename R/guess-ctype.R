@@ -62,11 +62,20 @@ guessCformats <- function(data){
 #' @export
 guessFtype <- function(df){
   ctypes <- guessCtypes(df)
+  ctypesToFtype(ctypes)
+}
+
+#' @export
+ctypesToFtype <- function(ctypes, as_string = FALSE){
+  if(as_string){
+    ctypes <- strsplit(ctypes,"-")[[1]]
+  }
   ct <- count(data_frame(ctypes = ctypes),ctypes)
   ct$n[ct$n == 1] <- ""
   ctv <- unite(ct,ctype,ctypes,n,sep="") %>% .[[1]] %>% sort()
   paste(ctv,collapse="-")
 }
+
 
 #' @export
 forceCtypes <- function(df, ctypes, cformat = NULL){

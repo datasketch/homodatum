@@ -4,7 +4,7 @@
 \alias{sampleData}
 \title{Creates a new Datafringe from a dataframe}
 \usage{
-sampleData(ftype, nrow = 20, loremNames = TRUE, addNA = TRUE,
+sampleData(ctypes, nrow = 20, loremNames = TRUE, addNA = TRUE,
   rep = FALSE, ...)
 }
 \arguments{
@@ -21,4 +21,3 @@ Creates a new datapackage from json, data fringe, list of data fringes, list of 
 fringe <- newDatafringeFromDatafringe(mtcars)
 }
 }
-

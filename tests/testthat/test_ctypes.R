@@ -21,6 +21,9 @@ test_that("Guess Ctypes",{
 
   expect_false("___" %in% availableCtypeIds(allowEmpty = FALSE))
 
+  # ctypesToFtype
+  expect_equal(ctypesToFtype(c("Num-Yea-Num"), as_string = TRUE),"Num2-Yea")
+
   ftype <- "Cat-Dat"
   d <- sampleData(ftype)
   ctypes <- guessCtypes(d)
