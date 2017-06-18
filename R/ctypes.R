@@ -48,6 +48,7 @@ Yea,Year,1
 Mon,Month,1
 Day,Day,1
 Wdy,Day of week,1
+Ywe,Week in year,1
 Dtm,Date time,1
 Hms,Time HMS,1
 Min,Minutes,1

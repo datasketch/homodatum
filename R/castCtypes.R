@@ -1,14 +1,53 @@
-#' cast_Da2Ca_weekdays : title.
-#' Convert Data type to Category weekdays
-#' @name cast_Da2Ca_weekdays
-#' @param x A number.
-#' @param y A number.
+
+#' cast_ctypes
+#' Convert Ctypes
+#' @name cast_ctypes
+#' @param data frame or a fringe.
+#' @param from string of Ctypes.
+#' @param to string of Ctypes.
 #' @export
-#' @return The sum of \code{x} and \code{y}.
-#' @section ftypes: Da-Nu
+#' @return data frame or a fringe according to input.
 #' @examples
-#' add(1, 1)
-#' add(10, 1)
+#' cast_ctypes(iris,"","")
+cast_ctypes <- function(data, from, to){
+
+  f <- fringe(data)
+  data <- f$d
+  weekdays <- weekdays(data$a)
+  return(weekdays)
+}
+
+
+cast_ctype <- function(from, to){
+  if(castable_ctypes(from, to))
+    do.call(paste0("cast_",from,to),list())
+
+}
+
+castable_ctypes <- function(from,to){
+  casts <- "from,to
+Cat,Uid
+Oca,Uid
+Num,Uid
+Cat,Ord
+Num,Pct
+Num,Dst
+Dat,Yea
+Dat,Mon
+Dat,Day
+Dat,Wdy
+Dtm,Dat
+Dtm,Hms
+Hms,Min
+Hms,Min
+Hms,Sec
+Cat,Txt
+"
+  casts <- read_csv(casts)
+}
+
+
+
 cast_Da2Ca_weekdays <- function(data, ...){
   f <- fringe(data)
   data <- f$d
@@ -16,17 +55,6 @@ cast_Da2Ca_weekdays <- function(data, ...){
   return(weekdays)
 }
 
-#' cast_Da2Ca_months : title.
-#' Convert Data type to Category months
-#' @name cast_Da2Ca_months
-#' @param x A number.
-#' @param y A number.
-#' @export
-#' @return The sum of \code{x} and \code{y}.
-#' @section ftypes: Da-Nu
-#' @examples
-#' add(1, 1)
-#' add(10, 1)
 cast_Da2Ca_months <- function(data, ...){
   f <- fringe(data)
   data <- f$d
@@ -34,17 +62,6 @@ cast_Da2Ca_months <- function(data, ...){
   return(months)
 }
 
-#' cast_Da2Ca_years : title.
-#' Convert Data type to Category years
-#' @name cast_Da2Ca_years
-#' @param x A number.
-#' @param y A number.
-#' @export
-#' @return The sum of \code{x} and \code{y}.
-#' @section ftypes: Da-Nu
-#' @examples
-#' add(1, 1)
-#' add(10, 1)
 cast_Da2Ca_years <- function(data, ...){
   f <- fringe(data)
   data <- f$d
@@ -52,17 +69,6 @@ cast_Da2Ca_years <- function(data, ...){
   return(years)
 }
 
-#' cast_Da2Ca_qtr : title.
-#' Convert Data type to Category quaters
-#' @name cast_Da2Ca_qtr
-#' @param x A number.
-#' @param y A number.
-#' @export
-#' @return The sum of \code{x} and \code{y}.
-#' @section ftypes: Da-Nu
-#' @examples
-#' add(1, 1)
-#' add(10, 1)
 cast_Da2Ca_qtr <- function(data, ...){
   f <- fringe(data)
   data <- f$d
@@ -70,17 +76,6 @@ cast_Da2Ca_qtr <- function(data, ...){
   return(year_qtr)
 }
 
-#' cast_Da2Ca_weeks : title.
-#' Convert Data type to Category weeks
-#' @name cast_Da2Ca_weeks
-#' @param x A number.
-#' @param y A number.
-#' @export
-#' @return The sum of \code{x} and \code{y}.
-#' @section ftypes: Da-Nu
-#' @examples
-#' add(1, 1)
-#' add(10, 1)
 cast_Da2Ca_weeks <- function(data, ...){
   f <- fringe(data)
   data <- f$d
@@ -88,17 +83,6 @@ cast_Da2Ca_weeks <- function(data, ...){
   return(weeks)
 }
 
-#' cast_Da2Ca_weekend : title.
-#' Convert Data type to Category weekend
-#' @name cast_Da2Ca_weekend
-#' @param x A number.
-#' @param y A number.
-#' @export
-#' @return The sum of \code{x} and \code{y}.
-#' @section ftypes: Da-Nu
-#' @examples
-#' add(1, 1)
-#' add(10, 1)
 cast_Da2Ca_weekend <- function(data, ...){
   f <- fringe(data)
   data <- f$d

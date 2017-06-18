@@ -10,16 +10,16 @@
 #' @examples \dontrun{
 #' fringe <- newDatafringeFromDatafringe(mtcars)
 #' }
-sampleData <- function(ftype,nrow = 20, loremNames = TRUE,
+sampleData <- function(ctypes,nrow = 20, loremNames = TRUE,
                        addNA = TRUE, rep = FALSE,...){
   #nrow <- 100
   #ftype <- "Cat2-Yea2-Num1-Dat1"
   #ftype <- "Cat-Yea-NumP"
   # ftype <- "Cat2-Num1"
-  if(length(ftype)>1)
-    warning("Multiple ftypes provided, taking first only")
+  if(length(ctypes)>1)
+    warning("Use ctypes as a single string")
 
-  ctypes <- sampleCtypes(ftype)
+  ctypes <- sampleCtypes(ctypes)
   ncols <- length(ctypes)
 
   #s <- list(Cat = samp, Nu = nu, Da = da, Ye = ye)
@@ -113,6 +113,12 @@ sampleYea<- function(n, rep = FALSE, addNA = TRUE,...){
   }else{
     v <- sample(seq(1900,length.out = n/10),n, replace = TRUE)
   }
+  if(addNA) v[sample(n,round(n/10))] <- NA
+  v
+}
+
+sampleYwe <- function(n, rep = FALSE, addNA = TRUE,...){
+  v <- paste0("2001-",sprintf("%02d",sample(1:52,n)))
   if(addNA) v[sample(n,round(n/10))] <- NA
   v
 }
