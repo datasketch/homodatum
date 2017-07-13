@@ -10,26 +10,39 @@
 #' @examples
 #' cast_ctypes(iris,"","")
 cast_ctypes <- function(data, from, to){
-
   f <- fringe(data)
   data <- f$d
   weekdays <- weekdays(data$a)
   return(weekdays)
 }
 
+#' @export
+castable_list <- function(ctypes){
+  f <- function(ctype){
+    c(ctype,castable_ctype(ctype))
+  }
+  casts <- map(ctypes,f)
+  do.call(crossing,casts)
+}
 
-cast_ctype <- function(from, to){
+castable_ctype <- function(ctype){
+  cc <- castable_ctypes()
+  cc %>% filter(from == ctype) %>% pull()
+}
+
+cast_ctype <- function(from, to,...){
   if(castable_ctypes(from, to))
-    do.call(paste0("cast_",from,to),list())
+    do.call(paste0("cast_",from,to),list(...))
 
 }
 
-castable_ctypes <- function(from,to){
+castable_ctypes <- function(){
   casts <- "from,to
 Cat,Uid
-Oca,Uid
+Cat,Oca
+Cat,Txt
+Cat,Bin
 Num,Uid
-Cat,Ord
 Num,Pct
 Num,Dst
 Dat,Yea
@@ -41,9 +54,12 @@ Dtm,Hms
 Hms,Min
 Hms,Min
 Hms,Sec
-Cat,Txt
+Oca,Uid
+Oca,Num
+Pct,Num
 "
-  casts <- read_csv(casts)
+  read_csv(casts)
+
 }
 
 
