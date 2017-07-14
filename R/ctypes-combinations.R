@@ -31,6 +31,7 @@ possibleSubdata <- function(data,ctypes = NULL, permute = TRUE, castable = FALSE
   })
 }
 
+#' @export
 whichSubdata <- function(data, cStr){
   l <- possibleSubdata(data, permute = TRUE) # TODO ctype casts
   l %>% keep(~.$ctypeStr %in% cStr) %>% map("ctype")
