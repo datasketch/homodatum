@@ -39,6 +39,12 @@ whichSubdata <- function(data, cStr = NULL){
 }
 
 #' @export
+whichSubCtypes <- function(data){
+  l <- possibleSubdata(data, permute = TRUE) # TODO ctype casts
+  l %>% map("ctype") %>% map(unname) %>% unique()
+}
+
+#' @export
 permuteCtypes <- function(ctypes, nms = NULL){
   nms <- nms %||% names(ctypes)
   y <- permuteVector(nms) %>% t() %>% as_tibble() %>% as.list()
