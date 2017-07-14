@@ -1,3 +1,39 @@
+#' @export
+powerSet <- function(set) {
+  n <- length(set)
+  masks <- 2^(1:n-1)
+  l <- lapply( 1:2^n-1, function(u) set[ bitwAnd(u, masks) != 0 ] )
+  l[-1]
+}
+
+powerSet2 <- function(set) {
+  n <- length(set)
+  masks <- 2^(1:n-1)
+  l <- lapply( 1:2^n-1, function(u) {
+    x <- set[ bitwAnd(u, masks) != 0 ]
+  } )
+  l
+}
+
+
+permuteVector <- function(v){
+  as_tibble(matrix(v[permutations(length(v))],ncol=length(v)))
+}
+
+permutations <- function(n){
+  if(n==1){
+    return(matrix(1))
+  } else {
+    sp <- permutations(n-1)
+    p <- nrow(sp)
+    A <- matrix(nrow=n*p,ncol=n)
+    for(i in 1:n){
+      A[(i-1)*p+1:p,] <- cbind(i,sp+(sp>=i))
+    }
+    return(A)
+  }
+}
+
 
 
 sample2 <- function(v, n,replace = TRUE, ...){

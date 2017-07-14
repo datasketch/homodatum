@@ -27,4 +27,28 @@ test_that("Cast Ctypes",{
   expect_equal(nrow(castable), ncomb)
   expect_equal(unique(map_chr(castable,class)),"character")
 
+
+  ## Powerset of vars
+
+  expect_equal(length(possibleCtypes(ctypes)), 2 ^ length(ctypes) - 1)
+  possibleCtypes(ctypes, castable = TRUE)
+
+  ## Permutations
+
+  data <- d0
+
+  permuteCtypes(ctypes)
+  permuteCtypes(ctypes, names(data))
+
+
+  l <- possibleSubdata(data, permute = TRUE) # TODO ctype casts
+
+  whichSubdata(data, "Cat-Num")
+  whichSubdata(data, "Cat-Num-Cat")
+
+
+  # Cuántos son y porqué?
+  # sum(map_dbl(1L:7L,function(x) factorial(x)*(2^x-1)))
+
+
 })
