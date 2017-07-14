@@ -15,8 +15,15 @@ test_that("Cast Ctypes",{
     expect_equal(1,nr)
   }
 
-  #data <- sampleData()
-  #cast_ctypes(data, to = newCtype)
+  d0 <- sampleData("Cat-Cat-Num-Pct-Gcd-Gnm")
+  data <- d0[sample(names(d0),sample(1:5,1))]
+  ctypes <- guessCtypes(data)
 
+  ncomb <- (map_int(ctypes, function(c){
+    castable_ctypes() %>% filter(from == c) %>% nrow()
+    }) + 1) %>% reduce(`*`)
+  # Make sure possible combinations (* of all possible values for each column)
+  # Equals the number of return castable options
+  expect_equal(nrow(castable_list(ctypes)), ncomb)
 
 })

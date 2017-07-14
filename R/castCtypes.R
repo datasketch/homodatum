@@ -22,7 +22,8 @@ castable_list <- function(ctypes){
     c(ctype,castable_ctype(ctype))
   }
   casts <- map(ctypes,f)
-  do.call(crossing,casts)
+  #do.call("crossing_",casts)
+  as_tibble(expand.grid(casts))
 }
 
 castable_ctype <- function(ctype){
