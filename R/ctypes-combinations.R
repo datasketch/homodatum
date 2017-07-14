@@ -39,9 +39,11 @@ whichSubdata <- function(data, cStr = NULL){
 }
 
 #' @export
-whichSubCtypes <- function(data){
+whichSubCtypes <- function(data, as_string = FALSE){
   l <- possibleSubdata(data, permute = TRUE) # TODO ctype casts
-  l %>% map("ctype") %>% map(unname) %>% unique()
+  l <- l %>% map("ctype") %>% map(unname) %>% unique()
+  if(as_string) return(map(l, paste, collapse = "-"))
+  l
 }
 
 #' @export
