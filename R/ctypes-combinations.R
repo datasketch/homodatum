@@ -1,7 +1,7 @@
 
 #' @export
 possibleCtypes <- function(ctypes, castable = FALSE){
-  ctypes <- c("Cat1","Cat2","Num3","Cat4")
+  #ctypes <- c("Cat1","Cat2","Num3","Cat4")
   comb <- powerSet(ctypes)
   if(!castable) return(comb)
   map(comb, castable_list)

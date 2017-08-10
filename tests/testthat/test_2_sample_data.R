@@ -28,6 +28,15 @@ test_that("Sample Data", {
   sampleDtm(n = 10, rep= TRUE) ## Todo test with rep
   sampleTxt(n = 10, rep= TRUE) ## Todo test with rep
 
+  availableCtypes()
+
+  ctypes <- "Gcd-Gnm-Glt-Gln"
+  t <- sampleData(ctypes, scope = "world")
+
+  t <- sampleData(ctypes, scope = "col_departments", loremNames = FALSE)
+  expect_true(all(na.omit(t$b) %in% geodata::geodataCsv("col_departments")$name))
+
+
 })
 
 

@@ -37,6 +37,8 @@ sampleData <- function(ctypes,nrow = 20, loremNames = TRUE,
       return(list(n = nrow,rep = rep, addNA = addNA))
     if(ftype == "Wdy")
       return(list(n = nrow,lang = lang,addNA = addNA))
+    if(ftype %in% c("Gcd","Gnm","Glt","Gln"))
+      return(list(n = nrow,lang = lang,addNA = addNA, scope = args$scope))
     list(n = nrow, addNA = addNA, rep = rep)
   }
   params <- purrr::map(ctypes,makeFtypeParams)
@@ -184,28 +186,48 @@ sampleTxt <- function(n, addNA = TRUE,...){
 
 sampleMny <- sampleNum
 
-sampleGcd <- function(n, addNA = TRUE,...){
-  countries <- read_csv(system.file("data/countries.csv",package = "homodatum"))[[3]]
-  v <- sample2(countries,n)
+availableGeoScops <- function(){
+  c("world", "col_departments", "col")
+}
+
+
+geoDataframe <- function(scope){
+  scope <- scope %||% "world"
+  if(scope == "world")
+    countries <- read_csv(system.file("data/world-countries.csv",package = "homodatum"))
+  else{
+    if (!require("geodata"))
+      stop("Please install package geodata")
+    if(!scope %in% geodata::availableGeodata())
+      stop("Check available scopes with geodata::availableGeodata()")
+    geodata::geodataCsv(scope)
+  }
+}
+
+sampleGcd <- function(n, addNA = TRUE, scope = "world", ...){
+  df <- geoDataframe(scope)
+  v <- sample2(df$id,n)
   if(addNA) v[sample(n,round(n/10))] <- NA
   v
 }
 
-sampleGnm <- function(n,addNA = TRUE,...){
-  countries <- read_csv(system.file("data/countries.csv",package = "homodatum"))[[1]]
-  v <- sample2(countries,n)
+sampleGnm <- function(n,addNA = TRUE, scope = "world", ...){
+  df <- geoDataframe(scope)
+  v <- sample2(df$name,n)
   if(addNA) v[sample(n,round(n/10))] <- NA
   v
 }
 
-sampleGlt <- function(n,addNA = TRUE,...){
-  v <- runif(n,-90,90)
+sampleGlt <- function(n,addNA = TRUE, scope = "world", ...){
+  df <- geoDataframe(scope)
+  v <- sample2(df$lat,n)
   if(addNA) v[sample(n,round(n/10))] <- NA
   v
 }
 
-sampleGln <- function(n,addNA = TRUE,...){
-  v <- runif(n,-180,180)
+sampleGln <- function(n,addNA = TRUE, scope = "world", ...){
+  df <- geoDataframe(scope)
+  v <- sample2(df$lon,n)
   if(addNA) v[sample(n,round(n/10))] <- NA
   v
 }
