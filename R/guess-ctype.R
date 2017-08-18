@@ -44,11 +44,13 @@ isTxType <- function(v){
 
 
 #' @export
-guessCtypes <- function(df, as_string = FALSE){
+guessCtypes <- function(df, as_string = FALSE, named = FALSE){
   x <- purrr::map_chr(unname(df),guessCtype)
   if(as_string){
     return(paste(x,collapse="-"))
   }
+  if(named)
+    names(x) <- names(df)
   x
 }
 

@@ -1,54 +1,78 @@
 
 #' @export
-possibleCtypes <- function(ctypes, castable = FALSE){
-  #ctypes <- c("Cat1","Cat2","Num3","Cat4")
-  comb <- powerSet(ctypes)
-  if(!castable) return(comb)
-  map(comb, castable_list)
+possibleCtypes <- function(ctypes, castable = FALSE, combine = FALSE){
+  #ctypes <- c("Cat","Cat","Num","Cat")
+  if(castable & !combine){
+    return(castable_list(ctypes))
+  }
+  if(combine){
+    comb <- powerSet(ctypes)
+    if(!castable){
+      return(comb)
+    }else{
+      l <- map(comb, castable_list)
+      names(l) <- map(comb,paste,collapse = "-")
+      return(l)
+    }
+  }
+  ctypes
 }
 
 
 #' @export
-possibleSubdata <- function(data,ctypes = NULL, permute = TRUE, castable = FALSE){
-  comb <- powerSet(names(data))
-  ctypes <- ctypes %||% guessCtypes(data)
-  ctypes <- ctypes %>% set_names(names(data))
-  subdata <- map(comb,function(c) ctypes[c])
-  #if(!castable) return(subdata)
-  #map(subdata, castable_list)
+possibleNamedCtypes <- function(namedCtypes, permute = TRUE, castable = FALSE){
+  subdata <- powerSet(namedCtypes)
   if(!permute)
-    return(subdata)
-  #map(subdata, permuteVector)
+    permuteCtypes(subdata[[1]])
   l <- map(subdata, permuteCtypes)
   l <- unlist(l, recursive = FALSE) %>% unname()
-  map(l, function(x){
-    list(
-      ctype = x,
-      ctypeStr = paste(x, collapse = "-"),
-      #ftype = ctypesToFtype(x),
-      ncol = length(x)
-    )
-  })
-}
-
-#' @export
-whichSubdata <- function(data, cStr = NULL){
-  l <- possibleSubdata(data, permute = TRUE) # TODO ctype casts
-  if(is.null(cStr)) return(l)
-  l %>% keep(~.$ctypeStr %in% cStr) %>% map("ctype")
-}
-
-#' @export
-whichSubCtypes <- function(data, as_string = FALSE){
-  l <- possibleSubdata(data, permute = TRUE) # TODO ctype casts
-  l <- l %>% map("ctype") %>% map(unname) %>% unique()
-  if(as_string) return(map(l, paste, collapse = "-"))
+  if(castable){
+    l <- map(l, possibleCtypes, castable = TRUE)
+  }
+  names(l) <- map(l,function(x) paste0(names(x),collapse="|"))
   l
 }
 
 #' @export
+possibleNamedCtypesStr <- function(namedCtypes, permute = TRUE, castable = FALSE){
+  l <- possibleNamedCtypes(ctypes, permute = TRUE, castable = castable)
+  if(!castable){
+    ctypesStr <- map(l, paste, collapse = "-")
+  }else{
+    ctypesStr <- map(l, function(s) map_chr(transpose(s),paste, collapse = "-"))
+  }
+  ctypesStr
+}
+
+
+#' @export
+whichSubdata <- function(data, outCtypes, castable = FALSE){
+  ctypes <- guessCtypes(data, named = TRUE)
+  if(castable && (ncol(data) > 5))
+    stop("Too many columns for castable combinations")
+  ctypesStr <- possibleNamedCtypesStr(ctypes, permute = TRUE, castable = castable)
+  outCtypesStr <- paste(outCtypes, collapse = "-")
+  #if(is.null(outCtypes)){
+  #  cnames <- names(ctypesStr)
+  #}else{
+    cnames <- ctypesStr %>% keep(function(s){outCtypesStr %in% s}) %>% names
+  #}
+  strsplit(cnames,"|", fixed = TRUE)
+}
+
+# #' @export
+# whichSubCtypes <- function(data, as_string = FALSE){
+#   l <- possibleSubdata(data, permute = TRUE) # TODO ctype casts
+#   l <- l %>% map("ctype") %>% map(unname) %>% unique()
+#   if(as_string) return(map(l, paste, collapse = "-"))
+#   l
+# }
+
+#' @export
 permuteCtypes <- function(ctypes, nms = NULL){
   nms <- nms %||% names(ctypes)
+  if(is.null(nms))
+    stop("ctypes must have names")
   y <- permuteVector(nms) %>% t() %>% as_tibble() %>% as.list()
   x <- permuteVector(ctypes) %>% t() %>% as_tibble() %>% as.list()
   map2(x,y, ~ set_names(.x, .y))
