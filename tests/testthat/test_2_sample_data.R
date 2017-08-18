@@ -36,6 +36,7 @@ test_that("Sample Data", {
   t <- sampleData(ctypes, scope = "col_departments", loremNames = FALSE)
   expect_true(all(na.omit(t$b) %in% geodata::geodataCsv("col_departments")$name))
 
+  # Test sample Bin
 
 })
 

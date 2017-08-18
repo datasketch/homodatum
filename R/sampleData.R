@@ -1,6 +1,4 @@
 
-
-
 #' Creates a new Datafringe from a dataframe
 #' @name sampleData
 #' @description Creates a new datapackage from json, data fringe, list of data fringes, list of data fringees (see Datafringe reference class)
@@ -74,6 +72,10 @@ sampleOca <- function(n, nlevels = 5, addNA = TRUE, ...){
   v <- sample2(v,n)
   if(addNA) v[sample(n,round(n/10))] <- NA
   v
+}
+
+sampleBin <- function(n, addNA = TRUE,...){
+  sampleCat(n, nlevels = 2, addNA = TRUE,...)
 }
 
 sampleNum <- function(n,gt0 = NULL, addNA = TRUE,...){
