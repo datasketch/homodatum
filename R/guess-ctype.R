@@ -10,9 +10,10 @@ guessCtype <- function(v){
   if(class(v) %in% c("integer","numeric")){
     ctype <- "Num"
     if(all(v %in% 1800:2200)) ctype <- "Yea"
-    if(all(v >= 0 && v<=1) && !all(v %in% c(0,1))) ctype <- "Pct"
+    if(all(v >= 0 && v<=1)) ctype <- "Pct"
+    # && !all(v %in% c(0,1))
     # if(all(v %in% 1:31)) ctype <- "Dy"
-    #if(all(v %in% 1:12)) ctype <- "Mn"
+    # if(all(v %in% 1:12)) ctype <- "Mn"
     return(ctype)
   }
   if(class(v) == "Date")
