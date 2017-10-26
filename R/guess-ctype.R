@@ -1,4 +1,4 @@
-isImgUrl <- function(x) all(grepl("([^http\\s]+(\\.(?i)(jpg|png|gif|bmp|svg))$)",x))
+isImgUrl <- function(x) all(grepl("^[http].+\\.((?i)jpg|png|gif|bmp|svg)$", x))
 
 guessCtype <- function(v){
   if("data.frame" %in% class(v))
@@ -29,7 +29,7 @@ guessCtype <- function(v){
     v <- as.character(v)
     ctype <- "Cat"
     if(ctype == "Cat" && isImgUrl(v)){
-      ctype <- "Imt"
+      ctype <- "Img"
     }
     if(ctype == "Cat" && isTxType(v))
       ctype <- "Txt"
@@ -46,9 +46,9 @@ isTxType <- function(v){
 
 #' @export
 guessCtypes <- function(df, as_string = FALSE, named = FALSE){
-  x <- purrr::map_chr(unname(df),guessCtype)
+  x <- purrr::map_chr(unname(df), guessCtype)
   if(as_string){
-    return(paste(x,collapse="-"))
+    return(paste(x, collapse="-"))
   }
   if(named)
     names(x) <- names(df)
