@@ -79,4 +79,22 @@ permuteCtypes <- function(ctypes, nms = NULL){
 }
 
 
-
+#' @export
+possibleCtypes <- function(namedCtypes, vectorOfPosibilities) {
+  pr <- permuteCtypes(namedCtypes)
+  lg <- map_lgl(pr, function(z) {
+    paste(z, collapse = "-") %in% vectorOfPosibilities
+  })
+  if (sum(lg) == 0) {
+    #poner available los ctypes
+    nmb <- "ESCOGER CTYPS"
+  } else {
+    pr <- pr[lg]
+    nmb <- map(pr, function(z) {
+      paste(names(z), collapse = "-")
+    })
+    nmb <- paste(unlist(nmb), collapse = "<br/>")
+    #### Aqui el mensaje :: TRATE CON ÉSTOS ORDENES
+  }
+  nmb
+}
