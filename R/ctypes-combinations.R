@@ -80,7 +80,7 @@ permuteCtypes <- function(ctypes, nms = NULL){
 
 
 #' @export
-possibleCtypes <- function(namedCtypes, vectorOfPosibilities) {
+belongingCtypesCombinations <- function(namedCtypes, vectorOfPosibilities) {
   pr <- permuteCtypes(namedCtypes)
   lg <- map_lgl(pr, function(z) {
     paste(z, collapse = "-") %in% vectorOfPosibilities

@@ -3,6 +3,7 @@
 export(availableCformats)
 export(availableCtypeIds)
 export(availableCtypes)
+export(belongingCtypesCombinations)
 export(cast_ctypes)
 export(castable_list)
 export(ctypesToFtype)
