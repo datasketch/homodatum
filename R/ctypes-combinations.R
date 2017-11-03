@@ -93,7 +93,7 @@ belongingCtypesCombinations <- function(namedCtypes, vectorOfPosibilities) {
     nmb <- map(pr, function(z) {
       paste(names(z), collapse = "-")
     })
-    nmb <- paste(unlist(nmb), collapse = "<br/>")
+    nmb <- paste("<br/>", paste(unlist(nmb), collapse = "<br/>"))
     #### Aqui el mensaje :: TRATE CON ÉSTOS ORDENES
   }
   nmb
