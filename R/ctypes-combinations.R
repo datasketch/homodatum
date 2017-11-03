@@ -99,7 +99,7 @@ belongingCtypesCombinations <- function(namedCtypes, vectorOfPosibilities, names
       nmb <- map(pr, function(z) {
         paste(z, collapse = "-")
       })
-      nmb <- unlist(nmb)
+      nmb <- unname(unlist(nmb))
     }
   }
   nmb
