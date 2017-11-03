@@ -92,14 +92,15 @@ belongingCtypesCombinations <- function(namedCtypes, vectorOfPosibilities, names
     pr <- pr[lg]
     if (names) {
       nmb <- map(pr, function(z) {
-        paste(names(z), collapse = "-")
+        names(z)
       })
-      nmb <- paste("<br/>", paste(unlist(nmb), collapse = "<br/>"))
+      nmb <- unname(nmb)
+
     } else {
       nmb <- map(pr, function(z) {
-        paste(z, collapse = "-")
+        unname(z)
       })
-      nmb <- unname(unlist(nmb))
+      nmb <- unname(nmb)
     }
   }
   nmb
