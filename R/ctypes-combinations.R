@@ -80,21 +80,27 @@ permuteCtypes <- function(ctypes, nms = NULL){
 
 
 #' @export
-belongingCtypesCombinations <- function(namedCtypes, vectorOfPosibilities) {
+belongingCtypesCombinations <- function(namedCtypes, vectorOfPosibilities, names = FALSE) {
   pr <- permuteCtypes(namedCtypes)
   lg <- map_lgl(pr, function(z) {
     paste(z, collapse = "-") %in% vectorOfPosibilities
   })
   if (sum(lg) == 0) {
     #poner available los ctypes
-    nmb <- "ESCOGER CTYPS"
+    nmb <- NULL
   } else {
     pr <- pr[lg]
-    nmb <- map(pr, function(z) {
-      paste(names(z), collapse = "-")
-    })
-    nmb <- paste("<br/>", paste(unlist(nmb), collapse = "<br/>"))
-    #### Aqui el mensaje :: TRATE CON ÉSTOS ORDENES
+    if (names) {
+      nmb <- map(pr, function(z) {
+        paste(names(z), collapse = "-")
+      })
+      nmb <- paste("<br/>", paste(unlist(nmb), collapse = "<br/>"))
+    } else {
+      nmb <- map(pr, function(z) {
+        paste(z, collapse = "-")
+      })
+      nmb <- unlist(nmb)
+    }
   }
   nmb
 }
