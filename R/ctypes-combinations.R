@@ -81,4 +81,29 @@ permuteCtypes <- function(ctypes, nms = NULL){
 }
 
 
+#' @export
+belongingCtypesCombinations <- function(namedCtypes, vectorOfPosibilities, names = FALSE) {
+  pr <- permuteCtypes(namedCtypes)
+  lg <- map_lgl(pr, function(z) {
+    paste(z, collapse = "-") %in% vectorOfPosibilities
+  })
+  if (sum(lg) == 0) {
+    #poner available los ctypes
+    nmb <- NULL
+  } else {
+    pr <- pr[lg]
+    if (names) {
+      nmb <- map(pr, function(z) {
+        names(z)
+      })
+      nmb <- unname(nmb)
 
+    } else {
+      nmb <- map(pr, function(z) {
+        unname(z)
+      })
+      nmb <- unname(nmb)
+    }
+  }
+  nmb
+}
