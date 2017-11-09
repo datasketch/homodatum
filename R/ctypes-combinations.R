@@ -23,9 +23,11 @@ possibleCtypes <- function(ctypes, castable = FALSE, combine = FALSE){
 possibleNamedCtypes <- function(namedCtypes, permute = TRUE, castable = FALSE){
   subdata <- powerSet(namedCtypes)
   if(!permute)
-    permuteCtypes(subdata[[1]])
-  l <- map(subdata, permuteCtypes)
-  l <- unlist(l, recursive = FALSE) %>% unname()
+    l <- subdata
+  else{
+    l <- map(subdata, permuteCtypes)
+    l <- unlist(l, recursive = FALSE) %>% unname()
+  }
   if(castable){
     l <- map(l, possibleCtypes, castable = TRUE)
   }
