@@ -47,7 +47,7 @@ sampleData <- function(ctypes,nrow = 20, loremNames = TRUE,
   }else{
     names(d) <- loremNames(ncols)
   }
-  out <- as_data_frame(d)
+  out <- as_tibble(d)
   out
 }
 

@@ -104,5 +104,5 @@ forceCtypes <- function(df, ctypes, cformat = NULL){
     if(ctypes[i]=="Gln"){df[,i]<- as.numeric(df[,i])}
     if(ctypes[i]=="Gnm"){df[,i]<- as.character(df[,i])}
   }
-  as_data_frame(df)
+  as_tibble(df)
 }
