@@ -74,10 +74,12 @@ test_that("Cast Ctypes",{
   namedCtypes <- c("Cat","Num","Pct")
   names(namedCtypes) <- LETTERS[1:length(namedCtypes)]
   possibleNamedCtypes(namedCtypes)
+  possibleNamedCtypes(namedCtypes, permute = FALSE)
   possibleNamedCtypes(namedCtypes, castable = TRUE)
 
 
-  # Possible Subdata
+  # Possible Subdata for desired ctype
+  # Todo enhance with feasible casts
 
   data <- sampleData("Num-Cat-Oca", loremNames = FALSE)
   #whichSubdata(data)
