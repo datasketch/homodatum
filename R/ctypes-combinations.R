@@ -80,7 +80,14 @@ permuteCtypes <- function(ctypes, nms = NULL){
 
 
 #' @export
-belongingCtypesCombinations <- function(namedCtypes, vectorOfPosibilities, names = FALSE) {
+belongingCtypesCombinations <- function(d, vectorOfPosibilities, names = FALSE) {
+  if ("data.frame" %in% class(d)) {
+    namedCtypes <- guessCtypes(d, as_string = FALSE,  named = TRUE)
+    namedCtypes[namedCtypes == "Pct"] <- "Num"
+  }
+  if (is.atomic(d)) {
+    namedCtypes <- d
+  }
   pr <- permuteCtypes(namedCtypes)
   lg <- map_lgl(pr, function(z) {
     paste(z, collapse = "-") %in% vectorOfPosibilities
@@ -105,3 +112,19 @@ belongingCtypesCombinations <- function(namedCtypes, vectorOfPosibilities, names
   }
   nmb
 }
+
+#' @export
+whichFunction <- function(d, meta) {
+  if ("data.frame" %in% class(d)) {
+    ctp <- guessCtypes(d, as_string = FALSE)
+    ctp[ctp == "Pct"] <- "Num"
+    ctp <- paste0(ctp, collapse = "-")
+  }
+  if (is.atomic(d)) {
+    ctp <- paste0(d, collapse = "-")
+  }
+  meta <- meta %>% dplyr::filter(ctypes == ctp)
+  nms <- meta$name
+  meta %>% pull(name) %>% set_names(nms)
+}
+
