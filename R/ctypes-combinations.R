@@ -116,7 +116,7 @@ belongingCtypesCombinations <- function(d, vectorOfPosibilities, names = FALSE) 
 }
 
 #' @export
-whichFunction <- function(d, meta) {
+whichFunction <- function (d, colReturn = "name", meta) {
   if ("data.frame" %in% class(d)) {
     ctp <- guessCtypes(d, as_string = FALSE)
     ctp[ctp == "Pct"] <- "Num"
@@ -126,7 +126,7 @@ whichFunction <- function(d, meta) {
     ctp <- paste0(d, collapse = "-")
   }
   meta <- meta %>% dplyr::filter(ctypes == ctp)
-  nms <- meta$name
-  meta %>% pull(name) %>% set_names(nms)
+  nms <- meta[[colReturn]]
+  meta %>% pull(colReturn) %>% set_names(nms)
 }
 
