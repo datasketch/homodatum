@@ -37,7 +37,7 @@ possibleNamedCtypes <- function(namedCtypes, permute = TRUE, castable = FALSE){
 
 #' @export
 possibleNamedCtypesStr <- function(namedCtypes, permute = TRUE, castable = FALSE){
-  l <- possibleNamedCtypes(ctypes, permute = TRUE, castable = castable)
+  l <- possibleNamedCtypes(namedCtypes, permute = TRUE, castable = castable)
   if(!castable){
     ctypesStr <- map(l, paste, collapse = "-")
   }else{
