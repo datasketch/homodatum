@@ -20,8 +20,9 @@ possibleCtypes <- function(ctypes, castable = FALSE, combine = FALSE){
 
 
 #' @export
-possibleNamedCtypes <- function(namedCtypes, permute = TRUE, castable = FALSE){
+possibleNamedCtypes <- function(namedCtypes, permute = TRUE, castable = FALSE, ncol = NULL) {
   subdata <- powerSet(namedCtypes)
+  if (!is.null(ncol)) {subdata <- subdata[map_lgl(subdata, ~length(.x) <= ncol)]}
   if(!permute)
     l <- subdata
   else{
@@ -36,8 +37,8 @@ possibleNamedCtypes <- function(namedCtypes, permute = TRUE, castable = FALSE){
 }
 
 #' @export
-possibleNamedCtypesStr <- function(namedCtypes, permute = TRUE, castable = FALSE){
-  l <- possibleNamedCtypes(namedCtypes, permute = TRUE, castable = castable)
+possibleNamedCtypesStr <- function(namedCtypes, permute = TRUE, castable = FALSE, ncol = NULL){
+  l <- possibleNamedCtypes(namedCtypes, permute = TRUE, castable = castable, ncol = ncol)
   if(!castable){
     ctypesStr <- map(l, paste, collapse = "-")
   }else{
