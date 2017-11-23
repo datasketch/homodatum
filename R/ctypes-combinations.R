@@ -101,7 +101,7 @@ belongingCtypesCombinations <- function(d, vectorOfPosibilities, names = FALSE) 
     pr <- pr[lg]
     if (names) {
       nmb <- map(pr, function(z) {
-        names(z)
+        z
       })
       nmb <- unname(nmb)
 
