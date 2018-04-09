@@ -91,7 +91,7 @@ belongingCtypesCombinations <- function(d, vectorOfPosibilities, names = FALSE) 
   if (is.atomic(d)) {
     namedCtypes <- d
   }
-  pr <- permuteCtypes(namedCtypes)
+  pr <- possibleNamedCtypes(namedCtypes)
   lg <- map_lgl(pr, function(z) {
     paste(z, collapse = "-") %in% vectorOfPosibilities
   })
