@@ -83,34 +83,35 @@ permuteCtypes <- function(ctypes, nms = NULL){
 
 
 #' @export
-belongingCtypesCombinations <- function(d, vectorOfPosibilities, names = FALSE) {
-  if ("data.frame" %in% class(d)) {
-    namedCtypes <- guessCtypes(d, as_string = FALSE,  named = TRUE)
+belongingCtypesCombinations <- function (dt, vectorOfPosibilities, names = FALSE, numP = TRUE) {
+  if ("data.frame" %in% class(dt)) {
+    namedCtypes <- guessCtypes(dt, as_string = FALSE, named = TRUE)
     namedCtypes[namedCtypes == "Pct"] <- "Num"
   }
-  if (is.atomic(d)) {
-    namedCtypes <- d
+  if (is.atomic(dt)) {
+    namedCtypes <- dt
   }
   pr <- possibleNamedCtypes(namedCtypes)
-  lg <- map_lgl(pr, function(z) {
-    paste(z, collapse = "-") %in% vectorOfPosibilities
-  })
+  pr0 <- pr
+  if (numP) {
+    pr0 <- map(pr,  function(z) {
+      w <- which(z %in% "Num")
+      z1 <- z
+      if (length(w) > 1) {
+        z0 <- z[-w]
+        z1 <- c(z0, "NumP")
+        names(z1)[length(z1)] <- paste(names(z)[w], collapse = "|")
+      }
+      z1
+    })
+  }
+  lg <- map_lgl(pr0, ~paste(.x, collapse = "-") %in% vectorOfPosibilities)
   if (sum(lg) == 0) {
-    #poner available los ctypes
     nmb <- NULL
   } else {
-    pr <- pr[lg]
-    if (names) {
-      nmb <- map(pr, function(z) {
-        z
-      })
-      nmb <- unname(nmb)
-
-    } else {
-      nmb <- map(pr, function(z) {
-        unname(z)
-      })
-      nmb <- unname(nmb)
+    nmb <- pr0[lg]
+    if (!names) {
+      nmb <- map(nmb, ~unname(.x))
     }
   }
   nmb
