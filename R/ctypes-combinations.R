@@ -94,18 +94,25 @@ belongingCtypesCombinations <- function (dt, vectorOfPosibilities, names = FALSE
   pr <- possibleNamedCtypes(namedCtypes)
   pr0 <- pr
   if (numP) {
-    pr0 <- map(pr,  function(z) {
+    pr0 <- map(pr, function(z) {
       w <- which(z %in% "Num")
-      z1 <- z
+      z0 <- z
       if (length(w) > 1) {
-        z0 <- z[-w]
-        z1 <- c(z0, "NumP")
-        names(z1)[length(z1)] <- paste(names(z)[w], collapse = "|")
+        z0[w[1]] <- "NumP"
+        z0 <- z0[-w[2:length(w)]]
+        names(z0)[w[1]] <- paste(names(z)[w], collapse = "|")
       }
-      z1
+      z0
     })
   }
-  lg <- map_lgl(pr0, ~paste(.x, collapse = "-") %in% vectorOfPosibilities)
+  lg <- map_lgl(pr0, function(s) {
+    ct <- paste(s, collapse = "-")
+    ps <- ct %in% vectorOfPosibilities
+    if (ps) {
+      ps <- any(map_lgl(vectorOfPosibilities, ~all(ct == .x)))
+    }
+    ps
+  })
   if (sum(lg) == 0) {
     nmb <- NULL
   } else {
@@ -116,6 +123,7 @@ belongingCtypesCombinations <- function (dt, vectorOfPosibilities, names = FALSE
   }
   nmb
 }
+
 
 #' @export
 whichFunction <- function (d, colReturn = "name", meta) {
