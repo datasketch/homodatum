@@ -67,7 +67,7 @@ sampleCat <- function(n, nlevels = 5, addNA = TRUE,...){
   v
 }
 
-sampleOca <- function(n, nlevels = 5, addNA = TRUE, ...){
+sampleSeq <- function(n, nlevels = 5, addNA = TRUE, ...){
   v <- paste0(loremNames(1),1:nlevels)
   v <- sample2(v,n)
   if(addNA) v[sample(n,round(n/10))] <- NA

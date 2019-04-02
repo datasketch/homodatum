@@ -1,6 +1,7 @@
 context("ctypes")
 
 test_that("Guess Ctypes",{
+
   void = data_frame(col1 = character(0), col2 = character(0))
   expect_equal(guessCtype(void[1]),"___")
   expect_equal(guessCtype(void %>% .[[1]]),"___")

@@ -39,7 +39,8 @@ availableCtypes <- function(as_df = FALSE){
 ___,Null,1
 Uid,Uid,1
 Cat,Categorical,5
-Oca,Ordered Categorical,3
+Bin,Binary,3
+Seq,Sequential,3
 Num,Numeric,5
 Pct,Percentage,2
 Dst,Distribution,2

@@ -40,7 +40,7 @@ cast_ctype <- function(from, to,...){
 castable_ctypes <- function(){
   casts <- "from,to
 Cat,Uid
-Cat,Oca
+Cat,Seq
 Cat,Txt
 Cat,Bin
 Num,Uid
@@ -55,8 +55,8 @@ Dtm,Hms
 Hms,Min
 Hms,Min
 Hms,Sec
-Oca,Uid
-Oca,Num
+Seq,Uid
+Seq,Num
 Pct,Num
 "
   read_csv(casts)

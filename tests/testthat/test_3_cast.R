@@ -4,10 +4,11 @@ test_that("Cast Ctypes",{
 
   # All possible casts: from -> to
   cs <- castable_ctypes()
+  expect_true(all(c(cs$from, cs$to) %in% availableCtypeIds()))
   expect_equal(19,nrow(cs))
 
   ctype <- "Cat"
-  expect_equal(castable_ctype("Cat"), c("Uid","Oca","Txt","Bin"))
+  expect_equal(castable_ctype("Cat"), c("Uid","Seq","Txt","Bin"))
   ctypes <- availableCtypes()
 
   # All possible casts for given ctypes
@@ -44,8 +45,8 @@ test_that("Cast Ctypes",{
   castableCombs <- possibleCtypes(ctypes, castable = TRUE, combine = TRUE)
   expect_equal(length(castableCombs), 2 ^ length(ctypes) - 1)
   expect_equal(
-    map(castableCombs,nrow),
-    map(strsplit(names(castableCombs),"-"),ncomb)
+    sort(unlist(unname(map_int(castableCombs,nrow)))),
+    sort(unlist(map(strsplit(names(castableCombs),"-"),ncomb)))
   )
 
   # Test with a Random Ctype
@@ -57,7 +58,7 @@ test_that("Cast Ctypes",{
   # Make sure possible combinations (* of all possible values for each column)
   # Equals the number of return castable options
   castable <- castable_list(ctypes)
-  expect_equal(nrow(castable), ncomb)
+  expect_equal(nrow(castable), ncomb(ctypes))
   expect_equal(unique(map_chr(castable,class)),"character")
 
 
@@ -81,12 +82,12 @@ test_that("Cast Ctypes",{
   # Possible Subdata for desired ctype
   # Todo enhance with feasible casts
 
-  data <- sampleData("Num-Cat-Oca", loremNames = FALSE)
+  data <- sampleData("Num-Cat-Seq", loremNames = FALSE)
   #whichSubdata(data)
   outCtypes <- c("Num","Cat","Cat")
   whichSubdata(data, castable = FALSE, outCtypes = outCtypes)
   whichSubdata(data, castable = TRUE, outCtypes = outCtypes)
-  outCtypes <- c("Num","Cat","Oca")
+  outCtypes <- c("Num","Cat","Seq")
   whichSubdata(data, castable = FALSE, outCtypes = outCtypes)
   whichSubdata(data, castable = TRUE, outCtypes = outCtypes)
 
