@@ -35,6 +35,22 @@ permutations <- function(n){
 }
 
 
+remove_accents <- function (string) {
+  accents <- "àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝäëïöüÄËÏÖÜâêîôûÂÊÎÔÛñÑç"
+  translation <- "aeiouAEIOUaeiouyAEIOUYaeiouAEIOUaeiouAEIOUnNc"
+  chartr(accents, translation, string)
+}
+
+col_ids_from_name <- function (x, sep = "_"){
+  x <- gsub("[^[:alnum:]]", "_", x)
+  x <- remove_accents(x)
+  x <- tolower(x)
+  x <- gsub("-+", "_", x)
+  x <- gsub("+-$", "", x)
+  x <- gsub("^-.", "", x)
+  x
+}
+
 
 sample2 <- function(v, n,replace = TRUE, ...){
   if(length(v)==1) return(rep(v,5))

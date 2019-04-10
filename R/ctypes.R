@@ -1,4 +1,30 @@
 
+ctype <- function(x, ...)  {
+  args <- list(...)
+  if(!"character" %in% class(x)) stop("x must be a character value")
+
+  if(!x %in% availableCtypes()) stop("Ctype must be valid, check availableCtypes()")
+  ctypes <- x
+  ct <- list(id = x, format = args$format)
+  # Do something here with x, args and put in something
+  class(f) <- "ctype"
+  return (f)
+}
+
+print.ctype <- function(f){
+  cat("Ctype:  ", f$id, "\n")
+  cat("Format: ", f$format)
+}
+
+#' @export
+is_ctype <- function(x){
+  inherits(x, "ctype")
+}
+
+
+
+
+
 
 sampleCtypes <- function(ftype, as_df = FALSE){
   #ftype <- "Num2-Cat1-DatP"

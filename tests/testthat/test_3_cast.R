@@ -65,7 +65,7 @@ test_that("Cast Ctypes",{
   ## Permutations
 
   ctypes1 <- c("Cat","Num")
-  names(ctypes1) <- LETTERS[1:length(ctypes)]
+  names(ctypes1) <- LETTERS[1:length(ctypes1)]
 
   ctypes2 <- c("Cat","Num")
   expect_equal(permuteCtypes(ctypes1), permuteCtypes(ctypes2, nms = LETTERS[1:length(ctypes2)]))
