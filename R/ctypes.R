@@ -1,16 +1,21 @@
 
+#' @export
 ctype <- function(x, ...)  {
   args <- list(...)
   if(!"character" %in% class(x)) stop("x must be a character value")
 
+  if(grepl("-",x)){
+    return(map(strsplit(x,"-")[[1]], ~ctype(.)))
+  }
   if(!x %in% availableCtypes()) stop("Ctype must be valid, check availableCtypes()")
   ctypes <- x
   ct <- list(id = x, format = args$format)
   # Do something here with x, args and put in something
-  class(f) <- "ctype"
-  return (f)
+  class(ct) <- "ctype"
+  return (ct)
 }
 
+#' @export
 print.ctype <- function(f){
   cat("Ctype:  ", f$id, "\n")
   cat("Format: ", f$format)
