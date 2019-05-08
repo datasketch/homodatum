@@ -53,7 +53,7 @@ sampleCtypes <- function(ftype, as_df = FALSE){
       rep(x,as.numeric(y))
     }))
     if(!all(ctypes %in% availableCtypeIds())) stop("Wrong ftype")
-    ctypes <- data_frame(id = ctypes,
+    ctypes <- tibble(id = ctypes,
                          label = avCtypes[[2]][match(ctypes, avCtypes[[1]])] )
   }
   if(as_df)

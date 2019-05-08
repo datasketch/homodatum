@@ -2,14 +2,14 @@ context("ctypes")
 
 test_that("Guess Ctypes",{
 
-  void = data_frame(col1 = character(0), col2 = character(0))
+  void = tibble(col1 = character(0), col2 = character(0))
   expect_equal(guessCtype(void[1]),"___")
   expect_equal(guessCtype(void %>% .[[1]]),"___")
   expect_equal(guessCtypes(void),c("___","___"))
   guessCformats(void)
   v <- c("1",NA,"2")
   expect_equal(guessCtype(v),"Num")
-  data <- data_frame(a = as.Date(c("2016-04-03", "2016-05-04")),
+  data <- tibble(a = as.Date(c("2016-04-03", "2016-05-04")),
                      b = as.character(c("2016-04-03", "2016-05-04")),
                      c = as.factor(c("2016-04-03", "2016-05-04")))
   expect_true(all(map_lgl(data,isDate)))

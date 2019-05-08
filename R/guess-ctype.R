@@ -71,7 +71,7 @@ guessFtype <- function(df){
 #' @export
 ctypesToFtype <- function(ctypes, as_string = FALSE){
   f <- function(ctypes){
-    ct <- count(data_frame(ctypes = ctypes),ctypes)
+    ct <- count(tibble(ctypes = ctypes),ctypes)
     ct$n[ct$n == 1] <- ""
     ctv <- unite(ct,ctype,ctypes,n,sep="") %>% .[[1]] %>% sort()
     paste(ctv,collapse="-")
