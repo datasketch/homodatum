@@ -8,7 +8,7 @@
 #' @examples \dontrun{
 #' fringe <- newDatafringeFromDatafringe(mtcars)
 #' }
-sampleData <- function(ctypes,nrow = 20, loremNames = TRUE,
+sampleData <- function(ctypes, nrow = 20, loremNames = TRUE,
                        addNA = TRUE, rep = FALSE,...){
   #nrow <- 100
   #ftype <- "Cat2-Yea2-Num1-Dat1"
