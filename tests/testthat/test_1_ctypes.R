@@ -12,8 +12,8 @@ test_that("Guess Ctypes",{
   data <- tibble(a = as.Date(c("2016-04-03", "2016-05-04")),
                      b = as.character(c("2016-04-03", "2016-05-04")),
                      c = as.factor(c("2016-04-03", "2016-05-04")))
-  expect_true(all(map_lgl(data,isDate)))
-  expect_equal(unique(map_chr(data,guessCtype)),"Dat")
+  expect_true(all(purrr::map_lgl(data,isDate)))
+  expect_equal(unique(purrr::map_chr(data,guessCtype)),"Dat")
   expect_equal(guessCtypes(data),c("Dat","Dat","Dat"))
   data <- sampleData("Cat-Dat-Yea-Num-Pct")
   expect_equal(guessFtype(data),"Cat-Dat-Num-Pct-Yea")

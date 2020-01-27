@@ -5,7 +5,7 @@ ctype <- function(x, ...)  {
   if(!"character" %in% class(x)) stop("x must be a character value")
 
   if(grepl("-",x)){
-    return(map(strsplit(x,"-")[[1]], ~ctype(.)))
+    return(purrr::map(strsplit(x,"-")[[1]], ~ctype(.)))
   }
   if(!x %in% availableCtypes()) stop("Ctype must be valid, check availableCtypes()")
   ctypes <- x
@@ -45,7 +45,7 @@ sampleCtypes <- function(ftype, as_df = FALSE){
     ft1 <- strsplit(ftype,"-",fixed = TRUE)[[1]]
     cts <- substring(ft1,1,3)
     reps <- substring(ft1,4)
-    ctypes <- purrr::flatten_chr(map2(cts,reps,function(x,y){
+    ctypes <- purrr::flatten_chr(purrr::map2(cts,reps,function(x,y){
       if(y == "P"){
         return(rep(x,sample(2:6,1)))
       }
@@ -142,7 +142,7 @@ availableCformats <- function(){
   )
 }
 
-defaultCformats <- map(availableCformats(),1)
+defaultCformats <- purrr::map(availableCformats(),1)
 
 getDefaultCformats <- function(ctypes){
   l <- lapply(ctypes, function(ctype){

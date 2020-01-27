@@ -34,7 +34,7 @@ test_that("Cast Ctypes",{
   expect_equal(length(comb),2 ^ length(ctypes) - 1)
 
   ncomb <- function(ctypes){
-    (map_int(ctypes, function(c){
+    (purrr::map_int(ctypes, function(c){
       castable_ctypes() %>% filter(from == c) %>% nrow()
     }) + 1) %>% reduce(`*`)
   }
@@ -45,8 +45,8 @@ test_that("Cast Ctypes",{
   castableCombs <- possibleCtypes(ctypes, castable = TRUE, combine = TRUE)
   expect_equal(length(castableCombs), 2 ^ length(ctypes) - 1)
   expect_equal(
-    sort(unlist(unname(map_int(castableCombs,nrow)))),
-    sort(unlist(map(strsplit(names(castableCombs),"-"),ncomb)))
+    sort(unlist(unname(purrr::map_int(castableCombs,nrow)))),
+    sort(unlist(purrr::map(strsplit(names(castableCombs),"-"),ncomb)))
   )
 
   # Test with a Random Ctype
@@ -59,7 +59,7 @@ test_that("Cast Ctypes",{
   # Equals the number of return castable options
   castable <- castable_list(ctypes)
   expect_equal(nrow(castable), ncomb(ctypes))
-  expect_equal(unique(map_chr(castable,class)),"character")
+  expect_equal(unique(purrr::map_chr(castable,class)),"character")
 
 
   ## Permutations

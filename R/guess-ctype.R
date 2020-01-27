@@ -10,7 +10,7 @@ guessCtype <- function(v){
   if(class(v) %in% c("integer","numeric")){
     ctype <- "Num"
     if(all(v %in% 1800:2200)) ctype <- "Yea"
-    if(all(map(v, function(z) {all(z >= 0 && z<=1) }) %>% unlist() == TRUE)) ctype <- "Pct"
+    if(all(purrr::map(v, function(z) {all(z >= 0 && z<=1) }) %>% unlist() == TRUE)) ctype <- "Pct"
     # && !all(v %in% c(0,1))
     # if(all(v %in% 1:31)) ctype <- "Dy"
     # if(all(v %in% 1:12)) ctype <- "Mn"
@@ -78,7 +78,7 @@ ctypesToFtype <- function(ctypes, as_string = FALSE){
   }
   if(as_string){
     ctps <- strsplit(ctypes,"-")
-    return(map_chr(ctps, f))
+    return(purrr::map_chr(ctps, f))
   }
   f(ctypes)
 }

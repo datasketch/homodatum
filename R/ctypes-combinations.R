@@ -10,8 +10,8 @@ possibleCtypes <- function(ctypes, castable = FALSE, combine = FALSE){
     if(!castable){
       return(comb)
     }else{
-      l <- map(comb, castable_list)
-      names(l) <- map(comb,paste,collapse = "-")
+      l <- purrr::map(comb, castable_list)
+      names(l) <- purrr::map(comb,paste,collapse = "-")
       return(l)
     }
   }
@@ -22,17 +22,17 @@ possibleCtypes <- function(ctypes, castable = FALSE, combine = FALSE){
 #' @export
 possibleNamedCtypes <- function(namedCtypes, permute = TRUE, castable = FALSE, ncol = NULL) {
   subdata <- powerSet(namedCtypes)
-  if (!is.null(ncol)) {subdata <- subdata[map_lgl(subdata, ~length(.x) <= ncol)]}
+  if (!is.null(ncol)) {subdata <- subdata[purrr::map_lgl(subdata, ~length(.x) <= ncol)]}
   if(!permute)
     l <- subdata
   else{
-    l <- map(subdata, permuteCtypes)
+    l <- purrr::map(subdata, permuteCtypes)
     l <- unlist(l, recursive = FALSE) %>% unname()
   }
   if(castable){
-    l <- map(l, possibleCtypes, castable = TRUE)
+    l <- purrr::map(l, possibleCtypes, castable = TRUE)
   }
-  names(l) <- map(l,function(x) paste0(names(x),collapse="|"))
+  names(l) <- purrr::map(l,function(x) paste0(names(x),collapse="|"))
   l
 }
 
@@ -40,9 +40,9 @@ possibleNamedCtypes <- function(namedCtypes, permute = TRUE, castable = FALSE, n
 possibleNamedCtypesStr <- function(namedCtypes, permute = TRUE, castable = FALSE, ncol = NULL){
   l <- possibleNamedCtypes(namedCtypes, permute = TRUE, castable = castable, ncol = ncol)
   if(!castable){
-    ctypesStr <- map(l, paste, collapse = "-")
+    ctypesStr <- purrr::map(l, paste, collapse = "-")
   }else{
-    ctypesStr <- map(l, function(s) map_chr(transpose(s),paste, collapse = "-"))
+    ctypesStr <- purrr::map(l, function(s) map_chr(transpose(s),paste, collapse = "-"))
   }
   ctypesStr
 }
@@ -78,7 +78,7 @@ permuteCtypes <- function(ctypes, nms = NULL){
     stop("ctypes must have names")
   y <- permuteVector(nms) %>% t() %>% as_tibble() %>% as.list()
   x <- permuteVector(ctypes) %>% t() %>% as_tibble() %>% as.list()
-  map2(x,y, ~ set_names(.x, .y))
+  purrr::map2(x,y, ~ set_names(.x, .y))
 }
 
 
@@ -94,7 +94,7 @@ belongingCtypesCombinations <- function (dt, vectorOfPosibilities, names = FALSE
   pr <- possibleNamedCtypes(namedCtypes)
   pr0 <- pr
   if (numP) {
-    pr0 <- map(pr, function(z) {
+    pr0 <- purrr::map(pr, function(z) {
       w <- which(z %in% "Num")
       z0 <- z
       if (length(w) > 1) {
@@ -105,7 +105,7 @@ belongingCtypesCombinations <- function (dt, vectorOfPosibilities, names = FALSE
       z0
     })
   }
-  lg <- map_lgl(pr0, function(s) {
+  lg <- purrr::map_lgl(pr0, function(s) {
     ct <- paste(s, collapse = "-")
     ps <- ct %in% vectorOfPosibilities
     if (ps) {
@@ -118,7 +118,7 @@ belongingCtypesCombinations <- function (dt, vectorOfPosibilities, names = FALSE
   } else {
     nmb <- pr0[lg]
     if (!names) {
-      nmb <- map(nmb, ~unname(.x))
+      nmb <- purrr::map(nmb, ~unname(.x))
     }
   }
   nmb

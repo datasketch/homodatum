@@ -40,7 +40,7 @@ sampleData <- function(ctypes, nrow = 20, loremNames = TRUE,
     list(n = nrow, addNA = addNA, rep = rep)
   }
   params <- purrr::map(ctypes,makeFtypeParams)
-  d <- invoke_map(selFuns, params)
+  d <- purrr::invoke_map(selFuns, params)
 
   if(!loremNames){
     names(d) <- letterNames(ncols)
@@ -181,7 +181,7 @@ sampleGrp <- sampleCat
 
 sampleTxt <- function(n, addNA = TRUE,...){
   nwords <- sample2(10:20,n)
-  v <- map_chr(nwords,~ paste0(loremNames(.),collapse=" "))
+  v <- purrr::map_chr(nwords,~ paste0(loremNames(.),collapse=" "))
   if(addNA) v[sample(n,round(n/10))] <- NA
   v
 }

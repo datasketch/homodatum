@@ -21,7 +21,7 @@ castable_list <- function(ctypes){
   f <- function(ctype){
     c(ctype,castable_ctype(ctype))
   }
-  casts <- map(ctypes,f)
+  casts <- purrr::map(ctypes,f)
   #do.call("crossing_",casts)
   as_tibble(expand.grid(casts,stringsAsFactors = FALSE))
 }
