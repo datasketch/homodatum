@@ -1,0 +1,58 @@
+test_that("Num", {
+
+  x <- c("06/24/2003")
+  d <- new_Dat(x)
+  d
+  expect_equal(Dat_get_format(d), "%m/%d/%Y")
+  expect_equal(Dat_get_order(d), "mdy")
+  expect_equal(Dat_show(d), x)
+  expect_equal("06/2003",Dat_show(d, format = "%m/%Y"))
+
+  x <- c("7.12.2000")
+  d <- new_Dat(x)
+  d
+  expect_equal(Dat_get_format(d), "%d.%m.%Y")
+  expect_equal(Dat_get_order(d), "dmy")
+  expect_equal("2000.12",Dat_show(d, format = "%Y.%m"))
+
+  x <-   c("2000-12-04","2010-20-04")
+  new_Dat(x, format = "%Y-%d-%m")
+
+
+  #Dat(NULL)
+  x <- Dat("2000-12-04")
+  y <- new_Dat("2000-04-12", format = "%Y-%d-%m")
+  expect_equal(vec_data(x),vec_data(y))
+  expect_equal(Dat_get_isodate(x),as.character(new_date(vec_data(y))))
+
+  expect_true(is.na(Dat(NA)))
+  # new_Dat(c(NA,NA))
+  # Dat(c(NA,NA))
+  expect_equal(is.na(Dat(c(NA,NA))), c(TRUE, TRUE))
+
+  z <- Dat(c("2000-12-04","2010-20-04"), format = "%Y-%d-%m")
+  # stats <- Dat_get_stats(z)
+  # stats$min
+  # Dat_get_isodate(z)
+  # expect_equal(unlist(stats))
+
+  # TODO stats need to return Dat as well? Define min and max for Dat
+
+
+
+
+  # Accepts anything coercible from double()
+  x <- Dat(c("1","0.2"))
+  class(x)
+  expect_true(inherits(x, "hd_Dat"))
+
+  x <- Dat(c(1,1,2,2,3,3))
+  x
+
+  # TODO TEST CASTS FROM DATES, NUMBERS, ETC
+  dates <- seq.Date(from = as.Date("2020-01-01"), by = "day", length.out = 3)
+  # Dat(dates)
+
+  a <- data.frame(fechas = Dat(c("2020-04-10", "2020-04-20")))
+  tibble(a)
+})
