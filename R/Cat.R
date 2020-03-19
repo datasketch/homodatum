@@ -49,7 +49,7 @@ vec_ptype2.hd_Cat.character <- function(x, y, ...) character()
 vec_ptype2.character.hd_Cat <- function(x, y, ...) character()
 
 # Casting
-vec_cast.vctrs_Cat <- function(x, to, ...) UseMethod("vec_cast.hc_Cat")
+vec_cast.vctrs_Cat <- function(x, to, ...) UseMethod("vec_cast.hd_Cat")
 vec_cast.vctrs_Cat.default <- function(x, to, ...) vec_default_cast(x, to)
 # Coerce Cat to Cat
 vec_cast.hd_Cat.hd_Cat <- function(x, to, ...) x

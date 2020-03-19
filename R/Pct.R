@@ -8,7 +8,8 @@ Pct <- function(x = double()) {
 
   x <- tryCatch(vec_cast(x, double()),
                 error = function(e) {
-                  if(all(grepl("%$",x))){
+                  x_no_na <- x[!is.na(x)]
+                  if(all(grepl("%$",x_no_na))){
                     vec_cast(gsub("%","", x), double())/100
                   }else{
                     e

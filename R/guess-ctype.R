@@ -1,25 +1,30 @@
 isImgUrl <- function(x) all(grepl("^[http].+\\.((?i)jpg|png|gif|bmp|svg)$", x))
 
+
+maybePct <- function(v){
+  all(purrr::map(v, function(z) {all(z >= 0 && z<=1) }) %>% unlist() == TRUE)
+}
+
+
 guessCtype <- function(v){
+  stop("guessCtype depricated. Please use guess_hdType()")
+
   if("data.frame" %in% class(v))
     v <- v %>% flatten
   v <- unique(v[!is.na(v)])
   if(length(v) == 0)
-    return("___")
+    return(hdType("___"))
 
   if(class(v) %in% c("integer","numeric")){
-    ctype <- "Num"
-    if(all(v %in% 1800:2200)) ctype <- "Yea"
-    if(all(purrr::map(v, function(z) {all(z >= 0 && z<=1) }) %>% unlist() == TRUE)) ctype <- "Pct"
-    # && !all(v %in% c(0,1))
-    # if(all(v %in% 1:31)) ctype <- "Dy"
-    # if(all(v %in% 1:12)) ctype <- "Mn"
+    ctype <- hdType("Num")
+    if(all(v %in% 1500L:2200L)) ctype <- hdType("Yea")
+    if(maybePct) ctype <- hdType("Pct")
     return(ctype)
   }
   if(class(v) == "Date")
-    return("Dat")
+    return(hdType("Dat"))
   if(class(v)!= "factor" & !has_warning(as.numeric(v))){
-    return("Num")
+    return(hdType("Num"))
   }
 
   dth <- whichDTH(v)
@@ -27,12 +32,12 @@ guessCtype <- function(v){
     ctype <- dth
   else{
     v <- as.character(v)
-    ctype <- "Cat"
-    if(ctype == "Cat" && isImgUrl(v)){
-      ctype <- "Img"
+    ctype <- hdType("Cat")
+    if(ctype == hdType("Cat") && isImgUrl(v)){
+      ctype <- hdType("Img")
     }
-    if(ctype == "Cat" && isTxType(v))
-      ctype <- "Txt"
+    if(ctype == hdType("Cat") && isTxType(v))
+      ctype <- hdType("Txt")
   }
   ctype
 }
@@ -46,6 +51,7 @@ isTxType <- function(v){
 
 #' @export
 guessCtypes <- function(df, as_string = FALSE, named = FALSE){
+  stop("guessCtypes depricated. Please use map(data, guess_hdType)")
   x <- purrr::map_chr(unname(df), guessCtype)
   if(as_string){
     return(paste(x, collapse="-"))
@@ -64,6 +70,7 @@ guessCformats <- function(data){
 
 #' @export
 guessFtype <- function(df){
+  stop("guessFtype depricated. Please use guess_frType()")
   ctypes <- guessCtypes(df)
   ctypesToFtype(ctypes)
 }
@@ -89,9 +96,9 @@ forceCtypes <- function(df, ctypes, cformat = NULL){
   df <- as.data.frame(df)
   if(ncol(df)!= length(ctypes)) stop("number of df cols must be the same as col types length")
   for (i in seq_along(ctypes)){
-    if(ctypes[i]=="Num"){df[,i]<- as.numeric(df[,i])}
+    if(ctypes[i]=="Num"){df[,i]<- Num(df[,i])}
     if(ctypes[i]=="Yea"){df[,i]<- as.character(df[,i])}
-    if(ctypes[i]=="Cat"){df[,i]<- as.character(df[,i])}
+    if(ctypes[i]=="Cat"){df[,i]<- Cat(df[,i])}
     if(ctypes[i]=="Txt"){df[,i]<- as.character(df[,i])}
     if(ctypes[i]=="Img"){
       if(!isImgUrl(df[,i])) stop ("Not an image Url")

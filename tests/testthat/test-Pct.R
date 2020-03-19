@@ -14,6 +14,8 @@ test_that("Pct is well defined", {
   y <- Pct(c("100%","20%")) # If there is at least 1 %
   y
   expect_equal(x,y)
+  x <- c("30%", "200%", NA)
+  expect_equal(vec_data(Pct(x)), c(0.3, 2, NA))
 
   expect_error(Pct(c("100%","20"))) # All must have the % symbol
   expect_error(Pct(c("%100"))) # All must have the % symbol at the end

@@ -4,7 +4,7 @@ new_Dat <- function(x = character(), format = NULL,
   vec_assert(x, character())
   if(is.null(format) & !all(is.na(x))){
     date_orders <- c("dmy","mdy","ymd")
-    guess_fmt <- guess_formats(x,date_orders)
+    guess_fmt <- guess_formats(x[!is.na(x)],date_orders)
     fmt <- guess_fmt[vec_in(names(guess_fmt), date_orders)][1] # take first guess
   }else{
     fmt <- format
@@ -29,6 +29,9 @@ Dat_formats <- function(order = c("dmy","mdy","ymd"), sep = "-"){
 }
 
 Dat <- function(x = character(), format = NULL, skip_stats = FALSE) {
+  if(vctrs::vec_is(x, new_date())){
+    x <- as.character(x)
+  }
   x <- vec_cast(x, character())
   # format <- vec_recycle(vec_cast(format, character()), format)
   new_Dat(x, format = format, skip_stats = skip_stats)
@@ -59,7 +62,13 @@ Dat_get_stats <-  function(x){
 
 
 format.hd_Dat <- function(x, ...) {
-  sprintf(paste0(new_date(x)," (", Dat_show(x), ")"))
+  ## Check if prints as ISO, otherwise show with given format
+  if(all(Dat_show(x[!is.na(x)]) == as.character(new_date(x[!is.na(x)])))){
+    info <- ""
+  }else{
+    info <- paste0(" (", Dat_show(x), ")")
+  }
+  sprintf(paste0(new_date(x),info))
 }
 
 vec_ptype_abbr.hd_Dat <- function(x, ...) {
@@ -77,31 +86,35 @@ vec_ptype2.hd_Dat.default <- function(x, y, ..., x_arg = "x", y_arg = "y") {
   vec_default_ptype2(x, y, x_arg = x_arg, y_arg = y_arg)
 }
 
-vec_cast.vctrs_Dat <- function(x, to, ...) UseMethod("vec_cast.vctrs_decimal")
-vec_cast.vctrs_decimal.default <- function(x, to, ...) vec_default_cast(x, to)
+vec_cast.hd_Dat <- function(x, to, ...) UseMethod("vec_cast.hd_Dat")
+vec_cast.hd_Dat.default <- function(x, to, ...) vec_default_cast(x, to)
 
 # A Dat combined with a Dat returns a Dat... what happens when they have different formats?
 # TODO default to ISO
-vec_ptype2.vctrs_Dat.vctrs_Dat <- function(x, y, ...) {
-  new_Dat(digits = max(digits(x), digits(y)))
+vec_ptype2.hd_Dat.hd_Dat <- function(x, y, ...) {
+  new_Dat(format = "%Y-%Om-%d")
 }
-vec_cast.vctrs_decimal.vctrs_decimal <- function(x, to, ...) {
-  new_decimal(vec_Data(x), digits = digits(to))
+vec_cast.hd_Dat.hd_Dat <- function(x, to, ...) {
+  new_Dat(vec_Data(x), format = NULL)
 }
 
 
 vec_ptype2.hd_Dat.hd_Dat <- function(x, y, ...) new_Dat()
 # Dat and character return character
-vec_ptype2.hd_Dat.character <- function(x, y, ...) character()
-vec_ptype2.character.hd_Dat <- function(x, y, ...) character()
+vec_ptype2.hd_Dat.character <- function(x, y, ...) Dat()
+vec_ptype2.character.hd_Dat <- function(x, y, ...) Dat()
+# vec_ptype2.hd_Dat.new_date <- function(x, y, ...) Dat()
+# vec_ptype2.new_date.hd_Dat <- function(x, y, ...) Dat()
 
 # Casting
 vec_cast.vctrs_Dat <- function(x, to, ...) UseMethod("vec_cast.hc_Dat")
-vec_cast.vctrs_percent.default <- function(x, to, ...) vec_default_cast(x, to)
+vec_cast.vctrs_Dat.default <- function(x, to, ...) vec_default_cast(x, to)
 # Coerce Dat to Dat
 vec_cast.hd_Dat.hd_Dat <- function(x, to, ...) x
-vec_cast.hd_Dat.character <- function(x, to, ...) percent(x)
-vec_cast.character.hd_Dat <- function(x, to, ...) vec_data(x)
+vec_cast.hd_Dat.character <- function(x, to, ...) Dat(x)
+vec_cast.character.hd_Dat <- function(x, to, ...) Dat_show(x)
+vec_cast.hd_Dat.date <- function(x, to, ...) new_date(vec_data(x))
+vec_cast.character.hd_Dat <- function(x, to, ...) Dat(x)
 
 as_Dat <- function(x) {
   vec_cast(x, new_Dat())

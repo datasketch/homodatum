@@ -16,14 +16,24 @@ test_that("Num", {
   expect_equal("2000.12",Dat_show(d, format = "%Y.%m"))
 
   x <-   c("2000-12-04","2010-20-04")
-  new_Dat(x, format = "%Y-%d-%m")
+  dat <- new_Dat(x, format = "%Y-%d-%m")
+  dat
 
+  x <- c("2000-12-31", "2100-11-30", NA)
+  dat <- new_Dat(x)
+  dat
 
   #Dat(NULL)
   x <- Dat("2000-12-04")
   y <- new_Dat("2000-04-12", format = "%Y-%d-%m")
   expect_equal(vec_data(x),vec_data(y))
   expect_equal(Dat_get_isodate(x),as.character(new_date(vec_data(y))))
+
+  z <- Dat(as.Date("2000-12-04"))
+  expect_equal(x,z)
+  w <- Dat(c(as.Date("2000-12-04"),NA))
+  expect_true(is.na(w[2]))
+
 
   expect_true(is.na(Dat(NA)))
   # new_Dat(c(NA,NA))
@@ -51,7 +61,10 @@ test_that("Num", {
 
   # TODO TEST CASTS FROM DATES, NUMBERS, ETC
   dates <- seq.Date(from = as.Date("2020-01-01"), by = "day", length.out = 3)
-  # Dat(dates)
+  Dat(dates)
+
+  c(Dat("2020-04-30"),"2020-04-30")
+
 
   a <- data.frame(fechas = Dat(c("2020-04-10", "2020-04-20")))
   tibble(a)

@@ -2,7 +2,7 @@
 #' @export
 make_dic <- function(d, ctypes = NULL){
   if(is.null(ctypes))
-    ctypes <- guessCtypes(d)
+    ctypes <- guess_frType(d)
   ids <- col_ids_from_name(names(d))
   ## TODO format
   dic <- tibble(id = ids, label = names(d), ctype = ctypes)

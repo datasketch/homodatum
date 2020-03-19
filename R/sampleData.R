@@ -8,23 +8,30 @@
 #' @examples \dontrun{
 #' fringe <- newDatafringeFromDatafringe(mtcars)
 #' }
-sampleData <- function(ctypes, nrow = 20, loremNames = TRUE,
+sampleData <- function(frtype, nrow = 20, loremNames = TRUE,
                        addNA = TRUE, rep = FALSE,...){
   #nrow <- 100
   #ftype <- "Cat2-Yea2-Num1-Dat1"
   #ftype <- "Cat-Yea-NumP"
   # ftype <- "Cat2-Num1"
-  if(length(ctypes)>1)
-    warning("Use ctypes as a single string")
 
-  ctypes <- sampleCtypes(ctypes)
-  ncols <- length(ctypes)
+  if(!is_frType(frtype)){
+    frtype <- frType(frtype)
+  }
+
+  hdtypes <- frType_hdTypes(frtype)
+
+  # ctypes <- sampleCtypes(ctypes)
+  ncols <- length(hdtypes)
 
   #s <- list(Cat = samp, Nu = nu, Da = da, Ye = ye)
-  ctids <- availableCtypeIds()
-  sampleFunNames <- paste0("sample",ctids) %>% set_names(ctids)
-  selFuns <- sampleFunNames[ctypes]
-  #args <- list(gt0 = TRUE)
+  # ctids <- availableCtypeIds()
+  # sampleFunNames <- paste0("sample",ctids) %>% set_names(ctids)
+  # selFuns <- sampleFunNames[ctypes]
+
+  sample_funs <- paste0("sample",hdtypes)
+
+  #args <- list(gt0 = TRUE, size = 10)
   args <- list(...)
   lang <- args$lang %||% "en"
   rep <- args$rep %||% TRUE
@@ -39,8 +46,8 @@ sampleData <- function(ctypes, nrow = 20, loremNames = TRUE,
       return(list(n = nrow,lang = lang,addNA = addNA, scope = args$scope))
     list(n = nrow, addNA = addNA, rep = rep)
   }
-  params <- purrr::map(ctypes,makeFtypeParams)
-  d <- purrr::invoke_map(selFuns, params)
+  params <- purrr::map(hdtypes, makeFtypeParams)
+  d <- purrr::invoke_map(sample_funs, params)
 
   if(!loremNames){
     names(d) <- letterNames(ncols)
@@ -57,25 +64,25 @@ sample___ <- function(n,addNA = TRUE, ...){
 }
 
 sampleUid <- function(n, addNA = TRUE, ...){
-  paste("uid",1:n)
+  Uid(paste("uid",1:n))
 }
 
 sampleCat <- function(n, nlevels = 5, addNA = TRUE,...){
   prefix <- sample(c("Cat","Type","X_","Form","Ilk"),1)
   v <- sample(paste0(prefix,LETTERS[1:nlevels]),n,replace = TRUE)
   if(addNA) v[sample(n,round(n/10))] <- NA
-  v
+  Cat(v)
 }
 
 sampleSeq <- function(n, nlevels = 5, addNA = TRUE, ...){
   v <- paste0(loremNames(1),1:nlevels)
   v <- sample2(v,n)
   if(addNA) v[sample(n,round(n/10))] <- NA
-  v
+  Uid(v)
 }
 
 sampleBin <- function(n, addNA = TRUE,...){
-  sampleCat(n, nlevels = 2, addNA = TRUE,...)
+  Bin(sampleCat(n, nlevels = 2, addNA = TRUE,...))
 }
 
 sampleNum <- function(n,gt0 = NULL, addNA = TRUE,...){
@@ -83,19 +90,19 @@ sampleNum <- function(n,gt0 = NULL, addNA = TRUE,...){
   v <- round(rnorm(n,1000,300)*1)
   if(!gt0) v[sample(n,1)] <- -10
   if(addNA) v[sample(n,round(n/10))] <- NA
-  v
+  Num(v)
 }
 
 samplePct <- function(n,format = "decimal",addNA = TRUE,...){
   v <- round(runif(n,0,100),2)/100
   if(addNA) v[sample(n,round(n/10))] <- NA
-  v
+  Pct(v)
 }
 
 sampleDst <- function(n,addNA = TRUE,...){
   v <- runif(n,0,1)*100
   if(addNA) v[sample(n,round(n/10))] <- NA
-  v/sum(v)
+  Dst(v/sum(v))
 }
 
 
@@ -108,7 +115,7 @@ sampleDat <- function(n,rep = FALSE, addNA = TRUE,...){
                  n = n,replace = TRUE)
   }
   if(addNA) v[sample(n,round(n/10))] <- NA
-  v
+  Dat(v)
 }
 
 sampleYea<- function(n, rep = FALSE, addNA = TRUE,...){
@@ -118,7 +125,7 @@ sampleYea<- function(n, rep = FALSE, addNA = TRUE,...){
     v <- sample(seq(1900,length.out = n/10),n, replace = TRUE)
   }
   if(addNA) v[sample(n,round(n/10))] <- NA
-  v
+  Yea(v)
 }
 
 sampleYwe <- function(n, rep = FALSE, addNA = TRUE,...){

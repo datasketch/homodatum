@@ -10,6 +10,8 @@ test_that("Cat", {
   expect_equal(attr(cats,"stats")$n[2], 2)
   expect_equal(attr(cats,"n_categories"), 3)
 
+  # TODO add option to TRIM (spaces, etc) Cats, and to regroup/refactor
+
   x <- letters
   names(x) <- LETTERS
   cats <- new_Cat(x)
