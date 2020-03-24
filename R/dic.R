@@ -1,11 +1,14 @@
 
 #' @export
-make_dic <- function(d, ctypes = NULL){
-  if(is.null(ctypes))
-    ctypes <- guess_frType(d)
+make_dic <- function(d, frtype = NULL){
+  if(is.null(frtype))
+    frtype <- guess_frType(d)
+  if(!is_frType(frtype))
+    frtype <- frType(frtype)
   ids <- col_ids_from_name(names(d))
-  ## TODO format
-  dic <- tibble(id = ids, label = names(d), ctype = ctypes)
+
+  dic <- tibble(id = ids, label = names(d), hdType = frType_hdTypes(frtype))
   names(d) <-ids
-  list(data = forceCtypes(d, ctypes), dic = dic)
+  list(data = force_frType(d, frtype), dic = dic,
+       frtype = frtype, group = frType_group(frtype))
 }

@@ -1,6 +1,6 @@
 context("hdType")
 
-test_that("Guess Ctypes",{
+test_that("create hdTypes",{
 
   # TODO still need void ctype?
   # void = tibble(col1 = character(0), col2 = character(0))
@@ -12,7 +12,7 @@ test_that("Guess Ctypes",{
 
   expect_true(inherits(c(hdType("Num"), "Cat"),"hdType"))
   ## TODO check coercion rules
-  #expect_true(inherits(c("Num", hdType("Cat")),"hdType"))
+  expect_true(inherits(c("Num", hdType("Cat")),"character"))
   expect_true(inherits(c(hdType("Num"), hdType("Cat")),"hdType"))
 
 
@@ -57,6 +57,50 @@ test_that("Guess Ctypes",{
   # guessCformats(data)
 
   #expect_false("___" %in% availableCtypeIds(allowEmpty = FALSE))
+
+})
+
+
+test_that("Cast hdType",{
+
+  c(hdType("Num"),"Num")
+  c("Num", hdType("Num"))
+
+  vec_ptype2("Cat", hdType())
+  vec_ptype2(hdType(),"Num")
+
+  vec_ptype_show(hdType(), character(), hdType())
+
+  vec_cast("Num", hdType())
+  h <- hdType("Cat")
+  vec_data(h)
+  vec_cast(hdType("Cat"), character())
+
+  d <- data.frame(x = hdType(c("Num", "Cat")), y = 1:2)
+  write_csv(d,"~/Downloads/test.csv")
+
+})
+
+test_that("write hdTypes",{
+
+  data <- data.frame(
+    a = Cat(c("black", "white")),
+    b = Dat(seq.Date(from = as.Date("2000-01-01"), by = "day", length.out = 2)),
+    c = Yea(2001:2002),
+    d = Num(runif(2)*10),
+    e = Pct(runif(2))
+  )
+  data_str <- write_csv(data,"") %>% as_tibble()
+  str(data_str)
+  test <- read_csv(system.file("test.csv", package = "homodatum"),
+                   col_types = cols(.default = "c"))
+  # expect_equivalent(data_str, test)
+
+})
+
+
+
+test_that("frType",{
 
   # frType
 

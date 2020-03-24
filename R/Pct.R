@@ -50,12 +50,16 @@ vec_ptype2.hd_Pct.double <- function(x, y, ...) double()
 vec_ptype2.double.hd_Pct <- function(x, y, ...) double()
 
 # Casting
-vec_cast.vctrs_percent <- function(x, to, ...) UseMethod("vec_cast.hc_Pct")
-vec_cast.vctrs_percent.default <- function(x, to, ...) vec_default_cast(x, to)
+vec_cast.hd_Pct <- function(x, to, ...) UseMethod("vec_cast.hd_Pct")
+vec_cast.hd_Pct.default <- function(x, to, ...) vec_default_cast(x, to)
 # Coerce Pct to Pct
 vec_cast.hd_Pct.hd_Pct <- function(x, to, ...) x
-vec_cast.hd_Pct.double <- function(x, to, ...) percent(x)
+vec_cast.hd_Pct.double <- function(x, to, ...) Pct(x)
 vec_cast.double.hd_Pct <- function(x, to, ...) vec_data(x)
+# Coerce Pct to character
+# vec_cast.hd_Pct.character <- function(x, to, ...) Pct(as.numeric(x))
+vec_cast.character.hd_Pct <- function(x, to, ...) as.character(vec_data(x))
+
 
 as_Pct <- function(x) {
   vec_cast(x, new_Pct())

@@ -45,12 +45,15 @@ vec_ptype2.hd_Yea.integer <- function(x, y, ...) integer()
 vec_ptype2.integer.hd_Yea <- function(x, y, ...) integer()
 
 # Casting
-vec_cast.vctrs_percent <- function(x, to, ...) UseMethod("vec_cast.hc_Yea")
-vec_cast.vctrs_percent.default <- function(x, to, ...) vec_default_cast(x, to)
+vec_cast.hd_Yea <- function(x, to, ...) UseMethod("vec_cast.hc_Yea")
+vec_cast.hd_Yea.default <- function(x, to, ...) vec_default_cast(x, to)
 # Coerce Yea to Yea
 vec_cast.hd_Yea.hd_Yea <- function(x, to, ...) x
 vec_cast.hd_Yea.integer <- function(x, to, ...) Yea(x)
 vec_cast.integer.hd_Yea <- function(x, to, ...) vec_data(x)
+# Coerce Yea to character
+# vec_cast.hd_Pct.character <- function(x, to, ...) Pct(as.numeric(x))
+vec_cast.character.hd_Yea <- function(x, to, ...) as.character(vec_data(x))
 
 as_Yea <- function(x) {
   vec_cast(x, new_Yea())

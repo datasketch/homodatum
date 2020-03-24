@@ -84,7 +84,7 @@ frType_group <- function(x){
 }
 
 frType_hdTypes <- function(x){
-  if(!is_frType(x)) stop("x must be a Cat")
+  if(!is_frType(x)) stop("x must be a frType")
   attr(x, "hdTypes")
 }
 
@@ -109,8 +109,6 @@ force_frType <- function(df, frtype){
   df <- as.data.frame(df)
   # HERE GO ALL CASTS WITH GIVEN frType
   dd <- map2(df, hdtypes_str, function(x1,y1){
-    str(y1)
-    str(x1)
     do.call(y1, list(x1))
   })
   dd %>% as_tibble()

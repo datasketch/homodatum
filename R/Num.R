@@ -2,6 +2,8 @@
 new_Num <- function(x = double(), skip_stats = FALSE){
   vec_assert(x, double())
   stats <- NULL
+  if(length(x) == 0)
+    skip_stats <- TRUE
   if(!skip_stats){
     stats <- list(
       min = min(x, na.rm = TRUE),
@@ -44,12 +46,16 @@ vec_ptype2.hd_Num.double <- function(x, y, ...) double()
 vec_ptype2.double.hd_Num <- function(x, y, ...) double()
 
 # Casting
-vec_cast.vctrs_percent <- function(x, to, ...) UseMethod("vec_cast.hc_Num")
-vec_cast.vctrs_percent.default <- function(x, to, ...) vec_default_cast(x, to)
+vec_cast.hd_Num <- function(x, to, ...) UseMethod("vec_cast.hd_Num")
+vec_cast.hd_Num.default <- function(x, to, ...) vec_default_cast(x, to)
 # Coerce Num to Num
 vec_cast.hd_Num.hd_Num <- function(x, to, ...) x
 vec_cast.hd_Num.double <- function(x, to, ...) Num(x)
 vec_cast.double.hd_Num <- function(x, to, ...) vec_data(x)
+# Coerce Num to character
+vec_cast.hd_Num.character <- function(x, to, ...) Num(as.numeric(x))
+vec_cast.character.hd_Num <- function(x, to, ...) as.character(vec_data(x))
+
 
 as_Num <- function(x) {
   vec_cast(x, new_Num())

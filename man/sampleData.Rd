@@ -4,8 +4,14 @@
 \alias{sampleData}
 \title{Creates a new Datafringe from a dataframe}
 \usage{
-sampleData(ctypes, nrow = 20, loremNames = TRUE, addNA = TRUE,
-  rep = FALSE, ...)
+sampleData(
+  frtype,
+  nrow = 20,
+  loremNames = TRUE,
+  addNA = TRUE,
+  rep = FALSE,
+  ...
+)
 }
 \arguments{
 \item{d}{might be a json string, data fringe or list of data fringes.}

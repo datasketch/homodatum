@@ -37,7 +37,7 @@ guess_hdType <- function(v){
     if(ctype == hdType("Cat") && maybeImgUrl(v)){
       ctype <- hdType("Img")
     }
-    if(ctype == hdType("Cat") && maybeTxT(v))
+    if(ctype == hdType("Cat") && maybeTxt(v))
       ctype <- hdType("Txt")
   }
   ctype

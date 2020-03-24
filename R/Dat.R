@@ -114,7 +114,7 @@ vec_cast.hd_Dat.hd_Dat <- function(x, to, ...) x
 vec_cast.hd_Dat.character <- function(x, to, ...) Dat(x)
 vec_cast.character.hd_Dat <- function(x, to, ...) Dat_show(x)
 vec_cast.hd_Dat.date <- function(x, to, ...) new_date(vec_data(x))
-vec_cast.character.hd_Dat <- function(x, to, ...) Dat(x)
+vec_cast.character.hd_Dat <- function(x, to, ...) as.character(new_date(vec_data(x)))
 
 as_Dat <- function(x) {
   vec_cast(x, new_Dat())

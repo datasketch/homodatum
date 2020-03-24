@@ -48,12 +48,12 @@ vec_ptype2.hdType.character <- function(x, y, ...) hdType()
 vec_ptype2.character.hdType <- function(x, y, ...) hdType()
 
 # Casting
-vec_cast.vctrs_hdType <- function(x, to, ...) UseMethod("vec_cast.hdType")
-vec_cast.vctrs_hdType.default <- function(x, to, ...) vec_default_cast(x, to)
+vec_cast.hdType <- function(x, to, ...) UseMethod("vec_cast.hdType")
+vec_cast.hdType.default <- function(x, to, ...) vec_default_cast(x, to)
 # Coerce hdType to hdType
 vec_cast.hdType.hdType <- function(x, to, ...) x
 vec_cast.hdType.character <- function(x, to, ...) hdType(x)
-vec_cast.character.hdType <- function(x, to, ...) hdType(x)
+vec_cast.character.hdType <- function(x, to, ...) vec_data(x)
 
 as_hdType <- function(x) {
   vec_cast(x, new_hdType())
