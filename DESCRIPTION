@@ -19,7 +19,8 @@ Imports:
     tibble,
     dplyr,
     vctrs,
-    lubridate
+    lubridate,
+    magrittr (>= 1.5)
 Suggests:
     testthat (>= 2.1.0),
     knitr,

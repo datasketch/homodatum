@@ -11,12 +11,16 @@ test_that("fringe", {
   f2 <- list(fringe(mtcars), fringe(cars))
   expect_true(inherits(fringe(cars),"fringe"))
 
+  hd <- sampleData("Cat-Cat-Num-Pct")
+  fringe(hd)
+
   fr <- fringe(cars, name = "Los Carros", mas = "fda")
   expect_true(fr$meta$mas == "fda")
   expect_true(fr$slug == "los-carros")
 
   dir <- tempdir(check = TRUE)
   # dir <- "~/Downloads/tmp"
+  ### for some reason this tempdir clashes with write_csv(data, "")
   write_fringe(fr, path = dir, overwrite_dic = TRUE)
   expect_true(all(file.exists(file.path(dir,
                                         c('los-carros.csv',

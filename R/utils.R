@@ -158,4 +158,9 @@ is.empty <- function (x) {
 }
 
 
+#' @importFrom magrittr %>%
+#' @export
+magrittr::`%>%`
+
+
 
