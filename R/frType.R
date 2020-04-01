@@ -36,6 +36,10 @@ expand_frGroup <- function(frGroup){
 
 #' @export
 frType <- function(x = character()) {
+  if(is_hdType(x)){
+    x <- vctrs::vec_cast(x, character())
+    x <- paste(x, collapse = "-")
+  }
   x <- vctrs::vec_cast(x, character())
   new_frType(x)
 }
@@ -119,6 +123,11 @@ force_frType <- function(df, frtype){
     do.call(y1, list(x1))
   })
   dd %>% tibble::as_tibble()
+}
+
+
+get_hdTibble_frType <- function(d){
+  frType(hdType(purrr::map_chr(d, which_hdType)))
 }
 
 

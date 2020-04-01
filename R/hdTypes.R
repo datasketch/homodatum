@@ -24,6 +24,14 @@ which_hdType <- function(x){
   gsub("hd_","",class(x)[grep("hd_", class(x))])
 }
 
+is_hdTibble <- function(d){
+  all(purrr::map_lgl(d, is_any_hdType))
+}
+
+get_hdTibble_hdTypes <- function(d){
+  hdType(purrr::map_chr(d, which_hdType))
+}
+
 # Methods
 
 ## Format method

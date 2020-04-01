@@ -6,7 +6,7 @@ new_fringe <- function(x = new_data_frame(),
                        slug = NULL,
                        meta = NULL){
   # vctrs::vec_assert(x, data.frame())
-  dd <- make_dic(x, frtype = frtype)
+  dd <- add_dic(x, frtype = frtype)
   dd$name <- name
   dd$description <- description
   dd$slug <- slug
