@@ -92,5 +92,14 @@ write_fringe <- function(x, path = "", overwrite_dic = FALSE){
   yaml::write_yaml(y, file.path(path, paste0(x$slug,".yaml")))
 }
 
+#' @export
+getFringeLabels <- function(f){
+  f$dic$label
+}
 
+#'@export
+getFringeDataFrame <- function(f){
+  purrr::map_df(f$data, vctrs::vec_data) %>%
+    purrr::set_names(letters[1:nrow(f$dic)])
+}
 

@@ -37,7 +37,8 @@ expand_frGroup <- function(frGroup){
 #' @export
 frType <- function(x = character()) {
   if(is_hdType(x)){
-    x <- vctrs::vec_cast(x, character())
+    # x <- vctrs::vec_cast(x, character()) # Not working!
+    x <- vctrs::vec_data(x)
     x <- paste(x, collapse = "-")
   }
   x <- vctrs::vec_cast(x, character())

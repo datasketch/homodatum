@@ -11,8 +11,13 @@ test_that("fringe", {
   f2 <- list(fringe(mtcars), fringe(cars))
   expect_true(inherits(fringe(cars),"fringe"))
 
-  hd <- sampleData("Cat-Cat-Num-Pct")
-  fringe(hd)
+  d <- sampleData("Cat-Cat-Num-Pct")
+  f <- fringe(d)
+  expect_equal(d, f$data)
+
+  dd <- getFringeDataFrame(f)
+  expect_equal(names(dd), c('a','b','c','d'))
+  expect_true(all(!purrr::map_lgl(dd, is_hdType)))
 
   fr <- fringe(cars, name = "Los Carros", mas = "fda")
   expect_true(fr$meta$mas == "fda")
