@@ -19,12 +19,14 @@ new_Bin <- function(x = character(), categories = NULL,
            stats = stats, class = "hd_Bin")
 }
 
+#' @export
 Bin <- function(x = character(), categories = NULL, skip_stats = FALSE) {
   # x <- vctrs::vec_cast(x, character())
   x <- as.character(x)
   new_Bin(x, categories = categories, skip_stats = skip_stats)
 }
 
+#' @export
 is_Bin <- function(x) {
   inherits(x, "hd_Bin")
 }
@@ -60,21 +62,25 @@ vec_cast.hd_Bin.hd_Bin <- function(x, to, ...) x
 vec_cast.hd_Bin.character <- function(x, to, ...) Bin(x)
 vec_cast.character.hd_Bin <- function(x, to, ...) vctrs::vec_data(x)
 
+#' @export
 as_Bin <- function(x) {
   vctrs::vec_cast(x, new_Bin())
 }
 
 
+#' @export
 Bin_get_categories <- function(x){
   if(!is_Bin(x)) stop("x must be a Bin")
   attr(x, "categories")
 }
 
+#' @export
 Bin_get_n_categories <- function(x){
   if(!is_Bin(x)) stop("x must be a Bin")
   attr(x, "n_categories")
 }
 
+#' @export
 Bin_get_stats <-  function(x){
   if(!is_Bin(x)) stop("x must be a Bin")
   attr(x, "stats")

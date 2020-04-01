@@ -26,6 +26,12 @@ test_that("Cat", {
   class(x)
   expect_true(inherits(x, "hd_Cat"))
 
+  c("x", Cat("y"))
+  c(Cat("x"), "y")
+
+  vctrs::vec_cast(Cat(c("c","d")), character())
+  vctrs::vec_cast(c("c","d"), new_Bin())
+
   x <- Cat(c(1,1,2,2,3,3))
   expect_equal(Cat_get_categories(x),c("1","2","3"))
   expect_equal(Cat_get_n_categories(x), 3)
