@@ -46,7 +46,7 @@ sampleData <- function(frtype, nrow = 20, loremNames = TRUE,
       return(list(n = nrow,lang = lang,addNA = addNA, scope = args$scope))
     list(n = nrow, addNA = addNA, rep = rep)
   }
-  params <- purrr::map(hdtypes, makeFtypeParams)
+  params <- purrr::map(vctrs::vec_data(hdtypes), makeFtypeParams)
   d <- purrr::invoke_map(sample_funs, params)
 
   if(!loremNames){

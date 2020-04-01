@@ -12,7 +12,8 @@ test_that("create hdTypes",{
   # guessCformats(void)
 
 
-  expect_true(inherits(c(hdType("Num"), "Cat"),"hdType"))
+  # expect_true(inherits(c(hdType("Num"), "Cat"),"hdType"))
+  expect_true(inherits(c(hdType("Num"), "Cat"),"character"))
   ## TODO check coercion rules
   expect_true(inherits(c("Num", hdType("Cat")),"character"))
   expect_true(inherits(c(hdType("Num"), hdType("Cat")),"hdType"))
@@ -77,6 +78,8 @@ test_that("Cast hdType",{
   h <- hdType("Cat")
   vctrs::vec_data(h)
   vctrs::vec_cast(hdType("Cat"), character())
+
+  hdType("Cat") == "Cat"
 
   d <- data.frame(x = hdType(c("Num", "Cat")), y = 1:2)
   readr::write_csv(d,"~/Downloads/test.csv")

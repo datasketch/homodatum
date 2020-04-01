@@ -3,6 +3,9 @@ context("sample data")
 test_that("Sample Data", {
 
   t <- sampleData("Cat-Num")
+
+  homodatum:::sampleCat(10)
+
   fr <- guess_frType(t)
   expect_equal(frType_str(fr),"Cat-Num")
 

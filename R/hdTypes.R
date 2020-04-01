@@ -44,8 +44,8 @@ vec_ptype2.hdType.default <- function(x, y, ..., x_arg = "x", y_arg = "y") {
 # A hdType combined with a hdType returns a hdType
 vec_ptype2.hdType.hdType <- function(x, y, ...) new_hdType()
 # # hdType and character return hdType
-vec_ptype2.hdType.character <- function(x, y, ...) hdType()
-vec_ptype2.character.hdType <- function(x, y, ...) hdType()
+vec_ptype2.hdType.character <- function(x, y, ...) character()
+vec_ptype2.character.hdType <- function(x, y, ...) character()
 
 # Casting
 vec_cast.hdType <- function(x, to, ...) UseMethod("vec_cast.hdType")
