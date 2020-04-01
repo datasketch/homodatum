@@ -7,7 +7,8 @@ make_dic <- function(d, frtype = NULL){
     frtype <- frType(frtype)
   ids <- col_ids_from_name(names(d))
 
-  dic <- tibble(id = ids, label = names(d), hdType = frType_hdTypes(frtype))
+  dic <-tibble::tibble(id = ids, label = names(d),
+                       hdType = frType_hdTypes(frtype))
   names(d) <-ids
   list(data = force_frType(d, frtype), dic = dic,
        frtype = frtype, group = frType_group(frtype))

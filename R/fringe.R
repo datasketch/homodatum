@@ -4,18 +4,18 @@ new_fringe <- function(x = new_data_frame(),
                        name = NULL,
                        description = NULL,
                        meta = NULL){
-  # vec_assert(x, data.frame())
+  # vctrs::vec_assert(x, data.frame())
   dd <- make_dic(x, frtype = frtype)
   dd$name <- name
   dd$description <- description
   dd$meta <- meta
-  new_list_of(dd, class = "fringe")
+  vctrs::new_list_of(dd, class = "fringe")
 }
 
 
 fringe <- function(x = new_data_frame(), frtype = NULL,
                    name = NULL, description = NULL, ...) {
-  # x <- vec_cast(x, data.frame())
+  # x <- vctrs::vec_cast(x, data.frame())
   name <- name %||% deparse(substitute(x))
   description <- description %||% ""
   new_fringe(x, frtype = frtype, name = name,
@@ -31,13 +31,13 @@ is_fringe <- function(x) {
 ## Format method
 
 # format.fringe <- function(x, ...) {
-  # x1 <- paste(capture.output(vec_data(x)),collapse="    \n")
+  # x1 <- paste(capture.output(vctrs::vec_data(x)),collapse="    \n")
   #cat(paste0(x, "\n"), sep = "")
   #sprintf(fmt = "%s", x)
   # print(format(x))
-  # paste0(format(vec_data(x)), " m")
-  # sprintf(fmt = "%s", vec_data(x))
-  # paste0(capture.output(as_tibble(vec_data(x))),collapse = "\n")
+  # paste0(format(vctrs::vec_data(x)), " m")
+  # sprintf(fmt = "%s", vctrs::vec_data(x))
+  # paste0(capture.output(tibble::as_tibble(vctrs::vec_data(x))),collapse = "\n")
 # }
 
 vec_ptype_abbr.fringe <- function(x, ...) {
@@ -61,22 +61,22 @@ vec_ptype_abbr.fringe <- function(x, ...) {
 # # Coerce frType to frType
 # vec_cast.frType.frType <- function(x, to, ...) x
 # vec_cast.frType.character <- function(x, to, ...) frType(x)
-# vec_cast.character.frType <- function(x, to, ...) vec_data(x)
+# vec_cast.character.frType <- function(x, to, ...) vctrs::vec_data(x)
 #
 # as_frType <- function(x) {
-#   vec_cast(x, new_frType())
+#   vctrs::vec_cast(x, new_frType())
 # }
 
 write_fringe <- function(x, path = "", overwrite_dic = FALSE){
   if(!is_fringe(x))
     stop("x is not a fringe")
-  # vec_assert(x, new_fringe())
-  write_csv(x$data, file.path(path,paste0(x$name,".csv")))
+  # vctrs::vec_assert(x, new_fringe())
+  readr::write_csv(x$data, file.path(path,paste0(x$name,".csv")))
   dic_path <- file.path(path,paste0(x$name,".dic.csv"))
   if(file.exists(dic_path) && !overwrite_dic ){
     stop("Cannot overwrite dic")
   }
-  write_csv(x$dic, dic_path)
+  readr::write_csv(x$dic, dic_path)
   y <- x$meta
   y$name <- x$name
   y$description <- x$description

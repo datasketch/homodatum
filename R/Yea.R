@@ -1,6 +1,6 @@
 
 new_Yea <- function(x = integer(), skip_stats = FALSE){
-  vec_assert(x, integer())
+  vctrs::vec_assert(x, integer())
   stats <- NULL
   if(!skip_stats){
     stats <- list(
@@ -9,11 +9,11 @@ new_Yea <- function(x = integer(), skip_stats = FALSE){
       prop_na = sum(is.na(x))/length(x)
     )
   }
-  new_vctr(x, stats = stats, class = "hd_Yea")
+  vctrs::new_vctr(x, stats = stats, class = "hd_Yea")
 }
 
 Yea <- function(x = integer()) {
-  x <- vec_cast(x, integer())
+  x <- vctrs::vec_cast(x, integer())
   new_Yea(x)
 }
 
@@ -50,13 +50,13 @@ vec_cast.hd_Yea.default <- function(x, to, ...) vec_default_cast(x, to)
 # Coerce Yea to Yea
 vec_cast.hd_Yea.hd_Yea <- function(x, to, ...) x
 vec_cast.hd_Yea.integer <- function(x, to, ...) Yea(x)
-vec_cast.integer.hd_Yea <- function(x, to, ...) vec_data(x)
+vec_cast.integer.hd_Yea <- function(x, to, ...) vctrs::vec_data(x)
 # Coerce Yea to character
 # vec_cast.hd_Pct.character <- function(x, to, ...) Pct(as.numeric(x))
-vec_cast.character.hd_Yea <- function(x, to, ...) as.character(vec_data(x))
+vec_cast.character.hd_Yea <- function(x, to, ...) as.character(vctrs::vec_data(x))
 
 as_Yea <- function(x) {
-  vec_cast(x, new_Yea())
+  vctrs::vec_cast(x, new_Yea())
 }
 
 

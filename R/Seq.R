@@ -2,7 +2,7 @@
 new_Seq <- function(x = character(), categories = NULL,
                     order = NULL,
                     skip_stats = FALSE){
-  vec_assert(x, character())
+  vctrs::vec_assert(x, character())
   categories <- categories %||% unique(x[!is.na(x)])
   nms <- names(x)
   if(is.null(order)){
@@ -11,18 +11,18 @@ new_Seq <- function(x = character(), categories = NULL,
   stats <- NULL
   if(!skip_stats){
     stats <- table(x,useNA = "always") %>%
-      as_tibble() %>%
-      mutate(dist = n/sum(n), names = c(nms, NA)) %>%
-      rename(category = x)
+      tibble::as_tibble() %>%
+      dplyr::mutate(dist = n/sum(n), names = c(nms, NA)) %>%
+      dplyr::rename(category = x)
   }
-  new_vctr(x, categories = categories, order = order,
+  vctrs::new_vctr(x, categories = categories, order = order,
            n_categories = length(categories),
            stats = stats, class = "hd_Seq")
 }
 
 Seq <- function(x = character(), order = NULL,
                 categories = NULL, skip_stats = FALSE) {
-  x <- vec_cast(x, character())
+  x <- vctrs::vec_cast(x, character())
   new_Seq(x, order = order, categories = categories, skip_stats = skip_stats)
 }
 
@@ -63,10 +63,10 @@ vec_cast.vctrs_Seq.default <- function(x, to, ...) vec_default_cast(x, to)
 # Coerce Seq to Seq
 vec_cast.hd_Seq.hd_Seq <- function(x, to, ...) x
 vec_cast.hd_Seq.character <- function(x, to, ...) Seq(x)
-vec_cast.character.hd_Seq <- function(x, to, ...) vec_data(x)
+vec_cast.character.hd_Seq <- function(x, to, ...) vctrs::vec_data(x)
 
 as_Seq <- function(x) {
-  vec_cast(x, new_Seq())
+  vctrs::vec_cast(x, new_Seq())
 }
 
 

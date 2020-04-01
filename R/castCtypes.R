@@ -23,7 +23,7 @@ castable_list <- function(ctypes){
   }
   casts <- purrr::map(ctypes,f)
   #do.call("crossing_",casts)
-  as_tibble(expand.grid(casts,stringsAsFactors = FALSE))
+  tibble::as_tibble(expand.grid(casts,stringsAsFactors = FALSE))
 }
 
 castable_ctype <- function(ctype){

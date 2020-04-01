@@ -54,7 +54,7 @@ sampleData <- function(frtype, nrow = 20, loremNames = TRUE,
   }else{
     names(d) <- loremNames(ncols)
   }
-  out <- as_tibble(d)
+  out <- tibble::as_tibble(d)
   out
 }
 

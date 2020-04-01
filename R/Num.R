@@ -1,6 +1,6 @@
 
 new_Num <- function(x = double(), skip_stats = FALSE){
-  vec_assert(x, double())
+  vctrs::vec_assert(x, double())
   stats <- NULL
   if(length(x) == 0)
     skip_stats <- TRUE
@@ -10,11 +10,11 @@ new_Num <- function(x = double(), skip_stats = FALSE){
       max = max(x, na.rm = TRUE)
     )
   }
-  new_vctr(x, stats = stats, class = "hd_Num")
+  vctrs::new_vctr(x, stats = stats, class = "hd_Num")
 }
 
 Num <- function(x = double()) {
-  x <- vec_cast(x, double())
+  x <- vctrs::vec_cast(x, double())
   new_Num(x)
 }
 
@@ -51,14 +51,14 @@ vec_cast.hd_Num.default <- function(x, to, ...) vec_default_cast(x, to)
 # Coerce Num to Num
 vec_cast.hd_Num.hd_Num <- function(x, to, ...) x
 vec_cast.hd_Num.double <- function(x, to, ...) Num(x)
-vec_cast.double.hd_Num <- function(x, to, ...) vec_data(x)
+vec_cast.double.hd_Num <- function(x, to, ...) vctrs::vec_data(x)
 # Coerce Num to character
 vec_cast.hd_Num.character <- function(x, to, ...) Num(as.numeric(x))
-vec_cast.character.hd_Num <- function(x, to, ...) as.character(vec_data(x))
+vec_cast.character.hd_Num <- function(x, to, ...) as.character(vctrs::vec_data(x))
 
 
 as_Num <- function(x) {
-  vec_cast(x, new_Num())
+  vctrs::vec_cast(x, new_Num())
 }
 
 

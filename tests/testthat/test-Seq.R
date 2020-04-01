@@ -32,7 +32,7 @@ test_that("Seq", {
   expect_equal(stats$n[1:2], as.vector(table(x)))
 
   a <- data.frame(myseqs = Seq(c("black", "white")), value = 1:2)
-  tibble(a)
+ tibble::tibble(a)
   ## TODO fix data.frame print
 
 })

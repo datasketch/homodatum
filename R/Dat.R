@@ -1,11 +1,11 @@
 
 new_Dat <- function(x = character(), format = NULL,
                     skip_stats = FALSE){
-  vec_assert(x, character())
+  vctrs::vec_assert(x, character())
   if(is.null(format) & !all(is.na(x))){
     date_orders <- c("dmy","mdy","ymd")
-    guess_fmt <- guess_formats(x[!is.na(x)],date_orders)
-    fmt <- guess_fmt[vec_in(names(guess_fmt), date_orders)][1] # take first guess
+    guess_fmt <- lubridate::guess_formats(x[!is.na(x)],date_orders)
+    fmt <- guess_fmt[vctrs::vec_in(names(guess_fmt), date_orders)][1] # take first guess
   }else{
     fmt <- format
   }
@@ -17,9 +17,9 @@ new_Dat <- function(x = character(), format = NULL,
       max = max(d, na.rm = TRUE)
     )
   }
-  # vec_assert(format, ptype = character(), size = 1)
-  vec_assert(d, new_date())
-  new_vctr(d, format = unname(fmt), order = names(fmt),
+  # vctrs::vec_assert(format, ptype = character(), size = 1)
+  vctrs::vec_assert(d, vctrs::new_date())
+  vctrs::new_vctr(d, format = unname(fmt), order = names(fmt),
            stats = stats, class = "hd_Dat")
 }
 
@@ -29,11 +29,11 @@ Dat_formats <- function(order = c("dmy","mdy","ymd"), sep = "-"){
 }
 
 Dat <- function(x = character(), format = NULL, skip_stats = FALSE) {
-  if(vctrs::vec_is(x, new_date())){
+  if(vctrs::vec_is(x, vctrs::new_date())){
     x <- as.character(x)
   }
-  x <- vec_cast(x, character())
-  # format <- vec_recycle(vec_cast(format, character()), format)
+  x <- vctrs::vec_cast(x, character())
+  # format <- vec_recycle(vctrs::vec_cast(format, character()), format)
   new_Dat(x, format = format, skip_stats = skip_stats)
 }
 
@@ -49,11 +49,11 @@ Dat_get_order <- function(x) attr(x, "order")
 
 Dat_show <- function(x, format = NULL){
   if(all(is.na(x))) return(sprintf(fmt = "%s", as.character(x)))
-  date <- new_date(x)
+  date <- vctrs::new_date(x)
   format(date, format %||% Dat_get_format(x))
 }
 
-Dat_get_isodate <- function(x) as.character(new_date(vec_data(x)))
+Dat_get_isodate <- function(x) as.character(vctrs::new_date(vctrs::vec_data(x)))
 
 Dat_get_stats <-  function(x){
   if(!is_Dat(x)) stop("x must be a Dat")
@@ -63,12 +63,12 @@ Dat_get_stats <-  function(x){
 
 format.hd_Dat <- function(x, ...) {
   ## Check if prints as ISO, otherwise show with given format
-  if(all(Dat_show(x[!is.na(x)]) == as.character(new_date(x[!is.na(x)])))){
+  if(all(Dat_show(x[!is.na(x)]) == as.character(vctrs::new_date(x[!is.na(x)])))){
     info <- ""
   }else{
     info <- paste0(" (", Dat_show(x), ")")
   }
-  sprintf(paste0(new_date(x),info))
+  sprintf(paste0(vctrs::new_date(x),info))
 }
 
 vec_ptype_abbr.hd_Dat <- function(x, ...) {
@@ -95,7 +95,7 @@ vec_ptype2.hd_Dat.hd_Dat <- function(x, y, ...) {
   new_Dat(format = "%Y-%Om-%d")
 }
 vec_cast.hd_Dat.hd_Dat <- function(x, to, ...) {
-  new_Dat(vec_Data(x), format = NULL)
+  new_Dat(vctrs::vec_data(x), format = NULL)
 }
 
 
@@ -113,11 +113,11 @@ vec_cast.vctrs_Dat.default <- function(x, to, ...) vec_default_cast(x, to)
 vec_cast.hd_Dat.hd_Dat <- function(x, to, ...) x
 vec_cast.hd_Dat.character <- function(x, to, ...) Dat(x)
 vec_cast.character.hd_Dat <- function(x, to, ...) Dat_show(x)
-vec_cast.hd_Dat.date <- function(x, to, ...) new_date(vec_data(x))
-vec_cast.character.hd_Dat <- function(x, to, ...) as.character(new_date(vec_data(x)))
+vec_cast.hd_Dat.date <- function(x, to, ...) vctrs::new_date(vctrs::vec_data(x))
+vec_cast.character.hd_Dat <- function(x, to, ...) as.character(vctrs::new_date(vctrs::vec_data(x)))
 
 as_Dat <- function(x) {
-  vec_cast(x, new_Dat())
+  vctrs::vec_cast(x, new_Dat())
 }
 
 

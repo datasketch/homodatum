@@ -33,6 +33,6 @@ test_that("Cat", {
   expect_equal(stats$n[1:3], as.vector(table(x)))
 
   a <- data.frame(mycats = Cat(c("black", "white")), value = 1:2)
-  tibble(a)
+  tibble::tibble(a)
 
 })

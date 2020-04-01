@@ -20,16 +20,24 @@ test_that("Bin", {
 
   # Accepts anything coercible from double()
   x <- Bin(c("1","0.2"))
-  class(x)
+  # class(x)
   expect_true(inherits(x, "hd_Bin"))
 
+  #vctrs::vec_ptype_show(Bin(), character(), Bin())
+
   x <- Bin(c(1,1,2,2))
+
+  vctrs::vec_cast(Bin(c("c","d")), character())
+  vctrs::vec_cast(c("c","d"), new_Bin())
+
+  as.character(x)
+
   expect_equal(Bin_get_categories(x),c("1","2"))
   expect_equal(Bin_get_n_categories(x), 2)
   stats <- Bin_get_stats(x)
   expect_equal(stats$n[1:2], as.vector(table(x)))
 
   a <- data.frame(mybins = Bin(c("black", "white")), value = 1:2)
-  tibble(a)
+  tibble::tibble(a)
 
 })

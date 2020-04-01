@@ -23,12 +23,12 @@ parseDatetime <- function(v, datetimeType){
     outVals <- as.Date(v, format = "%Y-%m-%d") # NO GUESSING
   }
   if(datetimeType == "Hms"){
-    format <- guess_formats(v0, "HMS")
+    format <- lubridate::guess_formats(v0, "HMS")
     v <- as.POSIXct(v, format = format)
     outVals <- format(v, format="%H:%M:%S")
   }
   if(datetimeType == "Dtm"){
-    format <- guess_formats(v0, "ymd HMS")
+    format <- lubridate::guess_formats(v0, "ymd HMS")
     outVals <- as.POSIXct(v, format = format)
   }
   outVals
@@ -52,7 +52,7 @@ isD_format <- function(format, expectedFormat){
     if(class(v) == "Date"){
       return(TRUE)
     }
-    guess = guess_formats(v,format)
+    guess <- lubridate::guess_formats(v,format)
     if(all(guess %in% c("%Y-%Om-%d","%Y-%m-%d" )) & format =="%Y-%m-%d")
       return(TRUE)
     if(length((guess))< length(v))
@@ -68,7 +68,7 @@ isDate <- function(v){
   if("Date" %in% class(v)){
     return(TRUE)
   }
-  guess <- guess_formats(v,"%Y-%m-%d")
+  guess <- lubridate::guess_formats(v,"%Y-%m-%d")
   if(is.null(guess)){
     return(FALSE)
   }else{

@@ -1,14 +1,14 @@
 
 new_hdType <- function(x = character()){
-  vec_assert(x, character())
-  if(!all(vec_data(x) %in% available_hdTypes(as_character = TRUE))){
+  vctrs::vec_assert(x, character())
+  if(!all(vctrs::vec_data(x) %in% available_hdTypes(as_character = TRUE))){
     stop("hdType must be one of: ", paste(collapse = ", "))
   }
-  new_vctr(x, class = "hdType")
+  vctrs::new_vctr(x, class = "hdType")
 }
 
 hdType <- function(x = character()) {
-  x <- vec_cast(x, character())
+  x <- vctrs::vec_cast(x, character())
   new_hdType(x)
 }
 
@@ -53,10 +53,10 @@ vec_cast.hdType.default <- function(x, to, ...) vec_default_cast(x, to)
 # Coerce hdType to hdType
 vec_cast.hdType.hdType <- function(x, to, ...) x
 vec_cast.hdType.character <- function(x, to, ...) hdType(x)
-vec_cast.character.hdType <- function(x, to, ...) vec_data(x)
+vec_cast.character.hdType <- function(x, to, ...) vctrs::vec_data(x)
 
 as_hdType <- function(x) {
-  vec_cast(x, new_hdType())
+  vctrs::vec_cast(x, new_hdType())
 }
 
 

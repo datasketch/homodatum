@@ -6,7 +6,7 @@ test_that("Yea", {
   str(x)
   expect_true(Yea_get_stats(x)$is_sequence)
   expect_equal(Yea_get_stats(x)$n_na, 1)
-  expect_equivalent(vec_cast(x, integer()), c(1803:1800, NA))
+  expect_equivalent(vctrs::vec_cast(x, integer()), c(1803:1800, NA))
 
 
 

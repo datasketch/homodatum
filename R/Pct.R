@@ -1,16 +1,16 @@
 
 new_Pct <- function(x = double()){
-  vec_assert(x, double())
-  new_vctr(x, class = "hd_Pct")
+  vctrs::vec_assert(x, double())
+  vctrs::new_vctr(x, class = "hd_Pct")
 }
 
 Pct <- function(x = double()) {
 
-  x <- tryCatch(vec_cast(x, double()),
+  x <- tryCatch(vctrs::vec_cast(x, double()),
                 error = function(e) {
                   x_no_na <- x[!is.na(x)]
                   if(all(grepl("%$",x_no_na))){
-                    vec_cast(gsub("%","", x), double())/100
+                    vctrs::vec_cast(gsub("%","", x), double())/100
                   }else{
                     e
                   }
@@ -27,7 +27,7 @@ is_Pct <- function(x) {
 ## Format method
 
 format.hd_Pct <- function(x, ...) {
-  out <- formatC(signif(vec_data(x) * 100, 3))
+  out <- formatC(signif(vctrs::vec_data(x) * 100, 3))
   #out <- formatC(x)
   out[is.na(x)] <- NA
   out[!is.na(x)] <- paste0(out[!is.na(x)], "%")
@@ -55,14 +55,14 @@ vec_cast.hd_Pct.default <- function(x, to, ...) vec_default_cast(x, to)
 # Coerce Pct to Pct
 vec_cast.hd_Pct.hd_Pct <- function(x, to, ...) x
 vec_cast.hd_Pct.double <- function(x, to, ...) Pct(x)
-vec_cast.double.hd_Pct <- function(x, to, ...) vec_data(x)
+vec_cast.double.hd_Pct <- function(x, to, ...) vctrs::vec_data(x)
 # Coerce Pct to character
 # vec_cast.hd_Pct.character <- function(x, to, ...) Pct(as.numeric(x))
-vec_cast.character.hd_Pct <- function(x, to, ...) as.character(vec_data(x))
+vec_cast.character.hd_Pct <- function(x, to, ...) as.character(vctrs::vec_data(x))
 
 
 as_Pct <- function(x) {
-  vec_cast(x, new_Pct())
+  vctrs::vec_cast(x, new_Pct())
 }
 
 

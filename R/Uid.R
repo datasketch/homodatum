@@ -1,11 +1,11 @@
 
 new_Uid <- function(x = character()){
-  vec_assert(x, character())
-  new_vctr(x, class = "hd_Uid")
+  vctrs::vec_assert(x, character())
+  vctrs::new_vctr(x, class = "hd_Uid")
 }
 
 Uid <- function(x = character()) {
-  x <- vec_cast(x, character())
+  x <- vctrs::vec_cast(x, character())
   new_Uid(x)
 }
 
@@ -18,7 +18,7 @@ is_Uid <- function(x) {
 ## Format method
 
 format.hd_Uid <- function(x, ...) {
-  out <- formatC(signif(vec_data(x) * 100, 3))
+  out <- formatC(signif(vctrs::vec_data(x) * 100, 3))
   out[is.na(x)] <- NA
   out[!is.na(x)] <- paste0(out[!is.na(x)], "%")
   out
@@ -45,10 +45,10 @@ vec_cast.vctrs_percent.default <- function(x, to, ...) vec_default_cast(x, to)
 # Coerce Uid to Uid
 vec_cast.hd_Uid.hd_Uid <- function(x, to, ...) x
 vec_cast.hd_Uid.character <- function(x, to, ...) percent(x)
-vec_cast.character.hd_Uid <- function(x, to, ...) vec_data(x)
+vec_cast.character.hd_Uid <- function(x, to, ...) vctrs::vec_data(x)
 
 as_Uid <- function(x) {
-  vec_cast(x, new_Uid())
+  vctrs::vec_cast(x, new_Uid())
 }
 
 

@@ -17,7 +17,7 @@ powerSet2 <- function(set) {
 
 
 permuteVector <- function(v){
-  as_tibble(matrix(v[permutations(length(v))],ncol=length(v)))
+  tibble::as_tibble(matrix(v[permutations(length(v))],ncol=length(v)))
 }
 
 permutations <- function(n){
@@ -76,12 +76,15 @@ letterNames <- function(n){
   if(n<27)
     return(letters[1:n])
   if(n<703){
-    l2 <- expand(tibble(A=letters,B=letters),A,B) %>% unite("l",A,B,sep="") %>% .$l
+    l2 <- expand(tibble(A=letters,B=letters),A,B) %>%
+      tidyr::unite("l",A,B,sep="") %>% .$l
     return(c(letters,l2)[1:n])
   }
   if(n < 18279){ # 26 + 676 + 17576 = 18278
-    l2 <- expand(tibble(A=letters,B=letters),A,B) %>% unite("l",A,B,sep="") %>% .$l
-    l3 <- expand(tibble(A=letters,B=letters,C=letters),A,B,C) %>% unite("l",A,B,C,sep="") %>% .$l
+    l2 <- expand(tibble(A=letters,B=letters),A,B) %>%
+      tidyr::unite("l",A,B,sep="") %>% .$l
+    l3 <- expand(tibble(A=letters,B=letters,C=letters),A,B,C) %>%
+      tidyr::unite("l",A,B,C,sep="") %>% .$l
     return(c(letters,l2,l3)[1:n])
   }
   stop("Cannot handle data with more than 18279 columns")
@@ -99,3 +102,51 @@ has_warning <- function(expr) {
     })
   length(warn) > 0
 }
+
+which_in <- function (x, y) x[x %in% y]
+
+na_proportion <- function(x){
+  if(length(x) < 4) return(0)
+  sum(is.na(x))/length(x)
+}
+
+many_words_proportion <- function(x) sum(grepl("[^\\s]([ ]{1,})[^\\s]",x))/length(x)
+
+na_to_chr <- function(x, na){
+  x[is.na(x)] <- na
+  x
+}
+
+insert_column <- function(d, vector, target, col_name){
+  if(ncol(d) == 1){
+    d[[col_name]] <- vector
+    return(d)
+  }
+  new_col <- data.frame(vector, stringsAsFactors = FALSE)
+  names(new_col) <- col_name
+  if(target == ncol(d)){
+    d[[col_name]] <- vector
+    return(d)
+  }
+  cbind(d[,1:target,drop=FALSE], new_col, d[,(target+1):length(d),drop=FALSE])
+}
+
+
+`%||%` <- function (x, y){
+  suppressWarnings({
+    if (is.empty(x))
+      return(y)
+    else if (is.null(x) || is.na(x))
+      return(y)
+    else if (class(x) == "character" && all(nchar(x) == 0))
+      return(y)
+    else x
+  })
+}
+
+is.empty <- function (x) {
+  !as.logical(length(x))
+}
+
+
+

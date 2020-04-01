@@ -26,8 +26,8 @@ test_that("Num", {
   #Dat(NULL)
   x <- Dat("2000-12-04")
   y <- new_Dat("2000-04-12", format = "%Y-%d-%m")
-  expect_equal(vec_data(x),vec_data(y))
-  expect_equal(Dat_get_isodate(x),as.character(new_date(vec_data(y))))
+  expect_equal(vctrs::vec_data(x),vctrs::vec_data(y))
+  expect_equal(Dat_get_isodate(x),as.character(vctrs::new_date(vctrs::vec_data(y))))
 
   z <- Dat(as.Date("2000-12-04"))
   expect_equal(x,z)
@@ -67,5 +67,5 @@ test_that("Num", {
 
 
   a <- data.frame(fechas = Dat(c("2020-04-10", "2020-04-20")))
-  tibble(a)
+ tibble::tibble(a)
 })

@@ -1,17 +1,17 @@
 
 new_frType <- function(x = character()){
-  vec_assert(x, character())
+  vctrs::vec_assert(x, character())
   hdTypes <- hdType(strsplit(x, "-", fixed = TRUE)[[1]])
   group <- get_frGroup(x)
-  new_vctr(x, hdTypes = hdTypes, group = group, class = "frType")
+  vctrs::new_vctr(x, hdTypes = hdTypes, group = group, class = "frType")
 }
 
 get_frGroup <- function(frType_str){
   ctps <- strsplit(frType_str,"-")
   f <- function(ctypes){
-    ct <- count(tibble(ctypes = ctypes),ctypes)
+    ct <- dplyr::count(tibble::tibble(ctypes = ctypes),ctypes)
     ct$n[ct$n == 1] <- ""
-    ctv <- unite(ct,ctype,ctypes,n,sep="") %>% .[[1]] %>% sort()
+    ctv <- tidyr::unite(ct,ctype,ctypes,n,sep="") %>% .[[1]] %>% sort()
     paste(ctv,collapse="-")
   }
   purrr::map_chr(ctps, f)
@@ -33,7 +33,7 @@ expand_frGroup <- function(frGroup){
 
 
 frType <- function(x = character()) {
-  x <- vec_cast(x, character())
+  x <- vctrs::vec_cast(x, character())
   new_frType(x)
 }
 
@@ -70,10 +70,10 @@ vec_cast.vctrs_frType.default <- function(x, to, ...) vec_default_cast(x, to)
 # Coerce frType to frType
 vec_cast.frType.frType <- function(x, to, ...) x
 vec_cast.frType.character <- function(x, to, ...) frType(x)
-vec_cast.character.frType <- function(x, to, ...) vec_data(x)
+vec_cast.character.frType <- function(x, to, ...) vctrs::vec_data(x)
 
 as_frType <- function(x) {
-  vec_cast(x, new_frType())
+  vctrs::vec_cast(x, new_frType())
 }
 
 
@@ -90,10 +90,10 @@ frType_hdTypes <- function(x){
 
 frType_str <- function(x){
   if(is_frType(x)){
-    return(paste(vec_data(frType_hdTypes(x)),collapse = "-"))
+    return(paste(vctrs::vec_data(frType_hdTypes(x)),collapse = "-"))
   }
   if("data.frame" %in% class(x)){
-    return(paste0(map_chr(x, which_hdType), collapse = "-"))
+    return(paste0(purrr::map_chr(x, which_hdType), collapse = "-"))
   }
 }
 
@@ -104,14 +104,14 @@ force_frType <- function(df, frtype){
     frtype <- frType(frtype)
   }
   hdtypes <- frType_hdTypes(frtype)
-  hdtypes_str <- vec_data(hdtypes)
+  hdtypes_str <- vctrs::vec_data(hdtypes)
 
   df <- as.data.frame(df)
   # HERE GO ALL CASTS WITH GIVEN frType
-  dd <- map2(df, hdtypes_str, function(x1,y1){
+  dd <- purrr::map2(df, hdtypes_str, function(x1,y1){
     do.call(y1, list(x1))
   })
-  dd %>% as_tibble()
+  dd %>% tibble::as_tibble()
 }
 
 

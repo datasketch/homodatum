@@ -1,7 +1,7 @@
 
 new_Txt <- function(x = character(),
                     skip_stats = FALSE){
-  vec_assert(x, character())
+  vctrs::vec_assert(x, character())
   stats <- NULL
 
   if(!skip_stats){
@@ -10,11 +10,11 @@ new_Txt <- function(x = character(),
       words = nwords(x)
     )
   }
-  new_vctr(x, stats = stats, class = "hd_Txt")
+  vctrs::new_vctr(x, stats = stats, class = "hd_Txt")
 }
 
 Txt <- function(x = character(), skip_stats = FALSE) {
-  x <- vec_cast(x, character())
+  x <- vctrs::vec_cast(x, character())
   new_Txt(x, skip_stats = skip_stats)
 }
 
@@ -59,10 +59,10 @@ vec_cast.vctrs_Txt.default <- function(x, to, ...) vec_default_cast(x, to)
 # Coerce Txt to Txt
 vec_cast.hd_Txt.hd_Txt <- function(x, to, ...) x
 vec_cast.hd_Txt.character <- function(x, to, ...) Txt(x)
-vec_cast.character.hd_Txt <- function(x, to, ...) vec_data(x)
+vec_cast.character.hd_Txt <- function(x, to, ...) vctrs::vec_data(x)
 
 as_Txt <- function(x) {
-  vec_cast(x, new_Txt())
+  vctrs::vec_cast(x, new_Txt())
 }
 
 

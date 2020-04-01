@@ -36,6 +36,6 @@ test_that("Txt", {
   expect_equal(stats$chars, rep(1,length(x)))
 
   a <- data.frame(idx = 1:3, sentence = Txt(hundred_years))
-  tibble(a)
+ tibble::tibble(a)
 
 })

@@ -18,7 +18,7 @@ test_that("fringe", {
 
   f1$data
   f1$name
-  vec_data(f1)
+  vctrs::vec_data(f1)
 
   write_fringe(f1, path = "~/Downloads", overwrite_dic = TRUE)
 

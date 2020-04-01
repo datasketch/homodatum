@@ -15,24 +15,24 @@ test_that("Pct is well defined", {
   y
   expect_equal(x,y)
   x <- c("30%", "200%", NA)
-  expect_equal(vec_data(Pct(x)), c(0.3, 2, NA))
+  expect_equal(vctrs::vec_data(Pct(x)), c(0.3, 2, NA))
 
   expect_error(Pct(c("100%","20"))) # All must have the % symbol
   expect_error(Pct(c("%100"))) # All must have the % symbol at the end
   expect_error(Pct("#4"))
 
   a <- data.frame(percent = Pct(c(1:10)/100))
-  tibble(a)
+ tibble::tibble(a)
 
 
   # Casts: Pct to Nu
   # check implementation of coercion
-  vec_ptype_show(Pct(), double(), Pct())
+  vctrs::vec_ptype_show(Pct(), double(), Pct())
 
-  vec_cast(0.5, Pct())
-  vec_cast(Pct(0.5), double())
+  vctrs::vec_cast(0.5, Pct())
+  vctrs::vec_cast(Pct(0.5), double())
 
-  vec_c(Pct(0.5), 1)
-  vec_c(NA, Pct(0.5), 1)
-  # vec_c(TRUE, Pct(0.5), 1)
+  vctrs::vec_c(Pct(0.5), 1)
+  vctrs::vec_c(NA, Pct(0.5), 1)
+  # vctrs::vec_c(TRUE, Pct(0.5), 1)
 })
