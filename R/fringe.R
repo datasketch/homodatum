@@ -13,6 +13,7 @@ new_fringe <- function(x = new_data_frame(),
 }
 
 
+#' @export
 fringe <- function(x = new_data_frame(), frtype = NULL,
                    name = NULL, description = NULL, ...) {
   # x <- vctrs::vec_cast(x, data.frame())
@@ -22,6 +23,7 @@ fringe <- function(x = new_data_frame(), frtype = NULL,
              description = description, meta = list(...))
 }
 
+#' @export
 is_fringe <- function(x) {
   inherits(x, "fringe")
 }
@@ -67,6 +69,7 @@ vec_ptype_abbr.fringe <- function(x, ...) {
 #   vctrs::vec_cast(x, new_frType())
 # }
 
+#' @export
 write_fringe <- function(x, path = "", overwrite_dic = FALSE){
   if(!is_fringe(x))
     stop("x is not a fringe")

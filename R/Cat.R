@@ -16,12 +16,15 @@ new_Cat <- function(x = character(), categories = NULL,
            stats = stats, class = "hd_Cat")
 }
 
+
+#' @export
 Cat <- function(x = character(), categories = NULL, skip_stats = FALSE) {
   # x <- vctrs::vec_cast(x, character())
   x <- as.character(x)
   new_Cat(x, categories = categories, skip_stats = skip_stats)
 }
 
+#' @export
 is_Cat <- function(x) {
   inherits(x, "hd_Cat")
 }
@@ -57,21 +60,25 @@ vec_cast.hd_Cat.hd_Cat <- function(x, to, ...) x
 vec_cast.hd_Cat.character <- function(x, to, ...) Cat(x)
 vec_cast.character.hd_Cat <- function(x, to, ...) vctrs::vec_data(x)
 
+#' @export
 as_Cat <- function(x) {
   vctrs::vec_cast(x, new_Cat())
 }
 
 
+#' @export
 Cat_get_categories <- function(x){
   if(!is_Cat(x)) stop("x must be a Cat")
   attr(x, "categories")
 }
 
+#' @export
 Cat_get_n_categories <- function(x){
   if(!is_Cat(x)) stop("x must be a Cat")
   attr(x, "n_categories")
 }
 
+#' @export
 Cat_get_stats <-  function(x){
   if(!is_Cat(x)) stop("x must be a Cat")
   attr(x, "stats")

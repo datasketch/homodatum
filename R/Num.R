@@ -13,11 +13,13 @@ new_Num <- function(x = double(), skip_stats = FALSE){
   vctrs::new_vctr(x, stats = stats, class = "hd_Num")
 }
 
+#' @export
 Num <- function(x = double()) {
   x <- vctrs::vec_cast(x, double())
   new_Num(x)
 }
 
+#' @export
 is_Num <- function(x) {
   inherits(x, "hd_Num")
 }
@@ -57,12 +59,14 @@ vec_cast.hd_Num.character <- function(x, to, ...) Num(as.numeric(x))
 vec_cast.character.hd_Num <- function(x, to, ...) as.character(vctrs::vec_data(x))
 
 
+#' @export
 as_Num <- function(x) {
   vctrs::vec_cast(x, new_Num())
 }
 
 
 
+#' @export
 Num_get_stats <-  function(x){
   if(!is_Num(x)) stop("x must be a Cat")
   attr(x, "stats")

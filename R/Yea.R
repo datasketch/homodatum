@@ -12,11 +12,13 @@ new_Yea <- function(x = integer(), skip_stats = FALSE){
   vctrs::new_vctr(x, stats = stats, class = "hd_Yea")
 }
 
+#' @export
 Yea <- function(x = integer()) {
   x <- vctrs::vec_cast(x, integer())
   new_Yea(x)
 }
 
+#' @export
 is_Yea <- function(x) {
   inherits(x, "hd_Yea")
 }
@@ -55,6 +57,7 @@ vec_cast.integer.hd_Yea <- function(x, to, ...) vctrs::vec_data(x)
 # vec_cast.hd_Pct.character <- function(x, to, ...) Pct(as.numeric(x))
 vec_cast.character.hd_Yea <- function(x, to, ...) as.character(vctrs::vec_data(x))
 
+#' @export
 as_Yea <- function(x) {
   vctrs::vec_cast(x, new_Yea())
 }

@@ -6,6 +6,7 @@ new_frType <- function(x = character()){
   vctrs::new_vctr(x, hdTypes = hdTypes, group = group, class = "frType")
 }
 
+#' @export
 get_frGroup <- function(frType_str){
   ctps <- strsplit(frType_str,"-")
   f <- function(ctypes){
@@ -17,6 +18,7 @@ get_frGroup <- function(frType_str){
   purrr::map_chr(ctps, f)
 }
 
+#' @export
 expand_frGroup <- function(frGroup){
   ft1 <- strsplit(frGroup,"-",fixed = TRUE)[[1]]
   cts <- substring(ft1,1,3)
@@ -32,11 +34,13 @@ expand_frGroup <- function(frGroup){
 
 
 
+#' @export
 frType <- function(x = character()) {
   x <- vctrs::vec_cast(x, character())
   new_frType(x)
 }
 
+#' @export
 is_frType <- function(x) {
   inherits(x, "frType")
 }
@@ -78,16 +82,19 @@ as_frType <- function(x) {
 
 
 
+#' @export
 frType_group <- function(x){
   if(!is_frType(x)) stop("x must be a frType")
   attr(x, "group")
 }
 
+#' @export
 frType_hdTypes <- function(x){
   if(!is_frType(x)) stop("x must be a frType")
   attr(x, "hdTypes")
 }
 
+#' @export
 frType_str <- function(x){
   if(is_frType(x)){
     return(paste(vctrs::vec_data(frType_hdTypes(x)),collapse = "-"))
