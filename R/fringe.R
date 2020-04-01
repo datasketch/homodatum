@@ -3,11 +3,13 @@ new_fringe <- function(x = new_data_frame(),
                        frtype = NULL,
                        name = NULL,
                        description = NULL,
+                       slug = NULL,
                        meta = NULL){
   # vctrs::vec_assert(x, data.frame())
   dd <- make_dic(x, frtype = frtype)
   dd$name <- name
   dd$description <- description
+  dd$slug <- slug
   dd$meta <- meta
   vctrs::new_list_of(dd, class = "fringe")
 }
@@ -15,12 +17,17 @@ new_fringe <- function(x = new_data_frame(),
 
 #' @export
 fringe <- function(x = new_data_frame(), frtype = NULL,
-                   name = NULL, description = NULL, ...) {
+                   name = NULL, description = NULL,
+                   slug = NULL, ...) {
+  if(is_fringe(x)) return(x)
   # x <- vctrs::vec_cast(x, data.frame())
   name <- name %||% deparse(substitute(x))
   description <- description %||% ""
+  slug <- slug %||% make_slug(name)
   new_fringe(x, frtype = frtype, name = name,
-             description = description, meta = list(...))
+             description = description,
+             slug = slug,
+             meta = list(...))
 }
 
 #' @export
@@ -74,16 +81,15 @@ write_fringe <- function(x, path = "", overwrite_dic = FALSE){
   if(!is_fringe(x))
     stop("x is not a fringe")
   # vctrs::vec_assert(x, new_fringe())
-  readr::write_csv(x$data, file.path(path,paste0(x$name,".csv")))
-  dic_path <- file.path(path,paste0(x$name,".dic.csv"))
+  readr::write_csv(x$data, file.path(path,paste0(x$slug,".csv")))
+  dic_path <- file.path(path,paste0(x$slug,".dic.csv"))
   if(file.exists(dic_path) && !overwrite_dic ){
     stop("Cannot overwrite dic")
   }
   readr::write_csv(x$dic, dic_path)
-  y <- x$meta
-  y$name <- x$name
-  y$description <- x$description
-  yaml::write_yaml(y, file.path(path, paste0(x$name,".yaml")))
+  y <- list(name = x$name, description = x$description)
+  y <- modifyList(y, x$meta)
+  yaml::write_yaml(y, file.path(path, paste0(x$slug,".yaml")))
 }
 
 

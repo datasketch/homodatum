@@ -1,26 +1,27 @@
 test_that("fringe", {
 
   f <- new_fringe(cars)
-  length(f)
-  fringe(cars)
+  length(f) # 4 ----> Expect 1
+  fr <- fringe(cars)
+  expect_equal(f$data, fr$data)
+  expect_equal(f$dic, fr$dic)
+  # expect_equal(f$frtype, fr$frtype) ### TODO
+  expect_equal(f$group, fr$group)
 
   f2 <- list(fringe(mtcars), fringe(cars))
-
-  class(f2[[1]])
-
   expect_true(inherits(fringe(cars),"fringe"))
 
+  fr <- fringe(cars, name = "Los Carros", mas = "fda")
+  expect_true(fr$meta$mas == "fda")
+  expect_true(fr$slug == "los-carros")
 
-  fringe(cars, mas = "fda")
-  fringe(iris)
-
-  f1 <- fringe(cars)
-
-  f1$data
-  f1$name
-  vctrs::vec_data(f1)
-
-  write_fringe(f1, path = "~/Downloads", overwrite_dic = TRUE)
-
+  dir <- tempdir(check = TRUE)
+  # dir <- "~/Downloads/tmp"
+  write_fringe(fr, path = dir, overwrite_dic = TRUE)
+  expect_true(all(file.exists(file.path(dir,
+                                        c('los-carros.csv',
+                                          'los-carros.dic.csv',
+                                          'los-carros.yaml')))))
+  unlink(dir, recursive = TRUE)
 
 })

@@ -131,6 +131,15 @@ insert_column <- function(d, vector, target, col_name){
   cbind(d[,1:target,drop=FALSE], new_col, d[,(target+1):length(d),drop=FALSE])
 }
 
+make_slug <- function(x){
+  x <- gsub("[^[:alnum:]]", "-", x)
+  x <- remove_accents(tolower(x))
+  x <- gsub("-+", "-", x)
+  x <- gsub("+-$", "", x)
+  x <- gsub("^-.", "", x)
+  x
+}
+
 
 `%||%` <- function (x, y){
   suppressWarnings({
