@@ -130,11 +130,7 @@ test_that("frType",{
 
   ## Sample Data
 
-  frtype <- "Cat-Dat"
-  d <- sampleData(frtype)
-  d
-  frtype <- guess_frType(d)
-  # forceCtypes(d, ctypes)
+
 
   ftype <- "Cat-Dat-Yea-Num"
   d <- sampleData(ftype)

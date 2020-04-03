@@ -8,54 +8,31 @@
 #' @examples \dontrun{
 #' fringe <- newDatafringeFromDatafringe(mtcars)
 #' }
-sampleData <- function(frtype, nrow = 20, loremNames = TRUE,
+sampleData <- function(frtype, n = 20, loremNames = TRUE,
                        addNA = TRUE, rep = FALSE,...){
-  #nrow <- 100
-  #ftype <- "Cat2-Yea2-Num1-Dat1"
-  #ftype <- "Cat-Yea-NumP"
-  # ftype <- "Cat2-Num1"
-
+  arg <- c(as.list(environment()), list(...))
+  #arg <- list(n = 5, loremNames = FALSE, addNA = FALSE)
+  # frtype <- "Cat-Num-Pct-Gnm-Dat"
+  # frtype <- "Cat-Num-Pct-Dat"
   if(!is_frType(frtype)){
     frtype <- frType(frtype)
   }
 
   hdtypes <- frType_hdTypes(frtype)
 
-  # ctypes <- sampleCtypes(ctypes)
-  ncols <- length(hdtypes)
-
-  #s <- list(Cat = samp, Nu = nu, Da = da, Ye = ye)
-  # ctids <- availableCtypeIds()
-  # sampleFunNames <- paste0("sample",ctids) %>% set_names(ctids)
-  # selFuns <- sampleFunNames[ctypes]
-
   sample_funs <- paste0("sample",hdtypes)
 
-  #args <- list(gt0 = TRUE, size = 10)
-  args <- list(...)
-  lang <- args$lang %||% "en"
-  rep <- args$rep %||% TRUE
-  makeFtypeParams <- function(ftype){
-    if(ftype == "Num")
-      return(list(n = nrow,gt0 = args$gt0,addNA = addNA))
-    if(ftype == "Mon")
-      return(list(n = nrow,rep = rep, addNA = addNA))
-    if(ftype == "Wdy")
-      return(list(n = nrow,lang = lang,addNA = addNA))
-    if(ftype %in% c("Gcd","Gnm","Glt","Gln"))
-      return(list(n = nrow,lang = lang,addNA = addNA, scope = args$scope))
-    list(n = nrow, addNA = addNA, rep = rep)
-  }
-  params <- purrr::map(vctrs::vec_data(hdtypes), makeFtypeParams)
+  req_params <- lapply(sample_funs, function(x)formals(args(x)))
+  params <- lapply(req_params, function(x){
+    modifyList(x, arg)
+  })
+  #lang <- args$lang %||% "en"
   d <- purrr::invoke_map(sample_funs, params)
-
-  if(!loremNames){
-    names(d) <- letterNames(ncols)
-  }else{
-    names(d) <- loremNames(ncols)
+  names(d) <- letterNames(length(d))
+  if(loremNames){
+    names(d) <- loremNames(length(d))
   }
-  out <- tibble::as_tibble(d)
-  out
+  tibble::as_tibble(d)
 }
 
 
@@ -203,7 +180,7 @@ availableGeoScops <- function(){
 geoDataframe <- function(scope){
   scope <- scope %||% "world"
   if(scope == "world")
-    countries <- read_csv(system.file("data/world-countries.csv",package = "homodatum"))
+    countries <- readr::read_csv(system.file("data/world-countries.csv",package = "homodatum"))
   else{
     if (!require("geodata"))
       stop("Please install package geodata")
