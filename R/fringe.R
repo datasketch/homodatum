@@ -99,6 +99,7 @@ getFringeLabels <- function(f){
 
 #' @export
 as_baseType <- function(x){
+  ## TODO Cat as factors???
   UseMethod("as_baseType")
 }
 
