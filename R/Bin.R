@@ -46,22 +46,62 @@ vec_ptype_abbr.hd_Bin <- function(x, ...) {
 }
 
 # Coercion
+
+
+#' @rdname vctrs-compat
+#' @method vec_ptype2 hd_Bin
+#' @export
+#' @export vec_ptype2.hd_Bin
 vec_ptype2.hd_Bin <- function(x, y, ...) UseMethod("vec_ptype2.hd_Bin", y)
+
+#' @method vec_ptype2.hd_Bin default
+#' @export
 vec_ptype2.hd_Bin.default <- function(x, y, ..., x_arg = "x", y_arg = "y") {
   vec_default_ptype2(x, y, x_arg = x_arg, y_arg = y_arg)
 }
+
 # A Bin combined with a Bin returns a Bin
+
+#' @method vec_ptype2.hd_Bin hd_Bin
+#' @export
 vec_ptype2.hd_Bin.hd_Bin <- function(x, y, ...) new_Bin()
+
 # Bin and character return character
+
+#' @method vec_ptype2.hd_Bin character
+#' @export
 vec_ptype2.hd_Bin.character <- function(x, y, ...) character()
+
+#' @method vec_ptype2.character hd_Bin
+#' @export
 vec_ptype2.character.hd_Bin <- function(x, y, ...) character()
 
 # Casting
+
+#' @rdname vctrs-compat
+#' @method vec_cast hd_Bin
+#' @export
+#' @export vec_cast.hd_Bin
 vec_cast.hd_Bin <- function(x, to, ...) UseMethod("vec_cast.hd_Bin")
+
+#' @method vec_cast.hd_Bin default
+#' @export
 vec_cast.hd_Bin.default <- function(x, to, ...) vec_default_cast(x, to)
-# Coerce Bin to Bin
+
+
+# Coerce Bin to Bin: TODO need to make sure Cats equivalence
+# Ex. Yes/No  yes/no -> Yes/No
+
+#' @method vec_cast.hd_Bin hd_Bin
+#' @export
 vec_cast.hd_Bin.hd_Bin <- function(x, to, ...) x
+
+#' @method vec_cast.hd_Bin character
+#' @export
 vec_cast.hd_Bin.character <- function(x, to, ...) Bin(x)
+
+#' @method vec_cast.character hd_Bin
+#' @export
 vec_cast.character.hd_Bin <- function(x, to, ...) vctrs::vec_data(x)
 
 #' @export

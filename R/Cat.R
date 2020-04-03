@@ -44,22 +44,60 @@ vec_ptype_abbr.hd_Cat <- function(x, ...) {
 }
 
 # Coercion
+
+#' @rdname vctrs-compat
+#' @method vec_ptype2 hd_Cat
+#' @export
+#' @export vec_ptype2.hd_Cat
 vec_ptype2.hd_Cat <- function(x, y, ...) UseMethod("vec_ptype2.hd_Cat", y)
+
+#' @method vec_ptype2.hd_Cat default
+#' @export
 vec_ptype2.hd_Cat.default <- function(x, y, ..., x_arg = "x", y_arg = "y") {
   vec_default_ptype2(x, y, x_arg = x_arg, y_arg = y_arg)
 }
+
+
 # A Cat combined with a Cat returns a Cat
+
+#' @method vec_ptype2.hd_Cat hd_Cat
+#' @export
 vec_ptype2.hd_Cat.hd_Cat <- function(x, y, ...) new_Cat()
+
 # Cat and character return double
+
+#' @method vec_ptype2.hd_Cat character
+#' @export
 vec_ptype2.hd_Cat.character <- function(x, y, ...) character()
+
+#' @method vec_ptype2.character hd_Cat
+#' @export
 vec_ptype2.character.hd_Cat <- function(x, y, ...) character()
 
 # Casting
+
+#' @rdname vctrs-compat
+#' @method vec_cast hd_Cat
+#' @export
+#' @export vec_cast.hd_Cat
 vec_cast.hd_Cat <- function(x, to, ...) UseMethod("vec_cast.hd_Cat")
+
+#' @method vec_cast.hd_Cat default
+#' @export
 vec_cast.hd_Cat.default <- function(x, to, ...) vec_default_cast(x, to)
+
 # Coerce Cat to Cat
+
+#' @method vec_cast.hd_Cat hd_Cat
+#' @export
 vec_cast.hd_Cat.hd_Cat <- function(x, to, ...) x
+
+#' @method vec_cast.hd_Cat character
+#' @export
 vec_cast.hd_Cat.character <- function(x, to, ...) Cat(x)
+
+#' @method vec_cast.character hd_Cat
+#' @export
 vec_cast.character.hd_Cat <- function(x, to, ...) vctrs::vec_data(x)
 
 #' @export

@@ -83,40 +83,81 @@ vec_ptype_abbr.hd_Dat <- function(x, ...) {
 
 
 # Coercion
+
+#' @rdname vctrs-compat
+#' @method vec_ptype2 hd_Dat
+#' @export
+#' @export vec_ptype2.hd_Dat
 vec_ptype2.hd_Dat <- function(x, y, ...) UseMethod("vec_ptype2.hd_Dat", y)
+
+#' @method vec_ptype2.hd_Dat default
+#' @export
 vec_ptype2.hd_Dat.default <- function(x, y, ..., x_arg = "x", y_arg = "y") {
   vec_default_ptype2(x, y, x_arg = x_arg, y_arg = y_arg)
 }
 
-vec_cast.hd_Dat <- function(x, to, ...) UseMethod("vec_cast.hd_Dat")
-vec_cast.hd_Dat.default <- function(x, to, ...) vec_default_cast(x, to)
+
 
 # A Dat combined with a Dat returns a Dat... what happens when they have different formats?
 # TODO default to ISO
+
+#' @method vec_ptype2.hd_Dat hd_Dat
+#' @export
 vec_ptype2.hd_Dat.hd_Dat <- function(x, y, ...) {
   new_Dat(format = "%Y-%Om-%d")
 }
-vec_cast.hd_Dat.hd_Dat <- function(x, to, ...) {
-  new_Dat(vctrs::vec_data(x), format = NULL)
-}
+# vec_ptype2.hd_Dat.hd_Dat <- function(x, y, ...) new_Dat()
 
 
-vec_ptype2.hd_Dat.hd_Dat <- function(x, y, ...) new_Dat()
 # Dat and character return character
+
+#' @method vec_ptype2.hd_Cat character
+#' @export
 vec_ptype2.hd_Dat.character <- function(x, y, ...) Dat()
+
+#' @method vec_ptype2.character hd_Cat
+#' @export
 vec_ptype2.character.hd_Dat <- function(x, y, ...) Dat()
 # vec_ptype2.hd_Dat.new_date <- function(x, y, ...) Dat()
 # vec_ptype2.new_date.hd_Dat <- function(x, y, ...) Dat()
 
 # Casting
-vec_cast.vctrs_Dat <- function(x, to, ...) UseMethod("vec_cast.hc_Dat")
-vec_cast.vctrs_Dat.default <- function(x, to, ...) vec_default_cast(x, to)
+
+#' @rdname vctrs-compat
+#' @method vec_cast hd_Dat
+#' @export
+#' @export vec_cast.hd_Cat
+vec_cast.hd_Dat <- function(x, to, ...) UseMethod("vec_cast.hd_Dat")
+
+#' @method vec_cast.hd_Dat default
+#' @export
+vec_cast.hd_Dat.default <- function(x, to, ...) vec_default_cast(x, to)
+
 # Coerce Dat to Dat
+
+#' @method vec_cast.hd_Dat hd_Dat
+#' @export
 vec_cast.hd_Dat.hd_Dat <- function(x, to, ...) x
+# vec_cast.hd_Dat.hd_Dat <- function(x, to, ...) {
+#   new_Dat(vctrs::vec_data(x), format = NULL)
+# }
+
+#' @method vec_cast.hd_Dat character
+#' @export
 vec_cast.hd_Dat.character <- function(x, to, ...) Dat(x)
+
+#' @method vec_cast.character hd_Dat
+#' @export
 vec_cast.character.hd_Dat <- function(x, to, ...) Dat_show(x)
+
+#' @method vec_cast.hd_Dat date
+#' @export
 vec_cast.hd_Dat.date <- function(x, to, ...) vctrs::new_date(vctrs::vec_data(x))
-vec_cast.character.hd_Dat <- function(x, to, ...) as.character(vctrs::new_date(vctrs::vec_data(x)))
+
+#' @method vec_cast.date hd_Dat
+#' @export
+vec_cast.date.hd_Dat <- function(x, to, ...) as.character(vctrs::new_date(vctrs::vec_data(x)))
+
 
 as_Dat <- function(x) {
   vctrs::vec_cast(x, new_Dat())

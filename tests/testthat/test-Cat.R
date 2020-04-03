@@ -29,6 +29,8 @@ test_that("Cat", {
   c("x", Cat("y"))
   c(Cat("x"), "y")
 
+  as.character(Cat(x))
+
   vctrs::vec_cast(Cat(c("c","d")), character())
   vctrs::vec_cast(c("c","d"), new_Bin())
 
