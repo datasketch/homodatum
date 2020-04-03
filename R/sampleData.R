@@ -11,6 +11,7 @@
 sampleData <- function(frtype, n = 20, loremNames = TRUE,
                        addNA = TRUE, rep = FALSE,...){
   arg <- c(as.list(environment()), list(...))
+  # str(arg)
   #arg <- list(n = 5, loremNames = FALSE, addNA = FALSE)
   # frtype <- "Cat-Num-Pct-Gnm-Dat"
   # frtype <- "Cat-Num-Pct-Dat"
@@ -22,7 +23,11 @@ sampleData <- function(frtype, n = 20, loremNames = TRUE,
 
   sample_funs <- paste0("sample",hdtypes)
 
-  req_params <- lapply(sample_funs, function(x)formals(args(x)))
+  getFunParams <- function(x){
+    formals(args(x))
+  }
+
+  req_params <- lapply(sample_funs, getFunParams)
   params <- lapply(req_params, function(x){
     modifyList(x, arg)
   })
@@ -36,14 +41,17 @@ sampleData <- function(frtype, n = 20, loremNames = TRUE,
 }
 
 
+#' @export
 sample___ <- function(n,addNA = TRUE, ...){
   rep(NA,n)
 }
 
+#' @export
 sampleUid <- function(n, addNA = TRUE, ...){
   Uid(paste("uid",1:n))
 }
 
+#' @export
 sampleCat <- function(n, nlevels = 5, addNA = TRUE,...){
   prefix <- sample(c("Cat","Type","X_","Form","Ilk"),1)
   v <- sample(paste0(prefix,LETTERS[1:nlevels]),n,replace = TRUE)
@@ -51,6 +59,7 @@ sampleCat <- function(n, nlevels = 5, addNA = TRUE,...){
   Cat(v)
 }
 
+#' @export
 sampleSeq <- function(n, nlevels = 5, addNA = TRUE, ...){
   v <- paste0(loremNames(1),1:nlevels)
   v <- sample2(v,n)
@@ -58,10 +67,12 @@ sampleSeq <- function(n, nlevels = 5, addNA = TRUE, ...){
   Uid(v)
 }
 
+#' @export
 sampleBin <- function(n, addNA = TRUE,...){
   Bin(sampleCat(n, nlevels = 2, addNA = TRUE,...))
 }
 
+#' @export
 sampleNum <- function(n,gt0 = NULL, addNA = TRUE,...){
   gt0 <- gt0 %||% FALSE
   v <- round(rnorm(n,1000,300)*1)
@@ -70,12 +81,14 @@ sampleNum <- function(n,gt0 = NULL, addNA = TRUE,...){
   Num(v)
 }
 
+#' @export
 samplePct <- function(n,format = "decimal",addNA = TRUE,...){
   v <- round(runif(n,0,100),2)/100
   if(addNA) v[sample(n,round(n/10))] <- NA
   Pct(v)
 }
 
+#' @export
 sampleDst <- function(n,addNA = TRUE,...){
   v <- runif(n,0,1)*100
   if(addNA) v[sample(n,round(n/10))] <- NA
@@ -83,6 +96,7 @@ sampleDst <- function(n,addNA = TRUE,...){
 }
 
 
+#' @export
 sampleDat <- function(n,rep = FALSE, addNA = TRUE,...){
   # type = seq || random
   if(!rep){
@@ -95,6 +109,7 @@ sampleDat <- function(n,rep = FALSE, addNA = TRUE,...){
   Dat(v)
 }
 
+#' @export
 sampleYea<- function(n, rep = FALSE, addNA = TRUE,...){
   if(!rep) {
     v <- seq(1900,length.out = n)
@@ -105,24 +120,28 @@ sampleYea<- function(n, rep = FALSE, addNA = TRUE,...){
   Yea(v)
 }
 
+#' @export
 sampleYwe <- function(n, rep = FALSE, addNA = TRUE,...){
   v <- paste0("2001-",sprintf("%02d",sample(1:52,n)))
   if(addNA) v[sample(n,round(n/10))] <- NA
   v
 }
 
+#' @export
 sampleMon<- function(n, rep = TRUE, addNA = TRUE,...){
   v <- sample2(1:12,n,replace = rep)
   if(addNA) v[sample(n,round(n/10))] <- NA
   v
 }
 
+#' @export
 sampleDay<- function(n, rep = TRUE, addNA = TRUE,...){
   v <- sample2(1:31,n,replace = rep)
   if(addNA) v[sample(n,round(n/10))] <- NA
   v
 }
 
+#' @export
 sampleWdy<- function(n, rep = FALSE, lang = "en", locale = NULL, addNA = TRUE,...){
   dates <- sampleDat(n, addNA = addNA)
   weekdaysLangs <- read_csv(system.file("data/weekdays-lang.csv",package = "homodatum"))
@@ -133,6 +152,7 @@ sampleWdy<- function(n, rep = FALSE, lang = "en", locale = NULL, addNA = TRUE,..
   wd_translation[match(wd, names(wd_translation))]
 }
 
+#' @export
 sampleDtm <- function(n, start = NULL, end = NULL, addNA = TRUE,...){
   st <- start %||% Sys.Date()- 180
   et <- end %||% Sys.Date()
@@ -145,24 +165,30 @@ sampleDtm <- function(n, start = NULL, end = NULL, addNA = TRUE,...){
   v
 }
 
+#' @export
 sampleHms <- function(n, addNA = TRUE,...){
   st <- as.POSIXct(Sys.Date())
   dti <- sampleDtm(n, start = Sys.Date() -1, end = Sys.Date(), addNA = addNA)
   substring(dti,12,19)
 }
 
+#' @export
 sampleMin <- function(n, addNA = TRUE,...){
   v <- sample2(0:59,n)
   if(addNA) v[sample(n,round(n/10))] <- NA
   v
 }
 
+#' @export
 sampleSec <- sampleMin
 
+#' @export
 sampleHie <- sampleCat
 
+#' @export
 sampleGrp <- sampleCat
 
+#' @export
 sampleTxt <- function(n, addNA = TRUE,...){
   nwords <- sample2(10:20,n)
   v <- purrr::map_chr(nwords,~ paste0(loremNames(.),collapse=" "))
@@ -170,6 +196,7 @@ sampleTxt <- function(n, addNA = TRUE,...){
   v
 }
 
+#' @export
 sampleMny <- sampleNum
 
 availableGeoScops <- function(){
@@ -190,6 +217,7 @@ geoDataframe <- function(scope){
   }
 }
 
+#' @export
 sampleGcd <- function(n, addNA = TRUE, scope = "world", ...){
   df <- geoDataframe(scope)
   v <- sample2(df$id,n)
@@ -197,6 +225,7 @@ sampleGcd <- function(n, addNA = TRUE, scope = "world", ...){
   v
 }
 
+#' @export
 sampleGnm <- function(n,addNA = TRUE, scope = "world", ...){
   df <- geoDataframe(scope)
   v <- sample2(df$name,n)
@@ -204,6 +233,7 @@ sampleGnm <- function(n,addNA = TRUE, scope = "world", ...){
   v
 }
 
+#' @export
 sampleGlt <- function(n,addNA = TRUE, scope = "world", ...){
   df <- geoDataframe(scope)
   v <- sample2(df$lat,n)
@@ -211,6 +241,7 @@ sampleGlt <- function(n,addNA = TRUE, scope = "world", ...){
   v
 }
 
+#' @export
 sampleGln <- function(n,addNA = TRUE, scope = "world", ...){
   df <- geoDataframe(scope)
   v <- sample2(df$lon,n)
@@ -218,6 +249,7 @@ sampleGln <- function(n,addNA = TRUE, scope = "world", ...){
   v
 }
 
+#' @export
 sampleImg <- function(n,addNA = TRUE,...){
   v <- sample2(1:50,n)
   v <- paste0("file",v,".png")
@@ -225,6 +257,7 @@ sampleImg <- function(n,addNA = TRUE,...){
   v
 }
 
+#' @export
 sampleAud <- function(n,addNA = TRUE,...){
   v <- sample2(1:50,n)
   v <- paste0("file",v,".mpg")

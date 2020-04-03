@@ -13,6 +13,7 @@ test_that("fringe", {
 
   d <- sampleData("Cat-Cat-Num-Pct")
   f <- fringe(d)
+  names(d) <- make_slug(names(d))
   expect_equal(d, f$data)
 
   dd <- getFringeDataFrame(f)
