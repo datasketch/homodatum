@@ -155,13 +155,14 @@ test_that("frType",{
   expect_equal(frtype, frType_str(dd))
 
 
-  #v <- sampleDat(20)
-  #parseDatetime(v,"Dat") ## Error with cast
+  ## Test coercion to base types
 
-  # v <- c("2000-01-04","2000-01-03","2000-01-04","2000-01-03","2000-01-02",
-  #        "2000-01-01",NA,NA,"2000-01-03","2000-01-04",
-  #        "2000-01-03","2000-01-02","2000-01-01","2000-01-03","2000-01-02",
-  #        "2000-01-02","2000-01-02","2000-01-04","2000-01-02","2000-01-02")
-  # #format <- guess_formats(v, "ymd") # issue when multiple matches
-  # parseDatetime(v,"Dat")
+  d <- sampleData("Cat-Dat-Yea-Num-Pct")
+
+  expect_true("character" %in% class(as_baseType(d[[1]])))
+  expect_true("Date" %in% class(as_baseType(d[[2]])))
+  expect_true("integer" %in% class(as_baseType(d[[3]])))
+  expect_true("numeric" %in% class(as_baseType(d[[4]])))
+  ## TODO check coercion to base types for all other hdTypes
+
 })

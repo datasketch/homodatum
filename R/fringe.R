@@ -97,9 +97,24 @@ getFringeLabels <- function(f){
   f$dic$label
 }
 
+#' @export
+as_baseType <- function(x){
+  UseMethod("as_baseType")
+}
+
+#' @export
+as_baseType.default <- function(x){
+  vctrs::vec_data(x)
+}
+
+#' @export
+as_baseType.hd_Dat <- function(x){
+  vctrs::new_date((vctrs::vec_data(x)))
+}
+
 #'@export
 getFringeDataFrame <- function(f){
-  purrr::map_df(f$data, vctrs::vec_data) %>%
+  purrr::map_df(f$data, as_baseType) %>%
     purrr::set_names(letters[1:nrow(f$dic)])
 }
 
