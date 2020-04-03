@@ -26,11 +26,13 @@ is_Txt <- function(x) {
 
 ## Format method
 
+#' @export
 format.hd_Txt <- function(x, ...) {
   more <- "(…)"
   sprintf(fmt = "%s(…)", substr(x, 1, 20))
 }
 
+#' @export
 vec_ptype_abbr.hd_Txt <- function(x, ...) {
   "Txt"
 }

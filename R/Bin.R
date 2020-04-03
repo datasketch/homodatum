@@ -35,10 +35,12 @@ is_Bin <- function(x) {
 
 ## Format method
 
+#' @export
 format.hd_Bin <- function(x, ...) {
   sprintf(fmt = "%s", x)
 }
 
+#' @export
 vec_ptype_abbr.hd_Bin <- function(x, ...) {
   "Bin"
 }

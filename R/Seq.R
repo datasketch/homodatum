@@ -34,6 +34,7 @@ is_Seq <- function(x) {
 
 ## Format method
 
+#' @export
 format.hd_Seq <- function(x, ...) {
   order <- paste0(Seq_get_order(x), collapse = "<")
   cat(
@@ -42,6 +43,7 @@ format.hd_Seq <- function(x, ...) {
     order)
 }
 
+#' @export
 vec_ptype_abbr.hd_Seq <- function(x, ...) {
   "Seq"
 }

@@ -26,6 +26,7 @@ is_Pct <- function(x) {
 
 ## Format method
 
+#' @export
 format.hd_Pct <- function(x, ...) {
   out <- formatC(signif(vctrs::vec_data(x) * 100, 3))
   #out <- formatC(x)
@@ -34,6 +35,7 @@ format.hd_Pct <- function(x, ...) {
   out
 }
 
+#' @export
 vec_ptype_abbr.hd_Pct <- function(x, ...) {
   "Pct"
 }

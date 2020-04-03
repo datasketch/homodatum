@@ -28,10 +28,12 @@ is_Num <- function(x) {
 
 ## Format method
 
+#' @export
 format.hd_Num <- function(x, ...) {
   formatC(x)
 }
 
+#' @export
 vec_ptype_abbr.hd_Num <- function(x, ...) {
   "Num"
 }

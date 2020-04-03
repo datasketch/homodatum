@@ -61,6 +61,7 @@ Dat_get_stats <-  function(x){
 }
 
 
+#' @export
 format.hd_Dat <- function(x, ...) {
   ## Check if prints as ISO, otherwise show with given format
   if(all(Dat_show(x[!is.na(x)]) == as.character(vctrs::new_date(x[!is.na(x)])))){
@@ -71,6 +72,7 @@ format.hd_Dat <- function(x, ...) {
   sprintf(paste0(vctrs::new_date(x),info))
 }
 
+#' @export
 vec_ptype_abbr.hd_Dat <- function(x, ...) {
   "Dat"
 }

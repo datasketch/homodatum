@@ -33,10 +33,12 @@ is_Cat <- function(x) {
 
 ## Format method
 
+#' @export
 format.hd_Cat <- function(x, ...) {
   sprintf(fmt = "%s", x)
 }
 
+#' @export
 vec_ptype_abbr.hd_Cat <- function(x, ...) {
   "Cat"
 }

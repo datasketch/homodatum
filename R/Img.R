@@ -17,6 +17,7 @@ is_Img <- function(x) {
 
 ## Format method
 
+#' @export
 format.hd_Img <- function(x, ...) {
   out <- formatC(signif(vctrs::vec_data(x) * 100, 3))
   out[is.na(x)] <- NA
@@ -24,6 +25,7 @@ format.hd_Img <- function(x, ...) {
   out
 }
 
+#' @export
 vec_ptype_abbr.hd_Img <- function(x, ...) {
   "Img"
 }

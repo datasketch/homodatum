@@ -17,6 +17,7 @@ is_Uid <- function(x) {
 
 ## Format method
 
+#' @export
 format.hd_Uid <- function(x, ...) {
   out <- formatC(signif(vctrs::vec_data(x) * 100, 3))
   out[is.na(x)] <- NA
@@ -24,6 +25,7 @@ format.hd_Uid <- function(x, ...) {
   out
 }
 
+#' @export
 vec_ptype_abbr.hd_Uid <- function(x, ...) {
   "Uid"
 }

@@ -27,10 +27,12 @@ is_Yea <- function(x) {
 
 ## Format method
 
+#' @export
 format.hd_Yea <- function(x, ...) {
   formatC(x)
 }
 
+#' @export
 vec_ptype_abbr.hd_Yea <- function(x, ...) {
   "Yea"
 }
