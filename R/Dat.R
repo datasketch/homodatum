@@ -154,11 +154,12 @@ vec_cast.character.hd_Dat <- function(x, to, ...) Dat_show(x)
 #' @export
 vec_cast.hd_Dat.date <- function(x, to, ...) vctrs::new_date(vctrs::vec_data(x))
 
-#' @method vec_cast.date hd_Dat
+#' #' @method vec_cast.date hd_Dat
+#' #' @export
+#' vec_cast.date.hd_Dat <- function(x, to, ...) as.character(vctrs::new_date(vctrs::vec_data(x)))
+
+
 #' @export
-vec_cast.date.hd_Dat <- function(x, to, ...) as.character(vctrs::new_date(vctrs::vec_data(x)))
-
-
 as_Dat <- function(x) {
   vctrs::vec_cast(x, new_Dat())
 }
