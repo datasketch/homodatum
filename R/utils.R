@@ -58,6 +58,12 @@ sample2 <- function(v, n,replace = TRUE, ...){
 }
 
 
+
+firstup <- function(x) {
+  substr(x, 1, 1) <- toupper(substr(x, 1, 1))
+  x
+}
+
 loremNames <- function(ncol){
   lorem0 <- "lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
   incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -67,7 +73,7 @@ loremNames <- function(ncol){
   proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
   lorem1 <- gsub("[[:punct:]|\n]", "", lorem0)
   lorem1 <- gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", lorem1, perl=TRUE)
-  lorem2 <- unique(strsplit(lorem1," ",fixed = TRUE)[[1]])
+  lorem2 <- unique(firstup(strsplit(lorem1," ",fixed = TRUE)[[1]]))
   sample2(lorem2,ncol,replace = FALSE)
 }
 

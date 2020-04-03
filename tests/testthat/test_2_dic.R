@@ -11,7 +11,8 @@ test_that("dic",{
   expect_equal(dd$dic$hdType, hdType(c("Num", "Num")))
 
   d <- sampleData("Cat-Num")
-  add_dic(d)
+  with_dic <- add_dic(d)
+  expect_equal(firstup(names(d)), with_dic$dic$label)
 
   d <- tibble::tibble(x = Cat(1:2), y = Num(1:2))
   d_dic <- add_dic(d)
