@@ -18,6 +18,7 @@ Pct <- function(x = double()) {
   new_Pct(x)
 }
 
+#' @export
 is_Pct <- function(x) {
   inherits(x, "hd_Pct")
 }

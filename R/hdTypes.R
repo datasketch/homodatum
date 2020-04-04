@@ -12,22 +12,27 @@ hdType <- function(x = character()) {
   new_hdType(x)
 }
 
+#' @export
 is_hdType <- function(x) {
   inherits(x, "hdType")
 }
 
+#' @export
 is_any_hdType <- function(x){
   sum(grepl("hd_", class(x))) > 0
 }
 
+#' @export
 which_hdType <- function(x){
   gsub("hd_","",class(x)[grep("hd_", class(x))])
 }
 
+#' @export
 is_hdTibble <- function(d){
   all(purrr::map_lgl(d, is_any_hdType))
 }
 
+#' @export
 get_hdTibble_hdTypes <- function(d){
   hdType(purrr::map_chr(d, which_hdType))
 }
@@ -63,6 +68,7 @@ vec_cast.hdType.hdType <- function(x, to, ...) x
 vec_cast.hdType.character <- function(x, to, ...) hdType(x)
 vec_cast.character.hdType <- function(x, to, ...) vctrs::vec_data(x)
 
+#' @export
 as_hdType <- function(x) {
   vctrs::vec_cast(x, new_hdType())
 }
