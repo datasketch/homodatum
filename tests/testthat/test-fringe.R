@@ -11,11 +11,15 @@ test_that("fringe", {
   f2 <- list(fringe(mtcars), fringe(cars))
   expect_true(inherits(fringe(cars),"fringe"))
 
-  d <- sampleData("Cat-Dat-Num-Pct",
+  d <- sampleData("Cat-Dat-Num-Pct", n = 11,
                   names = c("Category", "Dates", "Numbers","Percentages"))
   f <- fringe(d)
   names(d) <- make_slug(names(d))
   expect_equal(d, f$data)
+
+
+  expect_equal(getFringeStats(f)$nrow, 11)
+  expect_equal(getFringeStats(f)$ncol, 4)
 
   expect_equal(pullFringeColumn(f,1),f$data[[1]])
   expect_equal(pullFringeColumn(f,"Dates"), f$data[[2]])

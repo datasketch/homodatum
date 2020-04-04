@@ -11,6 +11,7 @@ new_fringe <- function(x = new_data_frame(),
   dd$description <- description
   dd$slug <- slug
   dd$meta <- meta
+  dd$stats <- calculateFringeStats(x)
   vctrs::new_list_of(dd, class = "fringe")
 }
 
@@ -34,6 +35,17 @@ fringe <- function(x = new_data_frame(), frtype = NULL,
 is_fringe <- function(x) {
   inherits(x, "fringe")
 }
+
+
+calculateFringeStats <- function(x){
+  list(nrow = nrow(x), ncol = ncol(x))
+}
+
+#' @export
+getFringeStats <- function(f){
+  f$stats
+}
+
 
 # Methods
 
