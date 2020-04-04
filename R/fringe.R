@@ -120,7 +120,7 @@ getFringeIds <- function(f){
 }
 
 #' @export
-getFringeColumn <- function(f, column){
+pullFringeColumn <- function(f, column){
   idx <- NULL
   if(is.numeric(column)){
     idx <- column

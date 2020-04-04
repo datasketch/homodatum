@@ -17,12 +17,9 @@ test_that("fringe", {
   names(d) <- make_slug(names(d))
   expect_equal(d, f$data)
 
-  expect_equal(getFringeColumn(f,1),f$data[[1]])
-  expect_equal(getFringeColumn(f,"Dates"), f$data[[2]])
-  expect_equal(getFringeColumn(f,"c"), getFringeDataFrame(f)[[3]])
-
-  getFringeColumn(d,1)
-  getFringeColumn(d,1)
+  expect_equal(pullFringeColumn(f,1),f$data[[1]])
+  expect_equal(pullFringeColumn(f,"Dates"), f$data[[2]])
+  expect_equal(pullFringeColumn(f,"c"), getFringeDataFrame(f)[[3]])
 
   dd <- getFringeDataFrame(f)
   expect_equal(names(dd), c('a','b','c','d'))
