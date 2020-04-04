@@ -9,10 +9,12 @@
 #' fringe <- newDatafringeFromDatafringe(mtcars)
 #' }
 sampleData <- function(frtype, n = 20, loremNames = TRUE,
+                       names = NULL,
                        addNA = TRUE, rep = FALSE,...){
   arg <- c(as.list(environment()), list(...))
+  arg <- purrr::discard(arg, is.null)
   # str(arg)
-  #arg <- list(n = 5, loremNames = FALSE, addNA = FALSE)
+  #arg <- list(n = 5, loremNames = FALSE, addNA = FALSE, names = NULL)
   # frtype <- "Cat-Num-Pct-Gnm-Dat"
   # frtype <- "Cat-Num-Pct-Dat"
   if(!is_frType(frtype)){
@@ -36,6 +38,9 @@ sampleData <- function(frtype, n = 20, loremNames = TRUE,
   names(d) <- letterNames(length(d))
   if(loremNames){
     names(d) <- loremNames(length(d))
+  }
+  if(!is.null(names)){
+    names(d) <- names
   }
   tibble::as_tibble(d)
 }

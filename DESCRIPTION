@@ -1,5 +1,5 @@
 Package: homodatum
-Title: Estimate Gender from Names in Spanish and Portuguese
+Title: Data types for humans.
 Version: 0.1.0
 Authors@R: 
     person(given = "Juan Pablo",

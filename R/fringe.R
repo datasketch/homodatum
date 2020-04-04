@@ -40,13 +40,13 @@ is_fringe <- function(x) {
 ## Format method
 
 # format.fringe <- function(x, ...) {
-  # x1 <- paste(capture.output(vctrs::vec_data(x)),collapse="    \n")
-  #cat(paste0(x, "\n"), sep = "")
-  #sprintf(fmt = "%s", x)
-  # print(format(x))
-  # paste0(format(vctrs::vec_data(x)), " m")
-  # sprintf(fmt = "%s", vctrs::vec_data(x))
-  # paste0(capture.output(tibble::as_tibble(vctrs::vec_data(x))),collapse = "\n")
+# x1 <- paste(capture.output(vctrs::vec_data(x)),collapse="    \n")
+#cat(paste0(x, "\n"), sep = "")
+#sprintf(fmt = "%s", x)
+# print(format(x))
+# paste0(format(vctrs::vec_data(x)), " m")
+# sprintf(fmt = "%s", vctrs::vec_data(x))
+# paste0(capture.output(tibble::as_tibble(vctrs::vec_data(x))),collapse = "\n")
 # }
 
 vec_ptype_abbr.fringe <- function(x, ...) {
@@ -92,10 +92,6 @@ write_fringe <- function(x, path = "", overwrite_dic = FALSE){
   yaml::write_yaml(y, file.path(path, paste0(x$slug,".yaml")))
 }
 
-#' @export
-getFringeLabels <- function(f){
-  f$dic$label
-}
 
 #' @export
 as_baseType <- function(x){
@@ -112,6 +108,38 @@ as_baseType.default <- function(x){
 as_baseType.hd_Dat <- function(x){
   vctrs::new_date((vctrs::vec_data(x)))
 }
+
+#' @export
+getFringeLabels <- function(f){
+  f$dic$label
+}
+
+#' @export
+getFringeIds <- function(f){
+  f$dic$id
+}
+
+#' @export
+getFringeColumn <- function(f, column){
+  idx <- NULL
+  if(is.numeric(column)){
+    idx <- column
+  }else{
+    if(is.character(column)){
+      idx <- match(column, getFringeLabels(f))
+      if(is.na(idx)){
+        idx <- match(column, getFringeIds(f))
+      }
+      if(column %in% letters){
+        d <- getFringeDataFrame(f)
+        return(d[[column]])
+      }
+    }
+  }
+  if(is.null(idx)) stop("column not found")
+  f$data[[idx]]
+}
+
 
 #'@export
 getFringeDataFrame <- function(f){

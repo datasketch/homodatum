@@ -38,6 +38,8 @@ test_that("Sample Data", {
 
   homodatum:::sampleCat(10)
 
+
+
   fr <- guess_frType(t)
   expect_equal(frType_str(fr),"Cat-Num")
 
@@ -50,7 +52,10 @@ test_that("Sample Data", {
   ## TODO... this test is a random value!!!
   # expect_true(any(t$b < 0))
 
-  t <- sampleData("Cat-Num")
+  t <- sampleData("Cat-Num", names = c("Name1","Name2"), loremNames = TRUE)
+  expect_equal(names(t), c("Name1","Name2"))
+
+
   ### TODO Add option to generate sampleData with given frGroup
   # expect_equal(guess_frType(t),ctypes)
 

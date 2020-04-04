@@ -4,7 +4,7 @@
 \name{homodatum-package}
 \alias{homodatum}
 \alias{homodatum-package}
-\title{homodatum: Estimate Gender from Names in Spanish and Portuguese}
+\title{homodatum: Data types for humans.}
 \description{
 Data types for humans.
 }
