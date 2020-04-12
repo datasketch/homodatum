@@ -1,6 +1,7 @@
 
 #' Creates a new Datafringe from a dataframe
 #' @name sampleData
+#' @rdname sampleData
 #' @description Creates a new datapackage from json, data fringe, list of data fringes, list of data fringees (see Datafringe reference class)
 #' @param d might be a json string, data fringe or list of data fringes.
 #' @return dp
@@ -14,7 +15,7 @@ sampleData <- function(frtype, n = 20, loremNames = TRUE,
   arg <- c(as.list(environment()), list(...))
   arg <- purrr::discard(arg, is.null)
   # str(arg)
-  #arg <- list(n = 5, loremNames = FALSE, addNA = FALSE, names = NULL)
+  # arg <- list(n = 5, loremNames = FALSE, addNA = FALSE, names = NULL)
   # frtype <- "Cat-Num-Pct-Gnm-Dat"
   # frtype <- "Cat-Num-Pct-Dat"
   if(!is_frType(frtype)){
@@ -37,13 +38,21 @@ sampleData <- function(frtype, n = 20, loremNames = TRUE,
   d <- purrr::invoke_map(sample_funs, params)
   names(d) <- letterNames(length(d))
   if(loremNames){
-    names(d) <- loremNames(length(d))
+    ncols <- length(d)
+    names(d) <- paste0(loremNames(ncols),rep(" (",ncols),hdtypes,rep(")",ncols))
   }
   if(!is.null(names)){
     names(d) <- names
   }
   tibble::as_tibble(d)
 }
+
+
+#' @name sample_data
+#' @inherit sampleData
+#' @export
+sample_data <- sampleData
+
 
 
 #' @export
