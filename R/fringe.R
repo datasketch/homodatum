@@ -123,7 +123,9 @@ as_baseType.hd_Dat <- function(x){
 
 #' @export
 getFringeLabels <- function(f){
-  f$dic$label
+  labels <- f$dic$label
+  names(labels) <- letterNames(f$stats$ncol)
+  labels
 }
 
 #' @export
