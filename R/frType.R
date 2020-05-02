@@ -1,8 +1,13 @@
 
 new_frType <- function(x = character()){
   vctrs::vec_assert(x, character())
-  hdTypes <- hdType(strsplit(x, "-", fixed = TRUE)[[1]])
-  group <- get_frGroup(x)
+  if(length(x)>0){
+    hdTypes <- hdType(strsplit(x, "-", fixed = TRUE)[[1]])
+    group <- get_frGroup(x)
+  } else{
+    hdTypes <- hdType()
+    group <- NULL
+  }
   vctrs::new_vctr(x, hdTypes = hdTypes, group = group, class = "frType")
 }
 
@@ -54,33 +59,67 @@ is_frType <- function(x) {
 
 ## Format method
 
+#' @export
 format.frType <- function(x, ...) {
   sprintf(fmt = "%s", x)
 }
 
+#' @export
 vec_ptype_abbr.frType <- function(x, ...) {
   "frType"
 }
 
 # Coercion
+
+#' @method vec_ptype2 frType
+#' @export
 vec_ptype2.frType <- function(x, y, ...) UseMethod("vec_ptype2.frType", y)
+
+#' @method vec_ptype2.frType default
+#' @export
 vec_ptype2.frType.default <- function(x, y, ..., x_arg = "x", y_arg = "y") {
   vec_default_ptype2(x, y, x_arg = x_arg, y_arg = y_arg)
 }
 # A frType combined with a frType returns a frType
+
+#' @method vec_ptype2.frType frType
+#' @export
 vec_ptype2.frType.frType <- function(x, y, ...) new_frType()
+
 # # frType and character return double
+
+#' @method vec_ptype2.frType character
+#' @export
 vec_ptype2.frType.character <- function(x, y, ...) frType()
+
+#' @method vec_ptype2.character frType
+#' @export
 vec_ptype2.character.frType <- function(x, y, ...) frType()
 
 # Casting
-vec_cast.vctrs_frType <- function(x, to, ...) UseMethod("vec_cast.frType")
-vec_cast.vctrs_frType.default <- function(x, to, ...) vec_default_cast(x, to)
+
+#' @method vec_cast frType
+#' @export
+vec_cast.frType <- function(x, to, ...) UseMethod("vec_cast.frType")
+
+#' @method vec_cast.frType default
+#' @export
+vec_cast.frType.default <- function(x, to, ...) vec_default_cast(x, to)
 # Coerce frType to frType
+
+#' @method vec_cast.frType frType
+#' @export
 vec_cast.frType.frType <- function(x, to, ...) x
+
+#' @method vec_cast.frType character
+#' @export
 vec_cast.frType.character <- function(x, to, ...) frType(x)
+
+#' @method vec_cast.character frType
+#' @export
 vec_cast.character.frType <- function(x, to, ...) vctrs::vec_data(x)
 
+#' @export
 as_frType <- function(x) {
   vctrs::vec_cast(x, new_frType())
 }

@@ -41,31 +41,65 @@ get_hdTibble_hdTypes <- function(d){
 
 ## Format method
 
+#' @export
 format.hdType <- function(x, ...) {
   sprintf(fmt = "%s", x)
 }
 
+#' @export
 vec_ptype_abbr.hdType <- function(x, ...) {
   "hdType"
 }
 
 # Coercion
+
+#' @method vec_ptype2 hdType
+#' @export
 vec_ptype2.hdType <- function(x, y, ...) UseMethod("vec_ptype2.hdType", y)
+
+#' @method vec_ptype2.hdType default
+#' @export
 vec_ptype2.hdType.default <- function(x, y, ..., x_arg = "x", y_arg = "y") {
   vec_default_ptype2(x, y, x_arg = x_arg, y_arg = y_arg)
 }
+
 # A hdType combined with a hdType returns a hdType
+
+#' @method vec_ptype2.hdType hdType
+#' @export
 vec_ptype2.hdType.hdType <- function(x, y, ...) new_hdType()
+
 # # hdType and character return hdType
+
+#' @method vec_ptype2.hdType character
+#' @export
 vec_ptype2.hdType.character <- function(x, y, ...) character()
+
+#' @method vec_ptype2.character hdType
+#' @export
 vec_ptype2.character.hdType <- function(x, y, ...) character()
 
 # Casting
+
+#' @method vec_cast hdType
+#' @export
 vec_cast.hdType <- function(x, to, ...) UseMethod("vec_cast.hdType")
+
+#' @method vec_cast.hdType default
+#' @export
 vec_cast.hdType.default <- function(x, to, ...) vec_default_cast(x, to)
 # Coerce hdType to hdType
+
+#' @method vec_cast.hdType hdType
+#' @export
 vec_cast.hdType.hdType <- function(x, to, ...) x
+
+#' @method vec_cast.hdType character
+#' @export
 vec_cast.hdType.character <- function(x, to, ...) hdType(x)
+
+#' @method vec_cast.character hdType
+#' @export
 vec_cast.character.hdType <- function(x, to, ...) vctrs::vec_data(x)
 
 #' @export
