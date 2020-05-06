@@ -122,30 +122,30 @@ as_baseType.hd_Dat <- function(x){
 }
 
 #' @export
-getFringeLabels <- function(f){
+fringe_labels <- function(f){
   labels <- f$dic$label
   names(labels) <- letterNames(f$stats$ncol)
   labels
 }
 
 #' @export
-getFringeIds <- function(f){
+fringe_ids <- function(f){
   f$dic$id
 }
 
 #' @export
-pullFringeColumn <- function(f, column){
+fringe_column <- function(f, column){
   idx <- NULL
   if(is.numeric(column)){
     idx <- column
   }else{
     if(is.character(column)){
-      idx <- match(column, getFringeLabels(f))
+      idx <- match(column, fringe_labels(f))
       if(is.na(idx)){
-        idx <- match(column, getFringeIds(f))
+        idx <- match(column, fringe_ids(f))
       }
       if(column %in% letters){
-        d <- getFringeDataFrame(f)
+        d <- fringe_data(f)
         return(d[[column]])
       }
     }
@@ -156,8 +156,20 @@ pullFringeColumn <- function(f, column){
 
 
 #'@export
-getFringeDataFrame <- function(f){
+fringe_data <- function(f){
   purrr::map_df(f$data, as_baseType) %>%
     purrr::set_names(letters[1:nrow(f$dic)])
+}
+
+#' @export
+fringe_dic <- function(f){
+  f$dic
+}
+
+#'@export
+fringe_hdTypes <- function(fr, named = FALSE){
+  x <- fr$dic$hdType
+  if(named) names(x) <- fr$dic$id
+  x
 }
 

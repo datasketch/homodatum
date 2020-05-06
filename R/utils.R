@@ -17,7 +17,8 @@ powerSet2 <- function(set) {
 
 
 permuteVector <- function(v){
-  tibble::as_tibble(matrix(v[permutations(length(v))],ncol=length(v)))
+  m <- matrix(v[permutations(length(v))],ncol=length(v))
+  tibble::as_tibble(m)
 }
 
 permutations <- function(n){

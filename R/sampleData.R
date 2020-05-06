@@ -221,7 +221,9 @@ availableGeoScops <- function(){
 geoDataframe <- function(scope){
   scope <- scope %||% "world"
   if(scope == "world")
-    countries <- readr::read_csv(system.file("data/world-countries.csv",package = "homodatum"))
+    countries <- readr::read_csv(system.file("data/world-countries.csv",
+                                             package = "homodatum"),
+                                 col_types = readr::cols())
   else{
     if (!require("geodata"))
       stop("Please install package geodata")

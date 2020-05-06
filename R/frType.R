@@ -1,10 +1,13 @@
 
 new_frType <- function(x = character()){
   vctrs::vec_assert(x, character())
-  if(length(x)>0){
+  if(length(x)>1){
+    hdTypes <- lapply(strsplit(x, "-", fixed = TRUE), hdType)
+    group <- get_frGroup(x)
+  } else if (length(x) == 1){
     hdTypes <- hdType(strsplit(x, "-", fixed = TRUE)[[1]])
     group <- get_frGroup(x)
-  } else{
+  } else {
     hdTypes <- hdType()
     group <- NULL
   }
@@ -38,7 +41,6 @@ expand_frGroup <- function(frGroup){
 }
 
 
-
 #' @export
 frType <- function(x = character()) {
   if(is_hdType(x)){
@@ -54,6 +56,42 @@ frType <- function(x = character()) {
 is_frType <- function(x) {
   inherits(x, "frType")
 }
+
+
+#' @export
+as_frType <- function(x) {
+  vctrs::vec_cast(x, new_frType())
+}
+
+
+
+#' @export
+frType_group <- function(x){
+  if(!is_frType(x)) stop("x must be a frType")
+  attr(x, "group")
+}
+
+#' @export
+frType_hdTypes <- function(x, chr = FALSE){
+  if(!is_frType(x)) stop("x must be a frType")
+  hdt <- attr(x, "hdTypes")
+  if(chr) hdt <- as.character(hdt)
+  hdt
+}
+
+#' @export
+frType_str <- function(x){
+  if(is_frType(x)){
+    return(paste(vctrs::vec_data(frType_hdTypes(x)),collapse = "-"))
+  }
+  if("data.frame" %in% class(x) || "hd_tbl" %in% class(x)){
+    return(paste0(purrr::map_chr(x, which_hdType), collapse = "-"))
+  }
+}
+
+
+
+
 
 # Methods
 
@@ -119,56 +157,6 @@ vec_cast.frType.character <- function(x, to, ...) frType(x)
 #' @export
 vec_cast.character.frType <- function(x, to, ...) vctrs::vec_data(x)
 
-#' @export
-as_frType <- function(x) {
-  vctrs::vec_cast(x, new_frType())
-}
-
-
-
-#' @export
-frType_group <- function(x){
-  if(!is_frType(x)) stop("x must be a frType")
-  attr(x, "group")
-}
-
-#' @export
-frType_hdTypes <- function(x){
-  if(!is_frType(x)) stop("x must be a frType")
-  attr(x, "hdTypes")
-}
-
-#' @export
-frType_str <- function(x){
-  if(is_frType(x)){
-    return(paste(vctrs::vec_data(frType_hdTypes(x)),collapse = "-"))
-  }
-  if("data.frame" %in% class(x)){
-    return(paste0(purrr::map_chr(x, which_hdType), collapse = "-"))
-  }
-}
-
-#' @export
-force_frType <- function(df, frtype){
-
-  if(!is_frType(frtype)){
-    frtype <- frType(frtype)
-  }
-  hdtypes <- frType_hdTypes(frtype)
-  hdtypes_str <- vctrs::vec_data(hdtypes)
-
-  df <- as.data.frame(df)
-  # HERE GO ALL CASTS WITH GIVEN frType
-  dd <- purrr::map2(df, hdtypes_str, function(x1,y1){
-    do.call(y1, list(x1))
-  })
-  dd %>% tibble::as_tibble()
-}
-
-
-get_hdTibble_frType <- function(d){
-  frType(hdType(purrr::map_chr(d, which_hdType)))
-}
 
 
 

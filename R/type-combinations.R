@@ -1,4 +1,73 @@
-#'
+
+#' @export
+sub_fringe_cols <- function(fr, frtype = NULL, group = NULL,
+                            show_hdType = FALSE){
+  if(!is_fringe(fr)){
+    fr <- fringe(fr)
+  }
+  hdtypes <- fringe_hdTypes(fr, named = TRUE)
+  subs <- sub_hdTypesVars(hdtypes, frtype = frtype, group = group)
+  if(show_hdType) return(subs)
+  lapply(subs, names)
+}
+
+
+
+sub_hdTypesVars <- function(namedHdTypes, frtype = NULL, group = NULL){
+
+  pw <- powerSet(namedHdTypes)
+  all_possible <- lapply(pw, function(x) {
+    list(
+      group = get_frGroup(paste(x,collapse = "-")),
+      frtype = paste(x,collapse = "-"),
+      permutations = hdTypes_permute(x)
+    )
+  })
+  if(!is.null(frtype)){
+    sub <- unlist(purrr::map(all_possible, "permutations"), recursive = FALSE)
+    sub <- sub %>% purrr::keep(~ paste0(., collapse = "-") %in% frtype)
+    return(sub)
+  }
+  if(!is.null(group)){
+    sub <- all_possible %>% purrr::keep(~ .$group %in% group)
+    sub <- unlist(purrr::map(sub, "permutations"), recursive = FALSE)
+    return(sub)
+  }
+}
+
+
+#' @export
+frType_combine <- function(frt){
+  if(is_frType(frt)){
+    hdt <- frType_hdTypes(frt, chr = TRUE)
+  }else if(is_hdType(frt)){
+    hdt <- frt
+  }
+  l <- lapply(powerSet(hdt), paste, collapse = "-")
+  lapply(l, frType)
+}
+
+hdTypes_permute <- function(hdtypes, nms = NULL){
+  if(is_frType(hdtypes)){
+    hdt <- frType_hdTypes(hdtypes, chr = TRUE)
+  }else if(is_hdType(hdtypes)){
+    hdt <- hdtypes
+  }else {
+    hdt <- hdType(hdtypes)
+  }
+  nms <- nms %||% names(hdt)
+  if(is.null(nms))
+    stop("ctypes must have names")
+  y <- permuteVector(nms) %>% t()
+  names(y) <- 1:ncol(y)
+  y <- y %>% tibble::as_tibble() %>% as.list()
+  x <- permuteVector(as.character(hdt)) %>% t()
+  names(x) <- 1:ncol(x)
+  x <- x %>% tibble::as_tibble() %>% as.list()
+  unname(purrr::map2(x,y, ~ hdType(purrr::set_names(.x, .y))))
+}
+
+
 #' #' @export
 #' possibleCtypes <- function(ctypes, castable = FALSE, combine = FALSE){
 #'   #ctypes <- c("Cat","Cat","Num","Cat")
@@ -17,8 +86,8 @@
 #'   }
 #'   ctypes
 #' }
-#'
-#'
+
+
 #' #' @export
 #' possibleNamedCtypes <- function(namedCtypes, permute = TRUE, castable = FALSE, ncol = NULL) {
 #'   subdata <- powerSet(namedCtypes)
@@ -71,15 +140,7 @@
 #' #   l
 #' # }
 #'
-#' #' @export
-#' permuteCtypes <- function(ctypes, nms = NULL){
-#'   nms <- nms %||% names(ctypes)
-#'   if(is.null(nms))
-#'     stop("ctypes must have names")
-#'   y <- permuteVector(nms) %>% t() %>% tibble::as_tibble() %>% as.list()
-#'   x <- permuteVector(ctypes) %>% t() %>% tibble::as_tibble() %>% as.list()
-#'   purrr::map2(x,y, ~ set_names(.x, .y))
-#' }
+
 #'
 #'
 #' #' @export

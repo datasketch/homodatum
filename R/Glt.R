@@ -16,7 +16,7 @@ new_Glt <- function(x = double(), skip_stats = FALSE){
 #' @export
 Glt <- function(x = double()) {
   x <- vctrs::vec_cast(x, double())
-  if(any(x < -90 || x > 90))
+  if(any(x < -90 || x > 90, na.rm = TRUE))
     stop("Latitude must be between -90 and 90")
   new_Glt(x)
 }

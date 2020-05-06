@@ -21,11 +21,11 @@ test_that("fringe", {
   expect_equal(getFringeStats(f)$nrow, 11)
   expect_equal(getFringeStats(f)$ncol, 4)
 
-  expect_equal(pullFringeColumn(f,1),f$data[[1]])
-  expect_equal(pullFringeColumn(f,"Dates"), f$data[[2]])
-  expect_equal(pullFringeColumn(f,"c"), getFringeDataFrame(f)[[3]])
+  expect_equal(fringe_column(f,1),f$data[[1]])
+  expect_equal(fringe_column(f,"Dates"), f$data[[2]])
+  expect_equal(fringe_column(f,"c"), fringe_data(f)[[3]])
 
-  dd <- getFringeDataFrame(f)
+  dd <- fringe_data(f)
   expect_equal(names(dd), c('a','b','c','d'))
   expect_equal(purrr::map_chr(dd, class),
                c(a = "character", b = "Date", c = "numeric", d = "numeric"))

@@ -16,7 +16,7 @@ new_Gln <- function(x = double(), skip_stats = FALSE){
 #' @export
 Gln <- function(x = double()) {
   x <- vctrs::vec_cast(x, double())
-  if(any(x < -180 || x > 180))
+  if(any(x < -180 || x > 180, na.rm = TRUE))
     stop("Latitude must be between -180 and 180")
 
   new_Gln(x)

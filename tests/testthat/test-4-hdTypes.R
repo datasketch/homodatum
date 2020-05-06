@@ -148,10 +148,10 @@ test_that("frType",{
     e = runif(2)
   )
   frtype <- "Cat-Dat-Yea-Num-Pct"
-  dd <- force_frType(df, frtype)
+  dd <- hdtibble(df, frtype)
   expect_equal(frtype, frType_str(dd))
   frtype <- "Cat-Dat-Num-Pct-Pct"
-  dd <- force_frType(df, frtype)
+  dd <- hdtibble(df, frtype)
   expect_equal(frtype, frType_str(dd))
 
 
