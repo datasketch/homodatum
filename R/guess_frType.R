@@ -1,5 +1,5 @@
 
-
+#' @export
 guess_frType <- function(data, as_string = FALSE){
   hdtypes <- purrr::map_chr(data, guess_hdType)
   out <- frType(paste(hdtypes, collapse = "-"))
