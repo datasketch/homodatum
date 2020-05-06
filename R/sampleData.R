@@ -236,7 +236,7 @@ sampleGcd <- function(n, addNA = TRUE, scope = "world", ...){
   df <- geoDataframe(scope)
   v <- sample2(df$id,n)
   if(addNA) v[sample(n,round(n/10))] <- NA
-  v
+  Gcd(v)
 }
 
 #' @export
@@ -244,7 +244,7 @@ sampleGnm <- function(n,addNA = TRUE, scope = "world", ...){
   df <- geoDataframe(scope)
   v <- sample2(df$name,n)
   if(addNA) v[sample(n,round(n/10))] <- NA
-  v
+  Gnm(v)
 }
 
 #' @export
@@ -252,7 +252,7 @@ sampleGlt <- function(n,addNA = TRUE, scope = "world", ...){
   df <- geoDataframe(scope)
   v <- sample2(df$lat,n)
   if(addNA) v[sample(n,round(n/10))] <- NA
-  v
+  Glt(v)
 }
 
 #' @export
@@ -260,7 +260,7 @@ sampleGln <- function(n,addNA = TRUE, scope = "world", ...){
   df <- geoDataframe(scope)
   v <- sample2(df$lon,n)
   if(addNA) v[sample(n,round(n/10))] <- NA
-  v
+  Gln(v)
 }
 
 #' @export

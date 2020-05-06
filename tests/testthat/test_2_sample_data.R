@@ -66,11 +66,18 @@ test_that("Sample Data", {
   expect_true(all(x == 1))
   expect_false(any(is.na(t[[1]])))
 
-  ctypes <- "Gcd-Gnm-Glt-Gln"
-  t <- sampleData(ctypes, scope = "world")
+  frtype <- "Gcd-Gnm-Glt-Gln"
+  t <- sampleData(frtype, scope = "world")
 
-  t <- sampleData(ctypes, scope = "col_departments", loremNames = FALSE)
+  expect_equal(hdtibble_frType(t), frType(frtype))
+
+  sampleData("Gln", scope = "col_departments", loremNames = FALSE)
+
+  t <- sampleData(frtype, scope = "col_departments", loremNames = FALSE)
   expect_true(all(na.omit(t$b) %in% geodata::geodataCsv("col_departments")$name))
+
+  data <- sample_data('Gnm-Num')
+  f <- homodatum::fringe(data)
 
   # Test sample Bin
 
