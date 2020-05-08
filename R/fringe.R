@@ -42,7 +42,7 @@ calculateFringeStats <- function(x){
 }
 
 #' @export
-getFringeStats <- function(f){
+fringe_stats <- function(f){
   f$stats
 }
 
