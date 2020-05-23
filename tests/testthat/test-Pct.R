@@ -25,14 +25,15 @@ test_that("Pct is well defined", {
  tibble::tibble(a)
 
 
-  # Casts: Pct to Nu
-  # check implementation of coercion
-  vctrs::vec_ptype_show(Pct(), double(), Pct())
-
-  vctrs::vec_cast(0.5, Pct())
-  vctrs::vec_cast(Pct(0.5), double())
-
-  vctrs::vec_c(Pct(0.5), 1)
-  vctrs::vec_c(NA, Pct(0.5), 1)
-  # vctrs::vec_c(TRUE, Pct(0.5), 1)
+  # TODO CHECK COERCION WITH DOUBLES
+  # # Casts: Pct to Nu
+  # # check implementation of coercion
+  # vctrs::vec_ptype_show(Pct(), double(), Pct())
+  #
+  # vctrs::vec_cast(0.5, Pct())
+  # vctrs::vec_cast(Pct(0.5), double())
+  #
+  # vctrs::vec_c(Pct(0.5), 1)
+  # vctrs::vec_c(NA, Pct(0.5), 1)
+  # # vctrs::vec_c(TRUE, Pct(0.5), 1)
 })

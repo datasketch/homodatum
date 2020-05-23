@@ -41,26 +41,43 @@ vec_ptype_abbr.hd_Glt <- function(x, ...) {
 }
 
 # Coercion
-vec_ptype2.hd_Glt <- function(x, y, ...) UseMethod("vec_ptype2.hd_Glt", y)
-vec_ptype2.hd_Glt.default <- function(x, y, ..., x_arg = "x", y_arg = "y") {
-  vec_default_ptype2(x, y, x_arg = x_arg, y_arg = y_arg)
-}
+# vec_ptype2.hd_Glt <- function(x, y, ...) UseMethod("vec_ptype2.hd_Glt", y)
+# vec_ptype2.hd_Glt.default <- function(x, y, ..., x_arg = "x", y_arg = "y") {
+#   vec_default_ptype2(x, y, x_arg = x_arg, y_arg = y_arg)
+# }
 # A Glt combined with a Glt returns a Glt
+
+#' @export
 vec_ptype2.hd_Glt.hd_Glt <- function(x, y, ...) new_Glt()
 # Glt and double return double
+
+#' @export
 vec_ptype2.hd_Glt.double <- function(x, y, ...) double()
+
+#' @export
 vec_ptype2.double.hd_Glt <- function(x, y, ...) double()
 
 # Casting
-vec_cast.hd_Glt <- function(x, to, ...) UseMethod("vec_cast.hd_Glt")
-vec_cast.hd_Glt.default <- function(x, to, ...) vec_default_cast(x, to)
+# vec_cast.hd_Glt <- function(x, to, ...) UseMethod("vec_cast.hd_Glt")
+# vec_cast.hd_Glt.default <- function(x, to, ...) vec_default_cast(x, to)
 # Coerce Glt to Glt
+
+#' @export
 vec_cast.hd_Glt.hd_Glt <- function(x, to, ...) x
+
+#' @export
 vec_cast.hd_Glt.double <- function(x, to, ...) Glt(x)
+
+#' @export
 vec_cast.double.hd_Glt <- function(x, to, ...) vctrs::vec_data(x)
-# Coerce Glt to character
-vec_cast.hd_Glt.character <- function(x, to, ...) Glt(as.numeric(x))
-vec_cast.character.hd_Glt <- function(x, to, ...) as.character(vctrs::vec_data(x))
+
+# # Coerce Glt to character
+# vec_cast.hd_Glt.character <- function(x, to, ...) Glt(as.numeric(x))
+# vec_cast.character.hd_Glt <- function(x, to, ...) as.character(vctrs::vec_data(x))
+
+#' @export
+as.character.hd_Glt <- function(x) as.character(vec_data(x))
+
 
 
 #' @export

@@ -22,7 +22,8 @@ new_Seq <- function(x = character(), categories = NULL,
 
 Seq <- function(x = character(), order = NULL,
                 categories = NULL, skip_stats = FALSE) {
-  x <- vctrs::vec_cast(x, character())
+  # x <- vctrs::vec_cast(x, character())
+  x <- as.character(x)
   new_Seq(x, order = order, categories = categories, skip_stats = skip_stats)
 }
 
@@ -49,23 +50,41 @@ vec_ptype_abbr.hd_Seq <- function(x, ...) {
 }
 
 # Coercion
-vec_ptype2.hd_Seq <- function(x, y, ...) UseMethod("vec_ptype2.hd_Seq", y)
-vec_ptype2.hd_Seq.default <- function(x, y, ..., x_arg = "x", y_arg = "y") {
-  vec_default_ptype2(x, y, x_arg = x_arg, y_arg = y_arg)
-}
+# vec_ptype2.hd_Seq <- function(x, y, ...) UseMethod("vec_ptype2.hd_Seq", y)
+# vec_ptype2.hd_Seq.default <- function(x, y, ..., x_arg = "x", y_arg = "y") {
+#   vec_default_ptype2(x, y, x_arg = x_arg, y_arg = y_arg)
+# }
 # A Seq combined with a Seq returns a Seq
+
+#' @export
 vec_ptype2.hd_Seq.hd_Seq <- function(x, y, ...) new_Seq()
+
 # Seq and character return double
+
+#' @export
 vec_ptype2.hd_Seq.character <- function(x, y, ...) character()
+
+#' @export
 vec_ptype2.character.hd_Seq <- function(x, y, ...) character()
 
 # Casting
-vec_cast.vctrs_Seq <- function(x, to, ...) UseMethod("vec_cast.hd_Seq")
-vec_cast.vctrs_Seq.default <- function(x, to, ...) vec_default_cast(x, to)
+# vec_cast.vctrs_Seq <- function(x, to, ...) UseMethod("vec_cast.hd_Seq")
+# vec_cast.vctrs_Seq.default <- function(x, to, ...) vec_default_cast(x, to)
 # Coerce Seq to Seq
+
+#' @export
 vec_cast.hd_Seq.hd_Seq <- function(x, to, ...) x
+
+#' @export
 vec_cast.hd_Seq.character <- function(x, to, ...) Seq(x)
+
+#' @export
 vec_cast.character.hd_Seq <- function(x, to, ...) vctrs::vec_data(x)
+
+#' @export
+as.character.hd_Seq <- function(x) as.character(vec_data(x))
+
+
 
 as_Seq <- function(x) {
   vctrs::vec_cast(x, new_Seq())

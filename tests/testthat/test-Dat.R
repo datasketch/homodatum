@@ -1,4 +1,4 @@
-test_that("Num", {
+test_that("Dat", {
 
   x <- c("06/24/2003")
   d <- new_Dat(x)
@@ -56,14 +56,15 @@ test_that("Num", {
   class(x)
   expect_true(inherits(x, "hd_Dat"))
 
-  x <- Dat(c(1,1,2,2,3,3))
-  x
+  # x <- Dat(c(1,1,2,2,3,3))
+  # x
 
   # TODO TEST CASTS FROM DATES, NUMBERS, ETC
   dates <- seq.Date(from = as.Date("2020-01-01"), by = "day", length.out = 3)
   Dat(dates)
 
-  c(Dat("2020-04-30"),"2020-04-30")
+  # TODO IS THIS COERCION NECESSARY?
+  # c(Dat("2020-04-30"),"2020-04-30")
 
 
   a <- data.frame(fechas = Dat(c("2020-04-10", "2020-04-20")))

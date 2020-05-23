@@ -20,7 +20,7 @@ test_that("Seq", {
   class(x)
   expect_true(inherits(x, "hd_Seq"))
 
-  x <- Seq(c(1,1,2,2), order = c(2,1))
+  x <- Seq(c(1,1,2,2), order = c(2,1)) # TODO: Seq cannot be numbers
   x
   expect_equal(Seq_get_categories(x),c("1","2"))
   expect_equal(Seq_get_n_categories(x), 2)

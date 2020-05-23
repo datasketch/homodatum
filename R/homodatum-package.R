@@ -18,3 +18,10 @@
 #' @name vctrs-compat
 #'
 NULL
+
+
+#' #' @importFrom vctrs vec_ptype2 vec_cast
+#' NULL
+
+
+

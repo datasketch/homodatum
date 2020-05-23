@@ -31,9 +31,7 @@ test_that("Txt", {
   class(x)
   expect_true(inherits(x, "hd_Txt"))
 
-  x <- Txt(c(1,1,2,2,3,3))
-  stats <- Txt_get_stats(x)
-  expect_equal(stats$chars, rep(1,length(x)))
+  expect_error(Txt(c(1,1,2,2,3,3))) # Txt should not be numbers... or shoud it?
 
   a <- data.frame(idx = 1:3, sentence = Txt(hundred_years))
  tibble::tibble(a)

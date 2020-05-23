@@ -89,7 +89,7 @@ vec_ptype_abbr.fringe <- function(x, ...) {
 # }
 
 #' @export
-write_fringe <- function(x, path = "", overwrite_dic = FALSE){
+fringe_write <- function(x, path = "", overwrite_dic = FALSE){
   if(!is_fringe(x))
     stop("x is not a fringe")
   # vctrs::vec_assert(x, new_fringe())

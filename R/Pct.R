@@ -6,11 +6,20 @@ new_Pct <- function(x = double()){
 
 Pct <- function(x = double()) {
 
-  x <- tryCatch(vctrs::vec_cast(x, double()),
+  # x <- tryCatch(vctrs::vec_cast(x, double()),
+  x <- tryCatch(as.numeric(x),
+                warning = function(w){
+                  x_no_na <- x[!is.na(x)]
+                  if(all(grepl("%$",x_no_na))){
+                    as.numeric(gsub("%","", x), double())/100
+                  }else{
+                    w
+                  }
+                },
                 error = function(e) {
                   x_no_na <- x[!is.na(x)]
                   if(all(grepl("%$",x_no_na))){
-                    vctrs::vec_cast(gsub("%","", x), double())/100
+                    as.numeric(gsub("%","", x), double())/100
                   }else{
                     e
                   }
@@ -53,15 +62,29 @@ vec_ptype2.hd_Pct.double <- function(x, y, ...) double()
 vec_ptype2.double.hd_Pct <- function(x, y, ...) double()
 
 # Casting
-vec_cast.hd_Pct <- function(x, to, ...) UseMethod("vec_cast.hd_Pct")
-vec_cast.hd_Pct.default <- function(x, to, ...) vec_default_cast(x, to)
+
+
+# vec_cast.hd_Pct <- function(x, to, ...) UseMethod("vec_cast.hd_Pct")
+# vec_cast.hd_Pct.default <- function(x, to, ...) vec_default_cast(x, to)
 # Coerce Pct to Pct
+
+#' @export
 vec_cast.hd_Pct.hd_Pct <- function(x, to, ...) x
+
+#' @export
 vec_cast.hd_Pct.double <- function(x, to, ...) Pct(x)
+
+#' @export
 vec_cast.double.hd_Pct <- function(x, to, ...) vctrs::vec_data(x)
 # Coerce Pct to character
-# vec_cast.hd_Pct.character <- function(x, to, ...) Pct(as.numeric(x))
-vec_cast.character.hd_Pct <- function(x, to, ...) as.character(vctrs::vec_data(x))
+
+#' @export
+vec_cast.hd_Pct.character <- function(x, to, ...) Pct(as.numeric(x))
+
+# vec_cast.character.hd_Pct <- function(x, to, ...) as.character(vctrs::vec_data(x))
+
+#' @export
+as.character.hd_Pct <- function(x) as.character(vec_data(x))
 
 
 as_Pct <- function(x) {

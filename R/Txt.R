@@ -45,22 +45,35 @@ nwords <- function(x){
 }
 
 # Coercion
-vec_ptype2.hd_Txt <- function(x, y, ...) UseMethod("vec_ptype2.hd_Txt", y)
-vec_ptype2.hd_Txt.default <- function(x, y, ..., x_arg = "x", y_arg = "y") {
-  vec_default_ptype2(x, y, x_arg = x_arg, y_arg = y_arg)
-}
+# vec_ptype2.hd_Txt <- function(x, y, ...) UseMethod("vec_ptype2.hd_Txt", y)
+# vec_ptype2.hd_Txt.default <- function(x, y, ..., x_arg = "x", y_arg = "y") {
+#   vec_default_ptype2(x, y, x_arg = x_arg, y_arg = y_arg)
+# }
 # A Txt combined with a Txt returns a Txt
+
+#' @export
 vec_ptype2.hd_Txt.hd_Txt <- function(x, y, ...) new_Txt()
+
 # Txt and character return double
+
+#' @export
 vec_ptype2.hd_Txt.character <- function(x, y, ...) character()
+
+#' @export
 vec_ptype2.character.hd_Txt <- function(x, y, ...) character()
 
 # Casting
-vec_cast.vctrs_Txt <- function(x, to, ...) UseMethod("vec_cast.hc_Txt")
-vec_cast.vctrs_Txt.default <- function(x, to, ...) vec_default_cast(x, to)
+# vec_cast.vctrs_Txt <- function(x, to, ...) UseMethod("vec_cast.hc_Txt")
+# vec_cast.vctrs_Txt.default <- function(x, to, ...) vec_default_cast(x, to)
 # Coerce Txt to Txt
+
+#' @export
 vec_cast.hd_Txt.hd_Txt <- function(x, to, ...) x
+
+#' @export
 vec_cast.hd_Txt.character <- function(x, to, ...) Txt(x)
+
+#' @export
 vec_cast.character.hd_Txt <- function(x, to, ...) vctrs::vec_data(x)
 
 as_Txt <- function(x) {

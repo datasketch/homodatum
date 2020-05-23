@@ -18,8 +18,8 @@ test_that("fringe", {
   expect_equal(d, f$data)
 
 
-  expect_equal(getFringeStats(f)$nrow, 11)
-  expect_equal(getFringeStats(f)$ncol, 4)
+  expect_equal(fringe_stats(f)$nrow, 11)
+  expect_equal(fringe_stats(f)$ncol, 4)
 
   expect_equal(fringe_column(f,1),f$data[[1]])
   expect_equal(fringe_column(f,"Dates"), f$data[[2]])
@@ -38,7 +38,7 @@ test_that("fringe", {
   dir <- tempdir(check = TRUE)
   # dir <- "~/Downloads/tmp"
   ### for some reason this tempdir clashes with write_csv(data, "")
-  write_fringe(fr, path = dir, overwrite_dic = TRUE)
+  fringe_write(fr, path = dir, overwrite_dic = TRUE)
   expect_true(all(file.exists(file.path(dir,
                                         c('los-carros.csv',
                                           'los-carros.dic.csv',

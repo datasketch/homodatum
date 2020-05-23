@@ -38,26 +38,44 @@ vec_ptype_abbr.hd_Yea <- function(x, ...) {
 }
 
 # Coercion
-vec_ptype2.hd_Yea <- function(x, y, ...) UseMethod("vec_ptype2.hd_Yea", y)
-vec_ptype2.hd_Yea.default <- function(x, y, ..., x_arg = "x", y_arg = "y") {
-  vec_default_ptype2(x, y, x_arg = x_arg, y_arg = y_arg)
-}
+# vec_ptype2.hd_Yea <- function(x, y, ...) UseMethod("vec_ptype2.hd_Yea", y)
+# vec_ptype2.hd_Yea.default <- function(x, y, ..., x_arg = "x", y_arg = "y") {
+#   vec_default_ptype2(x, y, x_arg = x_arg, y_arg = y_arg)
+# }
 # A Yea combined with a Yea returns a Yea
+
+#' @export
 vec_ptype2.hd_Yea.hd_Yea <- function(x, y, ...) new_Yea()
+
 # Yea and integer return integer
+
+#' @export
 vec_ptype2.hd_Yea.integer <- function(x, y, ...) integer()
+
+#' @export
 vec_ptype2.integer.hd_Yea <- function(x, y, ...) integer()
 
 # Casting
-vec_cast.hd_Yea <- function(x, to, ...) UseMethod("vec_cast.hc_Yea")
-vec_cast.hd_Yea.default <- function(x, to, ...) vec_default_cast(x, to)
+# vec_cast.hd_Yea <- function(x, to, ...) UseMethod("vec_cast.hc_Yea")
+# vec_cast.hd_Yea.default <- function(x, to, ...) vec_default_cast(x, to)
+
 # Coerce Yea to Yea
+
+#' @export
 vec_cast.hd_Yea.hd_Yea <- function(x, to, ...) x
+
+#' @export
 vec_cast.hd_Yea.integer <- function(x, to, ...) Yea(x)
+
+#' @export
 vec_cast.integer.hd_Yea <- function(x, to, ...) vctrs::vec_data(x)
 # Coerce Yea to character
-# vec_cast.hd_Pct.character <- function(x, to, ...) Pct(as.numeric(x))
-vec_cast.character.hd_Yea <- function(x, to, ...) as.character(vctrs::vec_data(x))
+# vec_cast.hd_Yea.character <- function(x, to, ...) Yea(as.integer(x))
+# vec_cast.character.hd_Yea <- function(x, to, ...) as.character(vctrs::vec_data(x))
+
+#' @export
+as.character.hd_Yea <- function(x) as.character(vec_data(x))
+
 
 #' @export
 as_Yea <- function(x) {
