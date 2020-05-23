@@ -15,16 +15,16 @@ test_that("Sample Column",{
   sampleTxt(n = 10, rep= TRUE) ## Todo test with rep
 
   frtype <- "Cat"
-  d <- sampleData(frtype)
+  d <- sample_data(frtype)
 
   frtype <- "Dat"
-  d <- sampleData(frtype, addNA = FALSE)
+  d <- sample_data(frtype, addNA = FALSE)
 
   frtype <- "Num"
-  d <- sampleData(frtype)
+  d <- sample_data(frtype)
 
   frtype <- "Cat-Dat"
-  d <- sampleData(frtype)
+  d <- sample_data(frtype)
   d
   frtype <- guess_frType(d)
   # forceCtypes(d, ctypes)
@@ -34,7 +34,7 @@ test_that("Sample Column",{
 
 test_that("Sample Data", {
 
-  t <- sampleData("Cat-Num")
+  t <- sample_data("Cat-Num")
 
   homodatum:::sampleCat(10)
 
@@ -45,14 +45,14 @@ test_that("Sample Data", {
 
   expect_equal(guess_frType(t, as_string = TRUE),c("Cat-Num"))
 
-    # t <- sampleData("Uid-Cat-Num-___")
-  # sampleData("Uid-Cat-Num-___-Img")
+    # t <- sample_data("Uid-Cat-Num-___")
+  # sample_data("Uid-Cat-Num-___-Img")
 
-  t <- sampleData("Cat-Num", loremNames = FALSE, gt0 = FALSE)
+  t <- sample_data("Cat-Num", loremNames = FALSE, gt0 = FALSE)
   ## TODO... this test is a random value!!!
   # expect_true(any(t$b < 0))
 
-  t <- sampleData("Cat-Num", names = c("Name1","Name2"), loremNames = TRUE)
+  t <- sample_data("Cat-Num", names = c("Name1","Name2"), loremNames = TRUE)
   expect_equal(names(t), c("Name1","Name2"))
 
 
@@ -61,19 +61,19 @@ test_that("Sample Data", {
 
   # Dat-Num
 
-  t <- sampleData("Dat-Num", nrow = 10, addNA = FALSE)
+  t <- sample_data("Dat-Num", nrow = 10, addNA = FALSE)
   x <- diff(vctrs::vec_data(t[[1]]))
   expect_true(all(x == 1))
   expect_false(any(is.na(t[[1]])))
 
   frtype <- "Gcd-Gnm-Glt-Gln"
-  t <- sampleData(frtype, scope = "world")
+  t <- sample_data(frtype, scope = "world")
 
   expect_equal(hdtibble_frType(t), frType(frtype))
 
-  sampleData("Gln", scope = "col_departments", loremNames = FALSE)
+  sample_data("Gln", scope = "col_departments", loremNames = FALSE)
 
-  t <- sampleData(frtype, scope = "col_departments", loremNames = FALSE)
+  t <- sample_data(frtype, scope = "col_departments", loremNames = FALSE)
   expect_true(all(na.omit(t$b) %in% geodata::geodataCsv("col_departments")$name))
 
   data <- sample_data('Gnm-Num')

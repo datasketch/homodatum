@@ -1,34 +1,52 @@
 
-new_fringe <- function(x = new_data_frame(),
+new_fringe <- function(d = new_data_frame(),
+                       dic = NULL,
                        frtype = NULL,
                        name = NULL,
                        description = NULL,
                        slug = NULL,
                        meta = NULL){
-  # vctrs::vec_assert(x, data.frame())
-  dd <- add_dic(x, frtype = frtype)
+
+  if(is.null(dic)){
+    dic <- create_dic(d, frtype = frtype)
+  } else {
+    dic$hdType <- as_hdType(dic$hdType)
+    dic <- tibble::as_tibble(dic)
+  }
+  names(d) <- dic$id
+  if(!is_hdtibble(d)){
+    d <- hdtibble(d, frtype = paste0(dic$hdType, collapse = "-"))
+  }
+  dd <- list(data = d, dic = dic)
+  dd$frtype <- frType(paste0(dic$hdType, collapse = "-"))
+  dd$group <- frType_group(dd$frtype)
   dd$name <- name
   dd$description <- description
   dd$slug <- slug
   dd$meta <- meta
-  dd$stats <- calculateFringeStats(x)
-  vctrs::new_list_of(dd, class = "fringe")
+  dd$stats <- calculateFringeStats(d)
+  class(dd) <- "fringe"
+  dd
 }
 
 
 #' @export
-fringe <- function(x = new_data_frame(), frtype = NULL,
+fringe <- function(x = new_data_frame(),
+                   frtype = NULL, dic = NULL,
                    name = NULL, description = NULL,
-                   slug = NULL, ...) {
+                   slug = NULL,
+                   meta = NULL,
+                   ...) {
   if(is_fringe(x)) return(x)
-  # x <- vctrs::vec_cast(x, data.frame())
   name <- name %||% deparse(substitute(x))
   description <- description %||% ""
   slug <- slug %||% make_slug(name)
-  new_fringe(x, frtype = frtype, name = name,
+  new_fringe(x, frtype = frtype,
+             dic = dic,
+             name = name,
              description = description,
              slug = slug,
-             meta = list(...))
+             meta = modifyList(meta %||% list(), list(...)))
 }
 
 #' @export
@@ -63,45 +81,6 @@ fringe_stats <- function(f){
 
 vec_ptype_abbr.fringe <- function(x, ...) {
   "fringe"
-}
-#
-# # Coercion
-# vec_ptype2.frType <- function(x, y, ...) UseMethod("vec_ptype2.frType", y)
-# vec_ptype2.frType.default <- function(x, y, ..., x_arg = "x", y_arg = "y") {
-#   vec_default_ptype2(x, y, x_arg = x_arg, y_arg = y_arg)
-# }
-# # A frType combined with a frType returns a frType
-# vec_ptype2.frType.frType <- function(x, y, ...) new_frType()
-# # # frType and character return double
-# vec_ptype2.frType.character <- function(x, y, ...) frType()
-# vec_ptype2.character.frType <- function(x, y, ...) frType()
-#
-# # Casting
-# vec_cast.vctrs_frType <- function(x, to, ...) UseMethod("vec_cast.frType")
-# vec_cast.vctrs_frType.default <- function(x, to, ...) vec_default_cast(x, to)
-# # Coerce frType to frType
-# vec_cast.frType.frType <- function(x, to, ...) x
-# vec_cast.frType.character <- function(x, to, ...) frType(x)
-# vec_cast.character.frType <- function(x, to, ...) vctrs::vec_data(x)
-#
-# as_frType <- function(x) {
-#   vctrs::vec_cast(x, new_frType())
-# }
-
-#' @export
-fringe_write <- function(x, path = "", overwrite_dic = FALSE){
-  if(!is_fringe(x))
-    stop("x is not a fringe")
-  # vctrs::vec_assert(x, new_fringe())
-  readr::write_csv(x$data, file.path(path,paste0(x$slug,".csv")))
-  dic_path <- file.path(path,paste0(x$slug,".dic.csv"))
-  if(file.exists(dic_path) && !overwrite_dic ){
-    stop("Cannot overwrite dic")
-  }
-  readr::write_csv(x$dic, dic_path)
-  y <- list(name = x$name, description = x$description)
-  y <- modifyList(y, x$meta)
-  yaml::write_yaml(y, file.path(path, paste0(x$slug,".yaml")))
 }
 
 
@@ -145,20 +124,25 @@ fringe_column <- function(f, column){
         idx <- match(column, fringe_ids(f))
       }
       if(column %in% letters){
-        d <- fringe_data(f)
+        d <- fringe_d(f)
         return(d[[column]])
       }
     }
   }
   if(is.null(idx)) stop("column not found")
-  f$data[[idx]]
+  fringe_d(f)[[idx]]
 }
 
 
 #'@export
-fringe_data <- function(f){
+fringe_d <- function(f){
   purrr::map_df(f$data, as_baseType) %>%
-    purrr::set_names(letters[1:nrow(f$dic)])
+    purrr::set_names(letterNames(nrow(f$dic)))
+}
+
+#'@export
+fringe_data <- function(f){
+  f$data
 }
 
 #' @export
@@ -172,4 +156,31 @@ fringe_hdTypes <- function(fr, named = FALSE){
   if(named) names(x) <- fr$dic$id
   x
 }
+
+
+
+
+#' #' @export
+#' force_hdTypes <- function(df, hdTypes){
+#'   df <- as.data.frame(df)
+#'   if(ncol(df)!= length(hdTypes)) stop("number of df cols must be the same as col types length")
+#'   for (i in seq_along(hdTypes)){
+#'     if(hdTypes[i]=="Num"){df[,i]<- as.numeric(df[,i])}
+#'     if(hdTypes[i]=="Yea"){df[,i]<- as.character(df[,i])}
+#'     if(hdTypes[i]=="Cat"){df[,i]<- as.character(df[,i])}
+#'     if(hdTypes[i]=="Txt"){df[,i]<- as.character(df[,i])}
+#'     if(hdTypes[i]=="Img"){
+#'       if(!isImgUrl(df[,i])) stop ("Not an image Url")
+#'       df[,i]<- as.character(df[,i])
+#'     }
+#'     if(hdTypes[i]=="Dat"){df[,i]<- parseDatetime(df[,i],"Dat")}
+#'     if(hdTypes[i]=="Hms"){df[,i]<- parseDatetime(df[,i],"Hms")}
+#'     if(hdTypes[i]=="Dti"){df[,i]<- parseDatetime(df[,i],"Dti")}
+#'     if(hdTypes[i]=="Glt"){df[,i]<- as.numeric(df[,i])}
+#'     if(hdTypes[i]=="Gln"){df[,i]<- as.numeric(df[,i])}
+#'     if(hdTypes[i]=="Gnm"){df[,i]<- as.character(df[,i])}
+#'   }
+#'   as_tibble(df)
+#' }
+
 

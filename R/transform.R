@@ -2,7 +2,7 @@
 #' #' sampleFringe
 #' #' @export
 #' sampleFringe <- function(ftype,...){
-#'   d <- sampleData(ftype,...)
+#'   d <- sample_data(ftype,...)
 #'   fringe(d)
 #' }
 #'

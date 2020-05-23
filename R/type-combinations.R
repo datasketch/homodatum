@@ -60,10 +60,10 @@ hdTypes_permute <- function(hdtypes, nms = NULL){
     stop("ctypes must have names")
   y <- permuteVector(nms) %>% t()
   names(y) <- 1:ncol(y)
-  y <- y %>% tibble::as_tibble() %>% as.list()
+  y <- y %>% tibble::as_tibble(.name_repair = "unique") %>% as.list()
   x <- permuteVector(as.character(hdt)) %>% t()
   names(x) <- 1:ncol(x)
-  x <- x %>% tibble::as_tibble() %>% as.list()
+  x <- x %>% tibble::as_tibble(.name_repair = "unique") %>% as.list()
   unname(purrr::map2(x,y, ~ hdType(purrr::set_names(.x, .y))))
 }
 

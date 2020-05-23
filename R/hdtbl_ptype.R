@@ -3,9 +3,9 @@
 #' @export
 fringeske<- function(ctypes=NULL,cformats=NULL,cnames = NULL,
                      name = NULL, description = NULL,
-                     validators = NULL, sampleData = NULL, useCnames = TRUE){
-  if(!is.null(sampleData))
-    name <- name %||% deparse(substitute(sampleData))
+                     validators = NULL, sample_data = NULL, useCnames = TRUE){
+  if(!is.null(sample_data))
+    name <- name %||% deparse(substitute(sample_data))
   fringeske <- FringeSke$new(
     ctypes=ctypes,
     cformats=cformats,
@@ -13,7 +13,7 @@ fringeske<- function(ctypes=NULL,cformats=NULL,cnames = NULL,
     name = name,
     description = description,
     validators = validators,
-    sampleData = sampleData,
+    sample_data = sample_data,
     useCnames = useCnames)
   fringeske
 }

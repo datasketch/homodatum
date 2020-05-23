@@ -35,11 +35,11 @@ test_that("subFringe works", {
 
   x <- sample_data("Cat-Num-Cat-Gnm")
   fr <- fringe(x)
-  sub_fringe_cols(fr, frtype = "Cat-Num")
-  sub_fringe_cols(fr, frtype = "Cat-Num", show_hdType = TRUE)
-
-  sub_fringe_cols(fr, group = "Cat2-Gnm")
-  sub_fringe_cols(fr, group = "Cat2-Gnm", show_hdType = TRUE)
+  # sub_fringe_cols(fr, frtype = "Cat-Num")
+  # sub_fringe_cols(fr, frtype = "Cat-Num", show_hdType = TRUE)
+  #
+  # sub_fringe_cols(fr, group = "Cat2-Gnm")
+  # sub_fringe_cols(fr, group = "Cat2-Gnm", show_hdType = TRUE)
 
 
 })

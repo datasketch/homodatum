@@ -11,38 +11,65 @@ test_that("fringe", {
   f2 <- list(fringe(mtcars), fringe(cars))
   expect_true(inherits(fringe(cars),"fringe"))
 
-  d <- sampleData("Cat-Dat-Num-Pct", n = 11,
+
+  d <- sample_data("Cat-Dat-Num-Pct", n = 11,
                   names = c("Category", "Dates", "Numbers","Percentages"))
   f <- fringe(d)
   names(d) <- make_slug(names(d))
   expect_equal(d, f$data)
 
-
   expect_equal(fringe_stats(f)$nrow, 11)
   expect_equal(fringe_stats(f)$ncol, 4)
 
-  expect_equal(fringe_column(f,1),f$data[[1]])
-  expect_equal(fringe_column(f,"Dates"), f$data[[2]])
-  expect_equal(fringe_column(f,"c"), fringe_data(f)[[3]])
 
-  dd <- fringe_data(f)
+})
+
+test_that("frige column extraction works",{
+
+  f <- sample_fringe("Cat-Dat-Num-Pct", n = 11,
+                     names = c("Category", "Dates", "Numbers","Percentages"))
+  f
+  expect_equal(fringe_column(f,1),as_baseType(f$data[[1]]))
+  expect_equal(fringe_column(f,"Dates"), as_baseType(f$data[[2]]))
+  expect_equal(fringe_column(f,"c"), fringe_d(f)[[3]])
+
+})
+
+
+
+test_that("frige column extraction works",{
+
+  f <- sample_fringe("Cat-Dat-Num-Pct", n = 11,
+                     names = c("Category", "Dates", "Numbers","Percentages"))
+  dd <- fringe_d(f)
   expect_equal(names(dd), c('a','b','c','d'))
   expect_equal(purrr::map_chr(dd, class),
                c(a = "character", b = "Date", c = "numeric", d = "numeric"))
   expect_true(all(!purrr::map_lgl(dd, is_hdType)))
 
-  fr <- fringe(cars, name = "Los Carros", mas = "fda")
-  expect_true(fr$meta$mas == "fda")
-  expect_true(fr$slug == "los-carros")
 
-  dir <- tempdir(check = TRUE)
-  # dir <- "~/Downloads/tmp"
-  ### for some reason this tempdir clashes with write_csv(data, "")
-  fringe_write(fr, path = dir, overwrite_dic = TRUE)
-  expect_true(all(file.exists(file.path(dir,
-                                        c('los-carros.csv',
-                                          'los-carros.dic.csv',
-                                          'los-carros.yaml')))))
-  unlink(dir, recursive = TRUE)
+  # New fringe with dic
+
+  data <- data.frame(book = c("Black", "Red"),
+                     value = 1:2,
+                     dates = c("28/04/2019", "4/12/2018"))
+  dic <- data.frame(id = names(data),
+                    hdType = c("Cat","Num","Dat"))
+  f <- fringe(data, dic = dic)
+
+  expect_equal(dic$id, f$dic$id)
+  f$dic
+  expect_equivalent(hdType(dic$hdType), f$dic$hdType)
+
+
+  f <- fringe(data)
+
+  data <- fringe_data(f)
+  dic <- fringe_dic(f)
+
+  dic2 <- dic
+  dic$hdType[3] <- "Dat"
+
 
 })
+

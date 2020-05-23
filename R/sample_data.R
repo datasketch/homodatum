@@ -1,7 +1,7 @@
 
 #' Creates a new Datafringe from a dataframe
-#' @name sampleData
-#' @rdname sampleData
+#' @name sample_data
+#' @rdname sample_data
 #' @description Creates a new datapackage from json, data fringe, list of data fringes, list of data fringees (see Datafringe reference class)
 #' @param d might be a json string, data fringe or list of data fringes.
 #' @return dp
@@ -9,7 +9,7 @@
 #' @examples \dontrun{
 #' fringe <- newDatafringeFromDatafringe(mtcars)
 #' }
-sampleData <- function(frtype, n = 20, loremNames = TRUE,
+sample_data <- function(frtype, n = 20, loremNames = TRUE,
                        names = NULL,
                        addNA = TRUE, rep = FALSE,...){
   arg <- c(as.list(environment()), list(...))
@@ -47,12 +47,11 @@ sampleData <- function(frtype, n = 20, loremNames = TRUE,
   tibble::as_tibble(d)
 }
 
-
-#' @name sample_data
-#' @inherit sampleData
 #' @export
-sample_data <- sampleData
-
+sample_fringe <- function(frtype, ...){
+  d <- sample_data(frtype,...)
+  fringe(d)
+}
 
 
 #' @export

@@ -50,7 +50,7 @@ test_that("create hdTypes",{
 
   expect_true(inherits(guess_hdType(data$a),"hdType"))
 
-  # data <- sampleData("Cat-Dat-Yea-Num-Pct")
+  # data <- sample_data("Cat-Dat-Yea-Num-Pct")
   hdTypes <- c(a = "Cat",b = "Dat", c = "Yea", d = "Num", e = "Pct")
   expect_equal(purrr::map_chr(data, guess_hdType),hdTypes)
 
@@ -133,7 +133,7 @@ test_that("frType",{
 
 
   ftype <- "Cat-Dat-Yea-Num"
-  d <- sampleData(ftype)
+  d <- sample_data(ftype)
   #ctypes <- guessCtypes(d)
   hdtypes <- c("Cat","Dat","Yea","Num")
 
@@ -157,7 +157,7 @@ test_that("frType",{
 
   ## Test coercion to base types
 
-  d <- sampleData("Cat-Dat-Yea-Num-Pct")
+  d <- sample_data("Cat-Dat-Yea-Num-Pct")
 
   expect_true("character" %in% class(as_baseType(d[[1]])))
   expect_true("Date" %in% class(as_baseType(d[[2]])))
