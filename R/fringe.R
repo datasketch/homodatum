@@ -146,9 +146,10 @@ fringe_data <- function(f){
 }
 
 #' @export
-fringe_dic <- function(f){
+fringe_dic <- function(f, id_letters = FALSE){
   dic <- f$dic
-  dic$id_letters <- letterNames(nrow(dic))
+  if(id_letters)
+    dic$id_letters <- letterNames(nrow(dic))
   dic
 }
 
