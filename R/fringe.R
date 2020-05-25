@@ -147,7 +147,9 @@ fringe_data <- function(f){
 
 #' @export
 fringe_dic <- function(f){
-  f$dic
+  dic <- f$dic
+  dic$id_letters <- letterNames(nrow(dic))
+  dic
 }
 
 #'@export
