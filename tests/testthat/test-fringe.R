@@ -21,8 +21,30 @@ test_that("fringe", {
   expect_equal(fringe_stats(f)$nrow, 11)
   expect_equal(fringe_stats(f)$ncol, 4)
 
+})
+
+test_that("Fringe creation with dictionaries work",{
+
+  d <- cars
+  names(d) <- c("a", "b")
+  dic <- data.frame(label = c("speed", "dist"),
+                    id = c("speed", "dist"),
+                    hdType = c("Num", "Num"))
+  f <- fringe(d, dic = dic)
+  expect_equivalent(fringe_d(f), d)
+  dic <- data.frame(label = c("Speed", "Dist"),
+                    id = c("speed", "dist"),
+                    hdType = c("Num", "Cat"))
+  f2 <- fringe(d, dic = dic)
+  expect_equivalent(fringe_d(f2)[[2]], as.character(cars[[2]]))
+
+  dic <- data.frame(label = c("speed", "dist"),
+                    id = c("speed", "dist"))
+  f3 <- fringe(d, dic = dic)
+  expect_equal(f3, f)
 
 })
+
 
 test_that("frige column extraction works",{
 
@@ -34,7 +56,6 @@ test_that("frige column extraction works",{
   expect_equal(fringe_column(f,"c"), fringe_d(f)[[3]])
 
 })
-
 
 
 test_that("frige column extraction works",{

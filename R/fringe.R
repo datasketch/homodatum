@@ -10,6 +10,7 @@ new_fringe <- function(d = new_data_frame(),
   if(is.null(dic)){
     dic <- create_dic(d, frtype = frtype)
   } else {
+    dic$hdType <- dic$hdType %||% frType_hdTypes(guess_frType(d))
     dic$hdType <- as_hdType(dic$hdType)
     dic <- tibble::as_tibble(dic)
   }
