@@ -46,6 +46,12 @@ test_that("Dat", {
   # Dat_get_isodate(z)
   # expect_equal(unlist(stats))
 
+
+  #
+  x <- as.POSIXct("2020-04-30")
+  class(x)
+  expect_equal(Dat(x), Dat("2020-04-30"))
+
   # TODO stats need to return Dat as well? Define min and max for Dat
 
 

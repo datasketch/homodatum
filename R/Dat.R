@@ -29,6 +29,9 @@ Dat_formats <- function(order = c("dmy","mdy","ymd"), sep = "-"){
 }
 
 Dat <- function(x = character(), format = NULL, skip_stats = FALSE) {
+  if(inherits(x, "POSIXct")){
+    x <- as.character(x)
+  }
   if(vctrs::vec_is(x, vctrs::new_date())){
     x <- as.character(x)
   }

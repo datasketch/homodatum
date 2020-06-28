@@ -21,6 +21,7 @@ test_that("Test guess", {
 
   # Guess Dat
   v <- c("2020-04-04", NA)
+  isDate(v)
   expect_equal(guess_hdType(v), hdType("Dat"))
 
   v <- "24/06/2020"
@@ -32,6 +33,9 @@ test_that("Test guess", {
   expect_equal(guess_hdType(v), hdType("Dat"))
   h <- Dat(v)
   attributes(h)$format
+
+  v <- c("25/03/2020","31/03/2020","06/04/2020","17/04/2020")
+  expect_true(isDate(v))
 
   d <- tibble::tibble(x = "24/06/2020",
                       y = "2020/12/31",
