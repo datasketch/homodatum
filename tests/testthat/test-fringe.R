@@ -79,18 +79,31 @@ test_that("frige column extraction works",{
   f <- fringe(data, dic = dic)
 
   expect_equal(dic$id, f$dic$id)
-  f$dic
   expect_equivalent(hdType(dic$hdType), f$dic$hdType)
 
+  f_data <- fringe_data(f)
+  expect_false("hd_tbl" %in% class(f_data))
 
+  f_hdTibble <- fringe_hdTibble(f)
+  expect_true("hd_tbl" %in% class(f_hdTibble))
+
+  #
+
+  data <- data.frame(
+    a = Cat(c("black", "white")),
+    b = Dat(seq.Date(from = as.Date("2000-01-01"), by = "day", length.out = 2)),
+    c = Yea(2001:2002),
+    d = Num(runif(2)*10),
+    e = Pct(runif(2))
+  )
+  class(data)
   f <- fringe(data)
+  f_data <- fringe_data(f)
 
-  data <- fringe_data(f)
-  dic <- fringe_dic(f)
+  expect_false("hd_tbl" %in% class(f_data))
 
-  dic2 <- dic
-  dic$hdType[3] <- "Dat"
-
+  f_hdTibble <- fringe_hdTibble(f)
+  expect_true("hd_tbl" %in% class(f_hdTibble))
 
 })
 

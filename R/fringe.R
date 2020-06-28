@@ -143,7 +143,18 @@ fringe_d <- function(f){
 
 #'@export
 fringe_data <- function(f){
-  f$data
+  data <- f$data
+  class(data) <- class(data)[class(data) != "hd_tbl"]
+  data
+}
+
+#'@export
+fringe_hdTibble <- function(f){
+  data <- f$data
+  if(!"hd_tbl" %in% class(data)){
+    class(data) <- c(class(data), "hd_tbl")
+  }
+  data
 }
 
 #' @export
