@@ -51,6 +51,8 @@ guess_hdType <- function(v){
 
 maybeNum <- function(v){
   v0 <- gsub(",",".",v)
+  v0 <- gsub("\\.","",v0)
+
   nums <- tryCatch(as.numeric(v0),
                    error=function(e) e, warning=function(w) w
                    )
@@ -64,7 +66,7 @@ maybeNum <- function(v){
 }
 
 has_decimal_comma <- function(v){
-  v0 <- gsub("[0-9]","", v)
+  v0 <- gsub("[0-9\\.]","", v)
   #has_commas <- grepl(",",v0)
   has_other_punct <- grepl("[[:punct:]]", gsub(",","", v0))
   if(any(has_other_punct)) return(FALSE)

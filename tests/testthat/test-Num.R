@@ -57,7 +57,10 @@ test_that("Num",{
   expect_true(has_decimal_comma(x))
   expect_true(is_Num(Num(x)))
 
-
+  x <- c("343.755,08", "5.380,00", NA, "21.555,11", "1.550.000")
+  expect_equal(guess_hdType(x), hdType("Num"))
+  expect_true(has_decimal_comma(x))
+  expect_true(is_Num(Num(x)))
 
 })
 

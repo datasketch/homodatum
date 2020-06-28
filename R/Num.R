@@ -17,6 +17,7 @@ new_Num <- function(x, skip_stats = FALSE){
 Num <- function(x = double()) {
   if(is.character(x)){
     if(has_decimal_comma(x)){
+      x <- gsub("\\.","", x)
       x <- as.numeric(gsub(",",".", x))
     }
   }

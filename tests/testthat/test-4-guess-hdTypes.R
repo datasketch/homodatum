@@ -18,6 +18,10 @@ test_that("Test guess", {
   v <- c("4,59", "5,38", "10,78", "123",NA)
   expect_equal(guess_hdType(v), hdType("Num"))
 
+  v <- c("343.755,08", "5.380,00", NA, "21.555,11", "1.550.000")
+  maybeNum(v)
+  expect_equal(guess_hdType(v), hdType("Num"))
+
   # Guess Pct
   expect_equal(guess_hdType(c(0.3, 0.4, 1)), hdType("Pct"))
   expect_equal(guess_hdType(c("30%", "200%", NA)), hdType("Pct"))
