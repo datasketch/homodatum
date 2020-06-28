@@ -25,9 +25,12 @@ guess_hdType <- function(v){
     return(hdType("Num"))
   }
 
-  dth <- whichDTH(v)
-  if(!is.null(dth))
-    ctype <- hdType(dth)
+  #dth <- whichDTH(v)
+  # if(!is.null(dth))
+  #   ctype <- hdType(dth)
+  if(isDate(v)){
+    return(hdType("Dat"))
+  }
   else{
     v <- as.character(v)
     if(maybePct(v)){

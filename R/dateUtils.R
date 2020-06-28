@@ -1,26 +1,50 @@
 
+isDate <- function(v){
+  if("Date" %in% class(v)){
+    return(TRUE)
+  }
+  guess_date <- try(parseDate(v), silent = TRUE)
+  if(inherits(guess_date, "try-error")){
+    return(FALSE)
+  }
+  if(inherits(guess_date, "try-warning")){
+    return(FALSE)
+  }
+  # if(length((guess))< length(v))
+  #   #stop("Dates do not seem to have the same format")
+  #   return(FALSE)
+  # if(unique(guess) != expectedFormat)
+  #   return(FALSE)
+  TRUE
+}
+
+parseDate <- function(v, format = NULL){
+  v0 <- v[!is.na(v)]
+  v0 <- v
+  format <- guess_date_fmt(v0)
+  as.Date(v, format = format)
+}
 
 
-# v <- c("2014-03-01","2043-04-04","2014-04-04")
-# isDate(v)
-# isDatetime(v)
-# isTime(v)
-# whichDTH(v)
-# v <- c("2014-03-01","2043-04-04","20140404")
-# parseDatetime(v, "D")
-# v <- c("2014-03-01 5:04:00","2043-04-04 5:04:00","2014-04-04 5:04:00")
-# parseDatetime(v, "T")
-# v <- c("04:00","13:05:00","5:04:00")
-# parseDatetime(v, "H")
+guess_date_fmt <- function(sample){
+  #locale <- locale %||% guess_date_locale(sample)
+  format_orders <- c("ymd", "mdY", "dmy", "BdY", "Bdy","dBY","dbY", "bdY", "bdy",
+                     "Bd","bd", "dB","db")
+  fmts <- lubridate::guess_formats(sample, format_orders)
+  fmts[1]
+}
+
+
+
+
 
 
 parseDatetime <- function(v, datetimeType){
   v0 <- v[!is.na(v)]
   v0 <- v
   if(datetimeType == "Dat"){
-    #format <- guess_formats(v0, "ymd")
-    #guess_formats(v0, "ymd",print_matches = TRUE)
-    outVals <- as.Date(v, format = "%Y-%m-%d") # NO GUESSING
+    format <- guess_date_fmt(v0)
+    outVals <- as.Date(v, format = format)
   }
   if(datetimeType == "Hms"){
     format <- lubridate::guess_formats(v0, "HMS")
@@ -33,9 +57,6 @@ parseDatetime <- function(v, datetimeType){
   }
   outVals
 }
-
-
-guessDateFormat <- function(v) parseDateTime(v)$format
 
 
 whichDTH <-function(x){
@@ -64,25 +85,10 @@ isD_format <- function(format, expectedFormat){
   }
 }
 
-isDate <- function(v){
-  if("Date" %in% class(v)){
-    return(TRUE)
-  }
-  guess <- lubridate::guess_formats(v,"%Y-%m-%d")
-  if(is.null(guess)){
-    return(FALSE)
-  }else{
-    if(all(guess %in% c("%Y-%Om-%d","%Y-%m-%d")))
-      return(TRUE)
-    if(length((guess))< length(v))
-      #stop("Dates do not seem to have the same format")
-      return(FALSE)
-    if(unique(guess) != expectedFormat)
-      return(FALSE)
-  }
-  TRUE
-}
+
+
 isTime <- isD_format("HMS","%H:%M:%S")
+
 isDatetime <- isD_format("ymd HMS","%Y-%m-%d %H:%M:%S")
 
 

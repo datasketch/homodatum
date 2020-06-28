@@ -18,4 +18,9 @@ test_that("dic",{
   new_dic <- create_dic(d)
   expect_equal(new_dic$hdType, hdType(c("Cat", "Num")))
 
+  d <- tibble::tibble(x = "24/06/2020")
+  new_dic <- create_dic(d)
+  expect_equal(new_dic$hdType, hdType("Dat"))
+
+
 })

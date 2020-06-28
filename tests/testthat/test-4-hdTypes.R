@@ -19,16 +19,6 @@ test_that("create hdTypes",{
   expect_true(inherits(c(hdType("Num"), hdType("Cat")),"hdType"))
 
 
-  # Guess Num
-  expect_equal(guess_hdType(c("1",NA,"2")), hdType("Num"))
-  expect_equal(guess_hdType(c(0.3, 2, NA)), hdType("Num"))
-
-  # Guess Pct
-  expect_equal(guess_hdType(c(0.3, 0.4, 1)), hdType("Pct"))
-  expect_equal(guess_hdType(c("30%", "200%", NA)), hdType("Pct"))
-
-  # Guess Dat
-  expect_equal(guess_hdType(c("2020-04-04", NA)), hdType("Dat"))
 
 
   # Data Frames
