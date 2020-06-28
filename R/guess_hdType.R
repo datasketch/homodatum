@@ -1,5 +1,5 @@
 
-
+#' @export
 guess_hdType <- function(v){
   # if("data.frame" %in% class(v))
   #   v <- v %>% flatten

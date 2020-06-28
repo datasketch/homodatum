@@ -1,5 +1,16 @@
 test_that("Test guess", {
 
+  # Guess Cat
+
+  v <- c("MSPS-CD-166-2020", "003-2020", "0811 - 2020")
+  expect_false(isDate(v)) # Test if there are letters
+  expect_equal(guess_hdType(v), hdType("Cat"))
+
+  v <- c("10306908", "900935265", "9010385043", "9010385043", "9010385043",
+         NA, "901046823", "830035101", "900417425-2")
+  expect_false(isDate(v)) # Test if many are parsed as NA. 60% failed to parse
+  expect_equal(guess_hdType(v), hdType("Cat"))
+
   # Guess Num
   expect_equal(guess_hdType(c("1",NA,"2")), hdType("Num"))
   expect_equal(guess_hdType(c(0.3, 2, NA)), hdType("Num"))
