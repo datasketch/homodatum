@@ -52,7 +52,10 @@ test_that("Num",{
   x <- Num(1.1)
   as.character(x)
 
-
+  x <- c("4,59", "5,38", "10,78", NA, "2")
+  expect_equal(guess_hdType(x), hdType("Num"))
+  expect_true(has_decimal_comma(x))
+  expect_true(is_Num(Num(x)))
 
 
 

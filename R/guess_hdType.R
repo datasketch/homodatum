@@ -33,6 +33,9 @@ guess_hdType <- function(v){
   }
   else{
     v <- as.character(v)
+    if(maybeNum(v)){
+      return(hdType("Num"))
+    }
     if(maybePct(v)){
       return(hdType("Pct"))
     }
@@ -46,7 +49,27 @@ guess_hdType <- function(v){
   ctype
 }
 
+maybeNum <- function(v){
+  v0 <- gsub(",",".",v)
+  nums <- tryCatch(as.numeric(v0),
+                   error=function(e) e, warning=function(w) w
+                   )
+  if(inherits(nums, "warning")){
+    return(FALSE)
+  }
+  if(na_proportion(nums) > 0.8){
+    return(FALSE)
+  }
+  TRUE
+}
 
+has_decimal_comma <- function(v){
+  v0 <- gsub("[0-9]","", v)
+  #has_commas <- grepl(",",v0)
+  has_other_punct <- grepl("[[:punct:]]", gsub(",","", v0))
+  if(any(has_other_punct)) return(FALSE)
+  TRUE
+}
 
 
 maybePct <- function(v){

@@ -15,6 +15,11 @@ new_Num <- function(x, skip_stats = FALSE){
 
 #' @export
 Num <- function(x = double()) {
+  if(is.character(x)){
+    if(has_decimal_comma(x)){
+      x <- as.numeric(gsub(",",".", x))
+    }
+  }
   x <- vctrs::vec_cast(x, double())
   new_Num(x)
 }

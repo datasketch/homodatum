@@ -15,6 +15,9 @@ test_that("Test guess", {
   expect_equal(guess_hdType(c("1",NA,"2")), hdType("Num"))
   expect_equal(guess_hdType(c(0.3, 2, NA)), hdType("Num"))
 
+  v <- c("4,59", "5,38", "10,78", "123",NA)
+  expect_equal(guess_hdType(v), hdType("Num"))
+
   # Guess Pct
   expect_equal(guess_hdType(c(0.3, 0.4, 1)), hdType("Pct"))
   expect_equal(guess_hdType(c("30%", "200%", NA)), hdType("Pct"))
