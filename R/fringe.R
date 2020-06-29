@@ -65,6 +65,23 @@ fringe_stats <- function(f){
   f$stats
 }
 
+#' @export
+fringe_update_meta <- function(f, ...){
+  fixed <- c("data", "dic", "frtype", "group")
+  args <- list(...)
+  if(any(names(args) %in% fixed)){
+    warning("Cannot update ",
+            paste0(names(args)[names(args) %in% fixed], collapse = ", "),
+            ". Removing from meta.")
+    args <- args[!names(args) %in% fixed]
+  }
+  info <- list(name = args$name, description = args$description %||% f$description,
+               meta = args[!names(args) %in% c("name", "description")])
+  f <- modifyList(f, info)
+  f
+}
+
+
 
 # Methods
 
@@ -143,7 +160,8 @@ fringe_d <- function(f){
 
 #'@export
 fringe_data <- function(f){
-  data <- f$data
+  data <- fringe_d(f)
+  names(data) <- fringe_dic(f)$id
   class(data) <- class(data)[class(data) != "hd_tbl"]
   data
 }
