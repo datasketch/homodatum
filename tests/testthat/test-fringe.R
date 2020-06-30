@@ -111,12 +111,15 @@ test_that("fringe", {
 
   f0 <- fringe(mtcars, name = "Mtcars",access = "private")
   expect_equal(f0$name, "Mtcars")
-  f1 <- fringe_update_meta(f0, name = "MTCARS")
-  expect_equal(f1$name, "MTCARS")
+  f1 <- fringe_update_meta(f0, name = "MTCARS 2")
+  expect_equal(f1$name, "MTCARS 2")
+  expect_equal(f1$slug, "mtcars-2")
+  expect_equal(f1$meta$access, "private")
   expect_equal(f1$meta$access, "private")
 
-  f2 <- fringe_update_meta(f1, name = "Mtcars")
-  expect_equal(f0, f2)
+  f2 <- fringe_update_meta(f1, name = "Mtcars", slug="new_mtcars")
+  f3 <- fringe_update_meta(f0, slug = "new_mtcars")
+  expect_equal(f3, f2)
 
 })
 

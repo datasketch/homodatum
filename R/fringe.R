@@ -75,8 +75,10 @@ fringe_update_meta <- function(f, ...){
             ". Removing from meta.")
     args <- args[!names(args) %in% fixed]
   }
-  info <- list(name = args$name, description = args$description %||% f$description,
-               meta = args[!names(args) %in% c("name", "description")])
+  info <- list(name = args$name %||% f$name,
+               description = args$description %||% f$description,
+               slug = args$slug %||% make_slug(args$name),
+               meta = args[!names(args) %in% c("name", "description","slug")])
   f <- modifyList(f, info)
   f
 }
