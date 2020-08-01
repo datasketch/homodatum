@@ -46,16 +46,12 @@ test_that("Dat", {
   # Dat_get_isodate(z)
   # expect_equal(unlist(stats))
 
-
-  #
+  # Works with POXIXct
   x <- as.POSIXct("2020-04-30")
   class(x)
   expect_equal(Dat(x), Dat("2020-04-30"))
 
   # TODO stats need to return Dat as well? Define min and max for Dat
-
-
-
 
   # Accepts anything coercible from double()
   x <- Dat(c("1","0.2"))
@@ -69,10 +65,20 @@ test_that("Dat", {
   dates <- seq.Date(from = as.Date("2020-01-01"), by = "day", length.out = 3)
   Dat(dates)
 
+  ## Dat("21\04?2020") # CHECK POSSIBLE PROBLE WITH SCAPING
+
+  string <- "21|04?2020"
+  dat <- Dat(string)
+
+  expect_equal(as.character(dat), string)
+  expect_equal(as.Date(dat), as.Date("2020-04-21"))
+  expect_equal(as.numeric(dat), vctrs::vec_data(dat))
+
+
   # TODO IS THIS COERCION NECESSARY?
   # c(Dat("2020-04-30"),"2020-04-30")
 
 
   a <- data.frame(fechas = Dat(c("2020-04-10", "2020-04-20")))
- tibble::tibble(a)
+  tibble::tibble(a)
 })
