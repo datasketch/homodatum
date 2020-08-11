@@ -29,9 +29,12 @@ test_that("Fringe creation with dictionaries work",{
   names(d) <- c("a", "b")
   dic <- data.frame(label = c("speed", "dist"),
                     id = c("speed", "dist"),
+                    description = c("SPEED", "DIST"),
                     hdType = c("Num", "Num"))
   f <- fringe(d, dic = dic)
   expect_equivalent(fringe_d(f), d)
+  expect_equal(f$dic$description, dic$description)
+
   dic <- data.frame(label = c("Speed", "Dist"),
                     id = c("speed", "dist"),
                     hdType = c("Num", "Cat"))
@@ -39,7 +42,8 @@ test_that("Fringe creation with dictionaries work",{
   expect_equivalent(fringe_d(f2)[[2]], as.character(cars[[2]]))
 
   dic <- data.frame(label = c("speed", "dist"),
-                    id = c("speed", "dist"))
+                    id = c("speed", "dist"),
+                    description = c("SPEED", "DIST"))
   f3 <- fringe(d, dic = dic)
   expect_equal(f3, f)
 
