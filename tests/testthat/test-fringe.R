@@ -40,6 +40,7 @@ test_that("Fringe creation with dictionaries work",{
                     hdType = c("Num", "Cat"))
   f2 <- fringe(d, dic = dic)
   expect_equivalent(fringe_d(f2)[[2]], as.character(cars[[2]]))
+  expect_equivalent(names(fringe_data(f2)), dic$label)
 
   dic <- data.frame(label = c("speed", "dist"),
                     id = c("speed", "dist"),
