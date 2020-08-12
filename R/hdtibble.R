@@ -22,6 +22,7 @@ hdtibble <- function(df, frtype = NULL){
   df <- as.data.frame(df)
   # HERE GO ALL CASTS WITH GIVEN frType
   dd <- purrr::map2(df, hdtypes_str, function(x1,y1){
+    if(y1 == "___") return(x1)
     do.call(y1, list(x1))
   })
   d <- dd %>% tibble::as_tibble()

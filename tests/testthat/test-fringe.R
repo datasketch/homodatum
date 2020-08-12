@@ -1,5 +1,14 @@
 test_that("fringe", {
 
+  # NA fringes
+  d <- data.frame(x = NA)
+  dic <- create_dic(data.frame(x = NA))
+  dd <- hdtibble(d, frtype = paste0(dic$hdType, collapse = "-"))
+  expect_equal(d$x, dd$x)
+  expect_equal(dd$x, NA)
+
+  f <- new_fringe(data.frame(x = NA))
+
   f <- new_fringe(cars)
   length(f) # 4 ----> Expect 1
   fr <- fringe(cars)
