@@ -161,9 +161,13 @@ fringe_d <- function(f){
 }
 
 #'@export
-fringe_data <- function(f){
+fringe_data <- function(f, labels = FALSE){
   data <- fringe_d(f)
-  names(data) <- fringe_dic(f)$label
+  if(labels){
+    names(data) <- fringe_dic(f)$label
+  }else{
+    names(data) <- fringe_dic(f)$id
+  }
   class(data) <- class(data)[class(data) != "hd_tbl"]
   data
 }
