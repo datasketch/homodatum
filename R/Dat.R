@@ -118,7 +118,7 @@ vec_ptype2.hd_Dat.hd_Dat <- function(x, y, ...) {
 #' @export
 vec_ptype2.hd_Dat.character <- function(x, y, ...) Dat()
 
-#' @method vec_ptype2.character hd_Cat
+#' @method vec_ptype2.character hd_Dat
 #' @export
 vec_ptype2.character.hd_Dat <- function(x, y, ...) Dat()
 # vec_ptype2.hd_Dat.new_date <- function(x, y, ...) Dat()
