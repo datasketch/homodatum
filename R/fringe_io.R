@@ -1,6 +1,5 @@
 
 #' @export
-
 fringe_read <- function(path){
 
   d <- readr::read_csv(paste0(path, ".csv"), col_types = readr::cols())
@@ -18,6 +17,12 @@ fringe_read <- function(path){
 
 
 #' @export
+fringe_meta <- function(x){
+  y <- list(name = x$name, description = x$description)
+  modifyList(y, x$meta)
+}
+
+#' @export
 fringe_write <- function(x, path = "", overwrite_dic = FALSE){
   if(!is_fringe(x))
     stop("x is not a fringe")
@@ -28,13 +33,12 @@ fringe_write <- function(x, path = "", overwrite_dic = FALSE){
     stop("Cannot overwrite dic")
   }
   readr::write_csv(x$dic, dic_path)
-  y <- list(name = x$name, description = x$description)
-  y <- modifyList(y, x$meta)
+  y <- fringe_meta(x)
   yaml::write_yaml(y, file.path(path, paste0(x$slug,".yaml")))
 }
 
 #' @export
-fringe_write_json <- function(x, path = "", overwrite_dic = FALSE){
+fringe_write_json <- function(x, path = "", overwrite_dic = FALSE, preview_nrows = 100){
   if(!is_fringe(x))
     stop("x is not a fringe")
 
@@ -45,11 +49,43 @@ fringe_write_json <- function(x, path = "", overwrite_dic = FALSE){
 
   preview <- fringe_data(x, labels = TRUE)
 
-  y <- list(name = x$name, description = x$description)
-  y <- modifyList(y, x$meta)
+  y <- fringe_meta(x)
 
-  l <- list(info = y, data = d, dic = dic, preview = head(preview, 1000))
+  l <- list(info = y, data = d, dic = dic, preview = head(preview, preview_nrows))
   jsonlite::write_json(l, path, auto_unbox = TRUE)
+
+}
+
+
+#' @export
+fringe_write_xlsx <- function(x, path = "", overwrite_dic = FALSE,
+                              credits = NULL, more_info = NULL){
+  if(!is_fringe(x))
+    stop("x is not a fringe")
+
+  path <- file.path(path, paste0(x$slug,".xlsx"))
+
+  d <- fringe_data(x)
+  dic <- purrr::map_df(x$dic, as_baseType)
+  dic$hdType <- NULL
+
+  info <- fringe_meta(x)
+  info <- unlist(info)
+  info <- data.frame(label = names(info), value = info)
+  credits <- credits %||% list(label = "credits", value = "")
+  info <- rbind(credits, info, more_info)
+  names(info) <- c("", "")
+
+  wb <- openxlsx::createWorkbook()
+  openxlsx::addWorksheet(wb, "Data")
+  openxlsx::addWorksheet(wb, "Dictionary")
+  openxlsx::addWorksheet(wb, "Info")
+
+  openxlsx::writeDataTable(wb, 1, d)
+  openxlsx::writeDataTable(wb, 2, dic)
+  openxlsx::writeData(wb, 3, info)
+  ## Not run:
+  openxlsx::saveWorkbook(wb, file = path, overwrite = TRUE)
 
 }
 

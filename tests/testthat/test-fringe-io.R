@@ -11,11 +11,13 @@ test_that("Fringe IO works", {
 
   fringe_write(fr, path = dir, overwrite_dic = TRUE)
   fringe_write_json(fr, path = dir)
+  fringe_write_xlsx(fr, path = dir)
 
   expect_true(all(file.exists(file.path(dir,
                                         c('los-carros.csv',
                                           'los-carros.dic.csv',
                                           'los-carros.json',
+                                          'los-carros.xlsx',
                                           'los-carros.yaml')))))
 
   path <- file.path(dir, fr$slug)
