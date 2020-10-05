@@ -137,5 +137,18 @@ test_that("fringe", {
   f3 <- fringe_update_meta(f0, slug = "new_mtcars")
   expect_equal(f3, f2)
 
+  sources <- list(title = "source name", path = "url-of-source")
+
+  f4 <- fringe(mtcars, sources = sources)
+  expect_equal(f4$meta$sources, sources)
+
+  sources_update <- list()
+  sources_update[[1]] <- sources
+  sources_update[[2]] <- list(title = "another source", path = "url-of-source")
+
+  f5 <- fringe_update_meta(f4, name = "this data", sources = sources_update)
+  expect_equal(f5$meta$sources, sources_update)
+  expect_equal(f5$name, "this data")
+
 })
 
