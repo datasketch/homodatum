@@ -17,6 +17,7 @@ test_that("Fringe IO works", {
                                         c('los-carros.csv',
                                           'los-carros.dic.csv',
                                           'los-carros.json',
+                                          'los-carros.meta.json',
                                           'los-carros.xlsx',
                                           'los-carros.yaml')))))
 
