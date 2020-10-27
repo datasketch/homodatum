@@ -42,6 +42,7 @@ fringe_write_json <- function(x, path = "", overwrite_dic = FALSE, preview_nrows
   if(!is_fringe(x))
     stop("x is not a fringe")
 
+  path.meta <- file.path(path,paste0(x$slug,".meta.json"))
   path <- file.path(path,paste0(x$slug,".json"))
 
   d <- fringe_data(x)
@@ -51,7 +52,10 @@ fringe_write_json <- function(x, path = "", overwrite_dic = FALSE, preview_nrows
 
   y <- fringe_meta(x)
 
-  l <- list(info = y, data = d, dic = dic, preview = head(preview, preview_nrows))
+  l.meta <- list(info = y, dic = dic, preview = head(preview, preview_nrows))
+  l <- list(data = d)
+
+  jsonlite::write_json(l.meta, path.meta, auto_unbox = TRUE)
   jsonlite::write_json(l, path, auto_unbox = TRUE)
 
 }
