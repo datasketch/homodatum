@@ -47,13 +47,14 @@ fringe_write_json <- function(x, path = "", overwrite_dic = FALSE, preview_nrows
 
   d <- fringe_data(x)
   dic <- purrr::map_df(x$dic, as_baseType)
+  dic.complete <- dic %>% dplyr::select(-hdType)
 
   preview <- fringe_data(x, labels = TRUE)
 
   y <- fringe_meta(x)
 
   l.meta <- list(info = y, dic = dic, preview = head(preview, preview_nrows))
-  l <- list(data = d)
+  l <- list(dic = dic.complete, data = d)
 
   jsonlite::write_json(l.meta, path.meta, auto_unbox = TRUE)
   jsonlite::write_json(l, path, auto_unbox = TRUE)
