@@ -14,11 +14,11 @@ test_that("Pct is well defined", {
   y <- Pct(c("100%","20%")) # If there is at least 1 %
   y
   expect_equal(x,y)
-  x <- c("30%", "200%", NA)
+  x <- c("30 (%)", "(%)200", NA)
   expect_equal(vctrs::vec_data(Pct(x)), c(0.3, 2, NA))
 
-  expect_error(Pct(c("100%","20"))) # All must have the % symbol
-  expect_error(Pct(c("%100"))) # All must have the % symbol at the end
+  expect_error(Pct(c("100%", "20"))) # All must have the % symbol
+  expect_error(Pct(c("d%", "20 (%)", "(%) 32", "1 %", "e%"))) # All must have numbers
   expect_error(Pct("#4"))
 
   a <- data.frame(percent = Pct(c(1:10)/100))

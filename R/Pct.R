@@ -8,19 +8,23 @@ Pct <- function(x = double()) {
 
   # x <- tryCatch(vctrs::vec_cast(x, double()),
   x <- tryCatch(as.numeric(x),
-                warning = function(w){
-                  x_no_na <- x[!is.na(x)]
-                  if(all(grepl("%$",x_no_na))){
-                    as.numeric(gsub("%","", x), double())/100
-                  }else{
+                warning = function(w) {
+                  x_no_na <- !is.na(x)
+                  if (all(grepl("([^%]*%[^%]*[0-9]+)|([0-9]+[^%]*%.*)", x[x_no_na]))) {
+                    x[x_no_na] <- gsub("\\,", ".", x[x_no_na])
+                    x[x_no_na] <- regmatches(x[x_no_na], regexpr("[0-9]*\\.*[0-9]+", x[x_no_na]))
+                    as.numeric(x, double())/100
+                  } else{
                     w
                   }
                 },
                 error = function(e) {
-                  x_no_na <- x[!is.na(x)]
-                  if(all(grepl("%$",x_no_na))){
-                    as.numeric(gsub("%","", x), double())/100
-                  }else{
+                  x_no_na <- !is.na(x)
+                  if (all(grepl("([^%]*%[^%]*[0-9]+)|([0-9]+[^%]*%.*)", x[x_no_na]))) {
+                    x[x_no_na] <- gsub("\\,", ".", x[x_no_na])
+                    x[x_no_na] <- regmatches(x[x_no_na], regexpr("[0-9]*\\.*[0-9]+", x[x_no_na]))
+                    as.numeric(x, double())/100
+                  } else{
                     e
                   }
                 })

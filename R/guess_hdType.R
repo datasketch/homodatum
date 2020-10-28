@@ -77,10 +77,11 @@ has_decimal_comma <- function(v){
 
 maybePct <- function(v){
   if(is.numeric(v)){
-    return(all(purrr::map(v, function(z) {all(z >= 0 && z<=1) }) %>% unlist() == TRUE))
+    return(all(purrr::map(v, function(z) {all(z >= 0 && z <= 1) }) %>% unlist() == TRUE))
   }
   if(is.character(v)){
-    return(all(grepl("%", v[!is.na(v)])))
+    return(all(grepl("([^%]*%[^%]*[0-9]+)|([0-9]+[^%]*%.*)", v[!is.na(v)])))
+    # return(all(grepl("%", v[!is.na(v)])))
   }
 }
 
