@@ -40,6 +40,7 @@ Dat <- function(x = character(), format = NULL, skip_stats = FALSE) {
   new_Dat(x, format = format, skip_stats = skip_stats)
 }
 
+#' @export
 is_Dat <- function(x) {
   inherits(x, "hd_Dat")
 }
