@@ -30,6 +30,9 @@ which_hdType <- function(x){
 
 #' @export
 as_hdType <- function(x) {
+  if(any(class(x) == "factor")){
+    x <- as.character(x)
+  }
   vctrs::vec_cast(x, new_hdType())
 }
 

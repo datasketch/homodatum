@@ -12,13 +12,13 @@ guess_hdType <- function(v){
   if(length(v) == 0)
     return(hdType("___"))
 
-  if(class(v) %in% c("integer","numeric")){
+  if(any(class(v) %in% c("integer","numeric"))){
     ctype <- hdType("Num")
     if(all(v %in% 1500L:2200L)) ctype <- hdType("Yea")
     if(maybePct(v)) ctype <- hdType("Pct")
     return(ctype)
   }
-  if(class(v) == "Date")
+  if(any(class(v) == "Date") | any(c("POSIXt", "POSIXct") %in% class(v)))
     return(hdType("Dat"))
 
   if(class(v)!= "factor" & !has_warning(as.numeric(v))){

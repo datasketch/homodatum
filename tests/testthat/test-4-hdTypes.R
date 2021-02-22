@@ -72,7 +72,7 @@ test_that("Cast hdType",{
   hdType("Cat") == "Cat"
 
   d <- data.frame(x = hdType(c("Num", "Cat")), y = 1:2)
-  readr::write_csv(d,"~/Downloads/test.csv")
+  readr::write_csv(d,"inst/test.csv")
 
 })
 
@@ -85,10 +85,10 @@ test_that("write hdTypes",{
     d = Num(runif(2)*10),
     e = Pct(runif(2))
   )
-  data_str <- readr::write_csv(data,"") %>% tibble::as_tibble()
+  data_str <- readr::write_csv(data,"inst/test.csv") %>% tibble::as_tibble()
   str(data_str)
-  test <- read_csv(system.file("test.csv", package = "homodatum"),
-                   col_types = cols(.default = "c"))
+  test <- readr::read_csv(system.file("test.csv", package = "homodatum"),
+                          col_types = readr::cols(.default = "c"))
   # expect_equivalent(data_str, test)
 
 })
