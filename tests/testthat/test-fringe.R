@@ -46,7 +46,8 @@ test_that("Fringe creation with dictionaries work",{
 
   dic <- data.frame(label = c("Speed", "Dist"),
                     id = c("speed", "dist"),
-                    hdType = c("Num", "Cat"))
+                    hdType = c("Num", "Cat"),
+                    stringsAsFactors = FALSE)
   f2 <- fringe(d, dic = dic)
   expect_equivalent(fringe_d(f2)[[2]], as.character(cars[[2]]))
   expect_equivalent(names(fringe_data(f2)), dic$id)
@@ -61,7 +62,7 @@ test_that("Fringe creation with dictionaries work",{
 })
 
 
-test_that("frige column extraction works",{
+test_that("fringe column extraction works",{
 
   f <- sample_fringe("Cat-Dat-Num-Pct", n = 11,
                      names = c("Category", "Dates", "Numbers","Percentages"))
@@ -73,7 +74,7 @@ test_that("frige column extraction works",{
 })
 
 
-test_that("frige column extraction works",{
+test_that("frige dictionaries have correct format",{
 
   f <- sample_fringe("Cat-Dat-Num-Pct", n = 11,
                      names = c("Category", "Dates", "Numbers","Percentages"))
