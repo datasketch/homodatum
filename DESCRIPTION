@@ -1,6 +1,6 @@
 Package: homodatum
 Title: Data types for humans.
-Version: 0.1.0
+Version: 0.8.1
 Authors@R: 
     person(given = "Juan Pablo",
            family = "Marin Diaz",
