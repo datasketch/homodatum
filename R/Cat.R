@@ -102,7 +102,7 @@ vec_cast.character.hd_Cat <- function(x, to, ...) vctrs::vec_data(x)
 
 #' @export
 as_Cat <- function(x) {
-  vctrs::vec_cast(x, new_Cat())
+  vctrs::vec_cast(as.character(x), new_Cat())
 }
 
 
