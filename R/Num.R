@@ -90,6 +90,7 @@ as.character.hd_Num <- function(x) as.character(vec_data(x))
 
 #' @export
 as_Num <- function(x) {
+  x <- as.numeric(x)
   vctrs::vec_cast(x, Num())
 }
 
