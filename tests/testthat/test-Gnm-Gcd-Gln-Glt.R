@@ -11,7 +11,20 @@ test_that("Gnm, Gcd, Gln, Glt", {
   expect_equal(attr(cities,"stats")$n[1], 1)
   expect_equal(attr(cities,"n_categories"), 3)
 
+  Gnm()
+  x <- new_Gnm(c("Colombia", "Argentina", "Brazil"))
+  vec <- c("Colombia", "Argentina", "Brazil")
+  class(vec)
+  vec_test <- as_Gnm(vec)
 
+  expect_true("hd_Gnm" %in% class(vec_test))
+
+
+  vec <- 1:10
+  class(vec)
+  vec_test <- as_Gnm(vec)
+
+  expect_true("hd_Gnm" %in% class(vec_test))
   # TODO add option to TRIM (spaces, etc) Gnms, and to regroup/refactor
 
   x <- letters
