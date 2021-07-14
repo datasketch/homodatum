@@ -102,6 +102,7 @@ vec_cast.character.hd_Gcd <- function(x, to, ...) vctrs::vec_data(x)
 
 #' @export
 as_Gcd <- function(x) {
+  x <- as.character(x)
   vctrs::vec_cast(x, new_Gcd())
 }
 
