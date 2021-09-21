@@ -59,6 +59,8 @@ test_that("Fringe creation with dictionaries work",{
   f3 <- fringe(d, dic = dic)
   expect_equal(f3, f)
 
+  expect_equal(as.character(f3$frtype), fringe_frtype(f3))
+
 })
 
 

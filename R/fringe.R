@@ -198,6 +198,11 @@ fringe_hdTypes <- function(fr, named = FALSE){
   x
 }
 
+#'@export
+fringe_frtype <- function(fr){
+  as.character(fr$frtype)
+}
+
 
 
 
