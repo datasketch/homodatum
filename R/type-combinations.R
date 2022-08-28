@@ -13,7 +13,7 @@ sub_fringe_cols <- function(fr, frtype = NULL, group = NULL,
 
 
 
-sub_hdTypesVars <- function(namedHdTypes, frtype = NULL, group = NULL){
+sub_hdTypesVars <- function(hdtypes, frtype = NULL, group = NULL){
 
   pw <- powerSet(namedHdTypes)
   all_possible <- lapply(pw, function(x) {

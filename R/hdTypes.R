@@ -1,8 +1,9 @@
 
 new_hdType <- function(x = character()){
   vctrs::vec_assert(x, character())
-  if(!all(vctrs::vec_data(x) %in% available_hdTypes(as_character = TRUE))){
-    stop("hdType must be one of: ", paste(collapse = ", "))
+  av <- available_hdTypes(as_character = TRUE)
+  if(!all(vctrs::vec_data(x) %in% av)){
+    stop(x, "hdType must be one of: ", paste(av, collapse = ", "))
   }
   vctrs::new_vctr(x, class = "hdType")
 }
