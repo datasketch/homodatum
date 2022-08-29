@@ -157,6 +157,11 @@ make_slug <- function(x){
 }
 
 
+sys_file <- function(...){
+  system.file(..., package = "homodatum")
+}
+
+
 `%||%` <- function (x, y){
   suppressWarnings({
     if (is.empty(x))

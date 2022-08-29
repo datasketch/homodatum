@@ -1,5 +1,7 @@
 test_that("fringe", {
 
+  #f <- fringe(NULL)
+
   # NA fringes
   d <- data.frame(x = NA)
   dic <- create_dic(data.frame(x = NA))

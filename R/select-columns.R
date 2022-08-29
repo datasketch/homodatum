@@ -40,4 +40,49 @@ fringe_subset_columns <- function(f, frtype = NULL, group = NULL){
   select_columns(f, columns = sub_cols)
 }
 
+#' @export
+suggest_columns <- function(f, frtype = NULL, group = NULL){
+  stats <- fringe_stats(f)
+  dic <- fringe_dic(f, stats = TRUE)
+  suggest <- NULL
+  # if(stats$ncol > 4){
+  # }else{
+  # }
+  if(frtype == "Cat-Num"){
+    suggest_cat <- dic_suggest_cat(dic, n = 1)
+    suggest_num <- dic_suggest_num(dic, n = 1, random = TRUE)
+    suggest <- c(suggest_cat, suggest_num)
+  }
+  suggest
+}
 
+
+dic_suggest_cat <- function(dic, n = 1, random = FALSE){
+  if(is.null(dic$stats))
+    stop("Need dic with stats")
+  cats <- dic |>
+    filter(hdType == "Cat")
+  cats$n_unique <- purrr::map_dbl(cats$stats, "n_unique")
+  cats <- cats |>
+    filter(n_unique > 1, n_unique < 11)
+  if(!random){
+   cats <- cats |> dplyr::slice(1:n)
+  }else{
+    cats <- cats |> dplyr::sample_n(n)
+  }
+  columns <- cats |> pull(id)
+  names(columns) <- cats |> pull(label)
+  columns
+}
+
+dic_suggest_num <- function(dic, n = 1, random = FALSE){
+  nums <- dic |> filter(hdType == "Num")
+  if(!random){
+    nums <- nums |> dplyr::slice(1)
+  }else{
+    nums <- nums |> dplyr::sample_n(1)
+  }
+  columns <- nums |> pull(id)
+  names(columns) <- nums |> pull(label)
+  columns
+}
