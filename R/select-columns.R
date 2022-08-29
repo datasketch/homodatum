@@ -19,11 +19,25 @@ select_columns <- function(f, columns){
 }
 
 #' @export
-subset_columns <- function(f, frtype = NULL, group = NULL){
-  dic <- fringe_dic(f)
-  hdtypes <- dic$hdType
-  names(hdtypes) <- dic$label
+hdtypes_subset <- function(x, frtype = NULL, group = NULL){
+  if(is_fringe(x)){
+    dic <- fringe_dic(x)
+    hdtypes <- dic$hdType
+    names(hdtypes) <- dic$label
+  }else if(is_hdType(x)){
+    hdtypes <- x
+    if(is.null(names(x)))
+      stop("hdtype must be named")
+  }
   subs <- sub_hdTypesVars(hdtypes, frtype = frtype, group = group)
+  subs
+}
+
+#' @export
+fringe_subset_columns <- function(f, frtype = NULL, group = NULL){
+  subs <- hdtypes_subset(f, frtype = frtype, group = group)
   sub_cols <- names(subs[[1]])
   select_columns(f, columns = sub_cols)
 }
+
+

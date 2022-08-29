@@ -14,7 +14,11 @@ test_that("Select columns", {
 
   stats <- homodatum::fringe_dic(f2, stats = TRUE)
 
-  f3 <- subset_columns(f, frtype = "Cat-Num")
+  x <- hdType(c("Category1"="Cat","Numeric"="Num", "Category2" = "Cat"))
+  hdtypes_subset(x, frtype = "Cat-Num")
+  hdtypes_subset(x, frtype = "Cat")
+
+  f3 <- fringe_subset_columns(f, frtype = "Cat-Num")
   expect_equal(fringe_frtype(f3), "Cat-Num")
 
 

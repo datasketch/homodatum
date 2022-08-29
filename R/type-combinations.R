@@ -34,6 +34,7 @@ sub_hdTypesVars <- function(hdtypes, frtype = NULL, group = NULL){
     sub <- unlist(purrr::map(sub, "permutations"), recursive = FALSE)
     return(sub)
   }
+  all_possible
 }
 
 
