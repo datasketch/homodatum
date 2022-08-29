@@ -6,10 +6,16 @@ new_Cat <- function(x = character(), categories = NULL,
   nms <- names(x)
   stats <- NULL
   if(!skip_stats){
-    stats <- table(x,useNA = "always") %>%
+    summary <- table(x,useNA = "always") %>%
       tibble::as_tibble() %>%
       dplyr::mutate(dist = n/sum(n), names = c(nms, NA)) %>%
       dplyr::rename(category = x)
+    stats <- list(
+      n_unique = length(unique(x[!is.na(x)])),
+      n_na = sum(is.na(x)),
+      pct_na = sum(is.na(x))/length(x),
+      summary = summary
+    )
   }
   vctrs::new_vctr(x, categories = categories,
            n_categories = length(categories),

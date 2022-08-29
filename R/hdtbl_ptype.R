@@ -130,11 +130,6 @@ validValidators <- function(validators){
   all(v %in% c(fringevalf,colvalf))
 }
 
-#' @export
-selectColumns <- function(fringe,fields){
-  if(!all(fields %in% getColumnNames(fringe))) stop("Columns not in this fringe")
-  fringe(fringe$data[fields],name = fringe$name, description = fringe$description)
-}
 
 
 

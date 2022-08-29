@@ -1,6 +1,20 @@
 
-new_Pct <- function(x = double()){
+new_Pct <- function(x = double(), skip_stats = FALSE){
   vctrs::vec_assert(x, double())
+
+  stats <- NULL
+  if(length(x) == 0)
+    skip_stats <- TRUE
+  if(!skip_stats){
+    stats <- list(
+      n_unique = length(unique(x)),
+      n_na = sum(is.na(x)),
+      pct_na = sum(is.na(x))/length(x),
+      min = min(x, na.rm = TRUE),
+      max = max(x, na.rm = TRUE)
+    )
+  }
+
   vctrs::new_vctr(x, class = "hd_Pct")
 }
 
@@ -95,4 +109,10 @@ as_Pct <- function(x) {
   vctrs::vec_cast(x, new_Pct())
 }
 
+
+#' @export
+Pct_get_stats <-  function(x){
+  if(!is_Pct(x)) stop("x must be a Pct")
+  attr(x, "stats")
+}
 

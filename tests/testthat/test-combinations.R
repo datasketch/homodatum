@@ -14,12 +14,12 @@ test_that("frtype combinations work",{
   expect_equal(perm[[1]], hdType(c(A = "Cat", B = "Num")))
   expect_equal(perm[[2]], hdType(c(B = "Num", A = "Cat")))
 
-  # hdtypes <- hdType(c(A = "Cat", B = "Cat", C = "Num"))
-  # sub <- sub_hdTypesVars(hdtypes, frtype = "Cat-Num")
-  # expect_equal(sub[[1]], hdType(c(A = "Cat", C = "Num")))
-  # expect_equal(sub[[2]], hdType(c(B = "Cat", C = "Num")))
-  # sub2 <- sub_hdTypesVars(hdtypes, frtype = frType("Cat-Num"))
-  # expect_equal(sub, sub2)
+  hdtypes <- hdType(c(A = "Cat", B = "Cat", C = "Num"))
+  sub <- sub_hdTypesVars(hdtypes, frtype = "Cat-Num")
+  expect_equal(sub[[1]], hdType(c(A = "Cat", C = "Num")))
+  expect_equal(sub[[2]], hdType(c(B = "Cat", C = "Num")))
+  sub2 <- sub_hdTypesVars(hdtypes, frtype = frType("Cat-Num"))
+  expect_equal(sub, sub2)
   #
   # sub <- sub_hdTypesVars(hdtypes, frtype = c("Cat","Cat-Num"))
   # expect_equal(sub[[2]], hdType(c(B = "Cat")))

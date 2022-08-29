@@ -8,6 +8,7 @@ test_that("fringe", {
   expect_equal(dd$x, NA)
 
   f <- new_fringe(data.frame(x = NA))
+  f$stats
 
   f <- new_fringe(cars)
   length(f) # 4 ----> Expect 1

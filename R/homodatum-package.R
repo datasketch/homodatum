@@ -20,8 +20,10 @@
 NULL
 
 
-#' #' @importFrom vctrs vec_ptype2 vec_cast
-#' NULL
-
+## usethis namespace: start
+#' @importFrom dplyr filter select slice pull
+#' @importFrom lubridate ymd_hms
+## usethis namespace: end
+NULL
 
 

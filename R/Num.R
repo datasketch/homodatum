@@ -6,6 +6,9 @@ new_Num <- function(x, skip_stats = FALSE){
     skip_stats <- TRUE
   if(!skip_stats){
     stats <- list(
+      n_unique = length(unique(x)),
+      n_na = sum(is.na(x)),
+      pct_na = sum(is.na(x))/length(x),
       min = min(x, na.rm = TRUE),
       max = max(x, na.rm = TRUE)
     )
@@ -98,7 +101,7 @@ as_Num <- function(x) {
 
 #' @export
 Num_get_stats <-  function(x){
-  if(!is_Num(x)) stop("x must be a Cat")
+  if(!is_Num(x)) stop("x must be a Num")
   attr(x, "stats")
 }
 

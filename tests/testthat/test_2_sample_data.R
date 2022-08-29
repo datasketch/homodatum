@@ -3,6 +3,8 @@ context("sample data")
 
 test_that("Sample Column",{
 
+  sampleDat(10, addNA = FALSE)
+
   x <- diff(vctrs::vec_data(sampleDat(10, addNA = FALSE)))
   expect_true(all(x == 1))
 

@@ -25,7 +25,7 @@ new_fringe <- function(d = new_data_frame(),
   dd$description <- description
   dd$slug <- slug
   dd$meta <- meta
-  dd$stats <- calculateFringeStats(d)
+  dd$stats <- calculate_fringe_stats(d, dic)
   class(dd) <- "fringe"
   dd
 }
@@ -56,8 +56,18 @@ is_fringe <- function(x) {
 }
 
 
-calculateFringeStats <- function(x){
-  list(nrow = nrow(x), ncol = ncol(x))
+calculate_fringe_stats <- function(d, dic){
+
+  stats <- purrr::map(d, function(col){
+    hdtype <- which_hdType(col)
+    if(length(hdtype) != 0){
+      do.call(paste0(hdtype, "_get_stats"), list(col))
+    }else{
+      NA
+    }
+  })
+
+  list(nrow = nrow(d), ncol = ncol(d), col_stats = stats)
 }
 
 #' @export
@@ -184,10 +194,14 @@ fringe_hdTibble <- function(f){
 }
 
 #' @export
-fringe_dic <- function(f, id_letters = FALSE){
+fringe_dic <- function(f, id_letters = FALSE, stats = FALSE){
   dic <- f$dic
   if(id_letters)
     dic$id_letters <- letterNames(nrow(dic))
+  if(stats){
+    col_stats <- fringe_stats(f)$col_stats
+    dic$stats <- unname(col_stats)
+  }
   dic
 }
 

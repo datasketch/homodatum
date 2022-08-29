@@ -6,8 +6,9 @@ test_that("Cat", {
   attr(cats, "stats")
   attr(cats, "categories")
   str(cats)
-  expect_equal(attr(cats,"stats")$category, unique(x))
-  expect_equal(attr(cats,"stats")$n[2], 2)
+  expect_equal(attr(cats,"stats")$summary$category, unique(x))
+  expect_equal(attr(cats,"stats")$summary$n[2], 2)
+  expect_equal(attr(cats,"stats")$n_unique, 3)
   expect_equal(attr(cats,"n_categories"), 3)
 
   # TODO add option to TRIM (spaces, etc) Cats, and to regroup/refactor
@@ -15,7 +16,7 @@ test_that("Cat", {
   x <- letters
   names(x) <- LETTERS
   cats <- new_Cat(x)
-  expect_equal(attr(cats,"stats")$names, c(LETTERS, NA))
+  expect_equal(attr(cats,"stats")$summary$names, c(LETTERS, NA))
 
 
   #Cat(NULL)
@@ -38,7 +39,7 @@ test_that("Cat", {
   expect_equal(Cat_get_categories(x),c("1","2","3"))
   expect_equal(Cat_get_n_categories(x), 3)
   stats <- Cat_get_stats(x)
-  expect_equal(stats$n[1:3], as.vector(table(x)))
+  expect_equal(stats$summary$n[1:3], as.vector(table(x)))
 
   a <- data.frame(mycats = Cat(c("black", "white")), value = 1:2)
   tibble::tibble(a)

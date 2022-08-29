@@ -11,12 +11,22 @@ new_Dat <- function(x = character(), format = NULL,
   }
   d <- as.Date(x, format = fmt %||% "%Y-%Om-%d")
   stats <- NULL
-  if(!skip_stats && !all(is.na(d))){
+
+  nms <- names(x)
+  stats <- NULL
+  if(!skip_stats){
+    summary <- table(x,useNA = "always") %>%
+      tibble::as_tibble() %>%
+      dplyr::mutate(dist = n/sum(n), names = c(nms, NA)) %>%
+      dplyr::rename(category = x)
     stats <- list(
-      min = min(d, na.rm = TRUE),
-      max = max(d, na.rm = TRUE)
+      n_unique = length(unique(x)),
+      n_na = sum(is.na(x)),
+      pct_na = sum(is.na(x))/length(x),
+      summary = summary
     )
   }
+
   # vctrs::vec_assert(format, ptype = character(), size = 1)
   vctrs::vec_assert(d, vctrs::new_date())
   vctrs::new_vctr(d, format = unname(fmt), order = names(fmt),
@@ -37,7 +47,8 @@ Dat <- function(x = character(), format = NULL, skip_stats = FALSE) {
   }
   x <- vctrs::vec_cast(x, character())
   # format <- vec_recycle(vctrs::vec_cast(format, character()), format)
-  new_Dat(x, format = format, skip_stats = skip_stats)
+  new_Dat(x, format = format,
+          skip_stats = skip_stats)
 }
 
 #' @export
