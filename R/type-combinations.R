@@ -17,6 +17,7 @@ sub_hdTypesVars <- function(hdtypes, frtype = NULL, group = NULL){
 
   pw <- powerSet(hdtypes)
   all_possible <- lapply(pw, function(x) {
+    # x <- pw[[14]]
     list(
       group = get_frGroup(paste(x,collapse = "-")),
       frtype = paste(x,collapse = "-"),
@@ -59,10 +60,10 @@ hdTypes_permute <- function(hdtypes, nms = NULL){
   if(is.null(nms))
     stop("ctypes must have names")
   y <- permuteVector(nms) %>% t()
-  names(y) <- 1:ncol(y)
+  colnames(y) <- 1:ncol(y)
   y <- y %>% tibble::as_tibble(.name_repair = "unique") %>% as.list()
   x <- permuteVector(as.character(hdt)) %>% t()
-  names(x) <- 1:ncol(x)
+  colnames(x) <- 1:ncol(x)
   x <- x %>% tibble::as_tibble(.name_repair = "unique") %>% as.list()
   unname(purrr::map2(x,y, ~ hdType(purrr::set_names(.x, .y))))
 }

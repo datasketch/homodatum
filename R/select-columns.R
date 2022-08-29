@@ -18,3 +18,12 @@ select_columns <- function(f, columns){
          name = f$name, description = f$description)
 }
 
+#' @export
+subset_columns <- function(f, frtype = NULL, group = NULL){
+  dic <- fringe_dic(f)
+  hdtypes <- dic$hdType
+  names(hdtypes) <- dic$label
+  subs <- sub_hdTypesVars(hdtypes, frtype = frtype, group = group)
+  sub_cols <- names(subs[[1]])
+  select_columns(f, columns = sub_cols)
+}
