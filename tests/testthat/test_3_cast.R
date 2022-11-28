@@ -1,5 +1,3 @@
-context("cast")
-
 
 test_that("Cast Ctypes",{
 

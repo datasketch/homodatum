@@ -1,5 +1,3 @@
-context("dic")
-
 test_that("dic",{
 
   d <- mtcars

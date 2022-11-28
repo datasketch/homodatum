@@ -1,4 +1,3 @@
-context("combinations")
 
 test_that("frtype combinations work",{
 

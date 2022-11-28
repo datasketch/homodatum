@@ -1,5 +1,3 @@
-context("sample data")
-
 
 test_that("Sample Column",{
 
