@@ -20,10 +20,13 @@ Imports:
     dplyr,
     vctrs,
     lubridate,
-    magrittr (>= 1.5)
+    magrittr (>= 1.5),
+    dstools
+    makeup
 Suggests:
     testthat (>= 2.1.0),
     knitr,
     rmarkdown
+Additional_repositories: http://pablotis.github.io/drat
 VignetteBuilder: knitr
 RoxygenNote: 7.1.2

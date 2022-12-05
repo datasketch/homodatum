@@ -26,24 +26,21 @@ isDate <- function(v){
 parseDate <- function(v, format = NULL){
   #v0 <- v[!is.na(v)]
   v0 <- v
-  format <- guess_date_fmt(v0)
+  format <- makeup::guess_date_fmt(v0)
   as.Date(v, format = format)
 }
 
-
-guess_date_fmt <- function(sample){
-  #locale <- locale %||% guess_date_locale(sample)
-  format_orders <- c("ymd", "mdY", "dmy", "BdY", "Bdy","dBY","dbY", "bdY", "bdy",
-                     "Bd","bd", "dB","db")
-  fmts <- lubridate::guess_formats(sample, format_orders)
-  fmts_count <- rev(sort(table(names(fmts)))) # table apparently does not return results sorted
-  fmt_nm <- names(fmts_count[1]) # take the most popular
-  fmt <- fmts[fmt_nm]
-  fmt
-}
-
-
-
+### Importar de makeup
+# guess_date_fmt <- function(sample){
+#   #locale <- locale %||% guess_date_locale(sample)
+#   format_orders <- c("ymd", "mdY", "dmy", "BdY", "Bdy","dBY","dbY", "bdY", "bdy",
+#                      "Bd","bd", "dB","db")
+#   fmts <- lubridate::guess_formats(sample, format_orders)
+#   fmts_count <- rev(sort(table(names(fmts)))) # table apparently does not return results sorted
+#   fmt_nm <- names(fmts_count[1]) # take the most popular
+#   fmt <- fmts[fmt_nm]
+#   fmt
+# }
 
 
 
@@ -51,7 +48,7 @@ parseDatetime <- function(v, datetimeType){
   v0 <- v[!is.na(v)]
   v0 <- v
   if(datetimeType == "Dat"){
-    format <- guess_date_fmt(v0)
+    format <- makeup::guess_date_fmt(v0)
     outVals <- as.Date(v, format = format)
   }
   if(datetimeType == "Hms"){
