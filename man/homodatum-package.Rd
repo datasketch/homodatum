@@ -4,7 +4,7 @@
 \name{homodatum-package}
 \alias{homodatum}
 \alias{homodatum-package}
-\title{homodatum: Data types for humans.}
+\title{homodatum: Data types for humans}
 \description{
 Data types for humans.
 }

@@ -4,8 +4,8 @@
 \alias{to_ftype}
 \title{#' @export
 to_ctypes <- function(ftype){
-  ctypes <-
-    map()
+ctypes <-
+map()
 }}
 \usage{
 to_ftype(ctypes)
@@ -13,7 +13,7 @@ to_ftype(ctypes)
 \description{
 #' @export
 to_ctypes <- function(ftype){
-  ctypes <-
-    map()
+ctypes <-
+map()
 }
 }
