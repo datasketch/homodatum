@@ -28,7 +28,7 @@ castable_list <- function(ctypes){
 
 castable_ctype <- function(ctype){
   cc <- castable_ctypes()
-  cc %>% filter(from == ctype) %>% pull()
+  cc %>% dplyr::filter(from == ctype) %>% pull()
 }
 
 cast_ctype <- function(from, to,...){

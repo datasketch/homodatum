@@ -59,7 +59,7 @@ maybeNum <- function(v){
   if(inherits(nums, "warning")){
     return(FALSE)
   }
-  if(na_proportion(nums) > 0.8){
+  if(dstools::na_proportion(nums) > 0.8){
     return(FALSE)
   }
   TRUE

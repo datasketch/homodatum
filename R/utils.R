@@ -148,7 +148,7 @@ insert_column <- function(d, vector, target, col_name){
 
 make_slug <- function(x){
   x <- gsub("[^[:alnum:]]", "-", x)
-  x <- remove_accents(tolower(x))
+  x <- dstools::remove_accents(tolower(x))
   x <- gsub("-+", "-", x)
   x <- gsub("+[[:punct:]]$", "", x)
   x <- gsub("^-.", "", x)

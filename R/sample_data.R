@@ -157,7 +157,7 @@ sampleDay<- function(n, rep = TRUE, addNA = TRUE,...){
 #' @export
 sampleWdy<- function(n, rep = FALSE, lang = "en", locale = NULL, addNA = TRUE,...){
   dates <- sampleDat(n, addNA = addNA)
-  weekdaysLangs <- read_csv(system.file("data/weekdays-lang.csv",package = "homodatum"))
+  weekdaysLangs <- readr::read_csv(system.file("data/weekdays-lang.csv",package = "homodatum"))
   wd_translation <- weekdaysLangs %>%
     filter(language == lang) %>%
     select(-language) %>% as_vector()
