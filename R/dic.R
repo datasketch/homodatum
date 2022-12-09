@@ -12,7 +12,6 @@
 #' @examples
 #' d <- mtcars
 #' new_dic <- create_dic(d)
-#' View(new_dic)
 create_dic <- function(d, frtype = NULL){
   if(is.null(frtype)){
     if(is_hdtibble(d)){

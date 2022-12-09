@@ -7,8 +7,6 @@
 #' @param to string of Ctypes.
 #' @export
 #' @return data frame or a fringe according to input.
-#' @examples
-#' cast_ctypes(iris,"","")
 cast_ctypes <- function(data, from, to){
   f <- fringe(data)
   data <- f$d
