@@ -38,7 +38,7 @@ permutations <- function(n){
 
 col_ids_from_name <- function (x, sep = "_"){
   x <- gsub("[^[:alnum:]]", "_", x)
-  x <- remove_accents(x)
+  x <- dstools::remove_accents(x)
   x <- tolower(x)
   x <- gsub("-+", "_", x)
   x <- gsub("[[:punct:]]+","_",x)
@@ -48,7 +48,7 @@ col_ids_from_name <- function (x, sep = "_"){
 
 
   # x <- gsub("[^[:alnum:]]", "-", x)
-  # x <- remove_accents(tolower(x))
+  # x <- dstools::remove_accents(tolower(x))
   # x <- gsub("-+", "-", x)
   # x <- gsub("^-.", "", x)
   # x

@@ -86,6 +86,7 @@ sampleBin <- function(n, addNA = TRUE,...){
 }
 
 #' @export
+#' @importFrom dstools %||%
 sampleNum <- function(n,gt0 = NULL, addNA = TRUE,...){
   gt0 <- gt0 %||% FALSE
   v <- round(rnorm(n,1000,300)*1)
@@ -166,6 +167,7 @@ sampleWdy<- function(n, rep = FALSE, lang = "en", locale = NULL, addNA = TRUE,..
 }
 
 #' @export
+#' @importFrom dstools %||%
 sampleDtm <- function(n, start = NULL, end = NULL, addNA = TRUE,...){
   st <- start %||% Sys.Date()- 180
   et <- end %||% Sys.Date()

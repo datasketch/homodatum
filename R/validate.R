@@ -151,6 +151,7 @@
 #'
 #'
 #' #' @export
+#' @importFrom dstools %||%
 #' fringeColValidate <- function(t, cols = NULL, validation, ...){
 #'   availableValidations <- fringeColValidateFuns()
 #'   if(!validation %in% availableValidations)

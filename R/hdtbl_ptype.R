@@ -1,6 +1,7 @@
 
 
 #' @export
+#' @importFrom dstools %||%
 fringeske<- function(ctypes=NULL,cformats=NULL,cnames = NULL,
                      name = NULL, description = NULL,
                      validators = NULL, sample_data = NULL, useCnames = TRUE){

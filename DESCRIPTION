@@ -32,7 +32,8 @@ Imports:
 Suggests:
     testthat (>= 2.1.0),
     knitr,
-    rmarkdown
+    rmarkdown,
+    geodata
 Additional_repositories: http://pablotis.github.io/drat
 VignetteBuilder: knitr
 RoxygenNote: 7.2.1

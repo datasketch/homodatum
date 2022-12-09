@@ -1,4 +1,4 @@
-
+#' @importFrom dstools %||%
 new_fringe <- function(d = new_data_frame(),
                        dic = NULL,
                        frtype = NULL,
@@ -32,6 +32,7 @@ new_fringe <- function(d = new_data_frame(),
 
 
 #' @export
+#' @importFrom dstools %||%
 fringe <- function(x = new_data_frame(),
                    frtype = NULL, dic = NULL,
                    name = NULL, description = NULL,
@@ -76,6 +77,7 @@ fringe_stats <- function(f){
 }
 
 #' @export
+#' @importFrom dstools %||%
 fringe_update_meta <- function(f, ...){
   fixed <- c("data", "dic", "frtype", "group")
   args <- list(...)
