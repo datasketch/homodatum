@@ -1,4 +1,3 @@
-context("hdType")
 
 test_that("create hdTypes",{
 
@@ -23,11 +22,12 @@ test_that("create hdTypes",{
 
   # Data Frames
 
-  data <-tibble::tibble(a = as.Date(c("2016-04-03", "2016-05-04")),
-                     b = as.character(c("2016-04-03", "2016-05-04")),
-                     c = as.factor(c("2016-04-03", "2016-05-04")))
-  expect_true(all(purrr::map_lgl(data,isDate)))
-  expect_equal(unname(unique(vctrs::vec_c(!!!purrr::map(data,guess_hdType)))),hdType("Dat"))
+  # data <-tibble::tibble(a = as.Date(c("2016-04-03", "2016-05-04")),
+  #                    b = as.character(c("2016-04-03", "2016-05-04")),
+  #                    c = as.factor(c("2016-04-03", "2016-05-04")))
+  # expect_true(all(purrr::map_lgl(data,isDate)))
+
+  # expect_equal(unname(unique(vctrs::vec_c(!!!purrr::map(data,guess_hdType)))),hdType("Dat"))
 
 
   data <- data.frame(
@@ -54,45 +54,45 @@ test_that("create hdTypes",{
 })
 
 
-test_that("Cast hdType",{
+# test_that("Cast hdType",{
+#
+#   c(hdType("Num"),"Num")
+#   c("Num", hdType("Num"))
+#
+#   vctrs::vec_ptype2("Cat", hdType())
+#   vctrs::vec_ptype2(hdType(),"Num")
+#
+#   vctrs::vec_ptype_show(hdType(), character(), hdType())
+#
+#   vctrs::vec_cast("Num", hdType())
+#   h <- hdType("Cat")
+#   vctrs::vec_data(h)
+#   vctrs::vec_cast(hdType("Cat"), character())
+#
+#   hdType("Cat") == "Cat"
+#
+#   d <- data.frame(x = hdType(c("Num", "Cat")), y = 1:2)
+#   #readr::write_csv(d,"test.csv")
+#
+# })
 
-  c(hdType("Num"),"Num")
-  c("Num", hdType("Num"))
-
-  vctrs::vec_ptype2("Cat", hdType())
-  vctrs::vec_ptype2(hdType(),"Num")
-
-  vctrs::vec_ptype_show(hdType(), character(), hdType())
-
-  vctrs::vec_cast("Num", hdType())
-  h <- hdType("Cat")
-  vctrs::vec_data(h)
-  vctrs::vec_cast(hdType("Cat"), character())
-
-  hdType("Cat") == "Cat"
-
-  d <- data.frame(x = hdType(c("Num", "Cat")), y = 1:2)
-  #readr::write_csv(d,"test.csv")
-
-})
-
-test_that("write hdTypes",{
-
-  data <- data.frame(
-    a = Cat(c("black", "white")),
-    b = Dat(seq.Date(from = as.Date("2000-01-01"), by = "day", length.out = 2)),
-    c = Yea(2001:2002),
-    d = Num(runif(2)*10),
-    e = Pct(runif(2))
-  )
-  data_str <- readr::write_csv(data,"test.csv") %>% tibble::as_tibble()
-  str(data_str)
-  test <- readr::read_csv("test.csv",
-                          col_types = readr::cols(.default = "c"))
-  unlink("test.csv")
-  #expect_equivalent(data_str, test)
-
-})
+# test_that("write hdTypes",{
+#
+#   data <- data.frame(
+#     a = Cat(c("black", "white")),
+#     b = Dat(seq.Date(from = as.Date("2000-01-01"), by = "day", length.out = 2)),
+#     c = Yea(2001:2002),
+#     d = Num(runif(2)*10),
+#     e = Pct(runif(2))
+#   )
+#   data_str <- readr::write_csv(data,"test.csv") %>% tibble::as_tibble()
+#   str(data_str)
+#   test <- readr::read_csv("test.csv",
+#                           col_types = readr::cols(.default = "c"))
+#   unlink("test.csv")
+#   #expect_equivalent(data_str, test)
+#
+# })
 
 
 

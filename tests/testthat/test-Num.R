@@ -44,7 +44,7 @@ test_that("Num",{
   data <- data.frame(
     e = Num(runif(2))
   )
-  write.csv(data,"~/Downloads/test.csv")
+  # write.csv(data,"~/Downloads/test.csv")
 
   as_Num("1")
 
