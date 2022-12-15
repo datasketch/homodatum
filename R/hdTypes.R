@@ -13,10 +13,29 @@ hdType <- function(x = character()) {
   new_hdType(x)
 }
 
+
+
+# hdType ------------------------------------------------------------------
+
+#' @title hdType Vectors
+#'
+#' @description test for objects of type "hdType"
+#'
+#' @param x object to be coerced or tested
+#'
+#' @return returns TRUE or FALSE depending on whether its argument is of type hdType or not.
+#'
+#' @examples
+#'
+#' some_value <- hdType("Cat")
+#' is_hdType(some_value)
+#'
 #' @export
 is_hdType <- function(x) {
   inherits(x, "hdType")
 }
+
+
 
 #' @export
 is_any_hdType <- function(x){
@@ -29,6 +48,24 @@ which_hdType <- function(x){
 }
 
 
+# hdType ------------------------------------------------------------------
+
+#' @title hdType Vectors
+#'
+#' @description coerces its argument to a hdType. It is an abbreviated form of hdType.
+#'
+#' @param x object to be coerced
+#'
+#' @return attempts to coerce its argument to hdType type
+#'
+#' @examples
+#'
+#' some_chr_value <- "Cat"
+#' class(some_chr_value)
+#'
+#' some_hdt_value <- as_hdType(some_chr_value)
+#' class(some_hdt_value)
+#'
 #' @export
 as_hdType <- function(x) {
   if(any(class(x) == "factor")){
