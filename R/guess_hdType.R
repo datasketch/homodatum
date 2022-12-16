@@ -1,4 +1,26 @@
 
+#' @title hdType
+#' @description evaluates which of the available_hdTypes is the object
+#'
+#' @param v a value for which you want to evaluate
+#'
+#' @return An available_hdType value
+#'
+#' @examples
+#'
+#' # Num hdType
+#' value <- c("1",NA,"2")
+#' guess_hdType(value)
+#'
+#' # Cat hdType
+#' value <- c("MSPS-CD-166-2020", "003-2020", "0811 - 2020")
+#' guess_hdType(value)
+#'
+#' # Pct hdType
+#' value <- c(0.3, 0.4, 1)
+#' guess_hdType(value)
+#'
+#'
 #' @export
 guess_hdType <- function(v){
   # if("data.frame" %in% class(v))
