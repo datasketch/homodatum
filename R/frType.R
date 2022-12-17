@@ -52,12 +52,43 @@ frType <- function(x = character()) {
   new_frType(x)
 }
 
+
+
+#' @title frType Vectors
+#'
+#' @description Creates or test for objects of type "frType"
+#'
+#' @param x object to be coerced or tested
+#'
+#' @return returns TRUE or FALSE depending on whether its argument is of type frType or not.
+#'
+#' @examples
+#'
+#' value <- frType("Cat")
+#' is_frType(value)
+#'
 #' @export
 is_frType <- function(x) {
   inherits(x, "frType")
 }
 
 
+#' @title frType Vectors
+#'
+#' @description coerces its argument to a frType. It is an abbreviated form of frType.
+#'
+#' @param x object to be coerced
+#'
+#' @return attempts to coerce its argument to frType type
+#'
+#' @examples
+#'
+#' some_chr_value <- "Cat"
+#' class(some_chr_value)
+#'
+#' some_frt_value <- as_frType(some_chr_value)
+#' class(some_frt_value)
+#'
 #' @export
 as_frType <- function(x) {
   vctrs::vec_cast(x, new_frType())
@@ -65,12 +96,44 @@ as_frType <- function(x) {
 
 
 
+#' @title frType Vectors
+#'
+#' @description a grouped way of reading frTypes values
+#'
+#' @param x several (more than one) available frTypes values
+#'
+#' @return a grouped view of given frTypes values
+#'
+#' @examples
+#'
+#' x <- c("Cat-Num-Cat")
+#' fr <- frType(x)
+#' frType_group(fr)
+#'
 #' @export
 frType_group <- function(x){
   if(!is_frType(x)) stop("x must be a frType")
   attr(x, "group")
 }
 
+
+
+#' @title frType Vectors
+#'
+#' @description convert frTypes value(s) into hdType
+#'
+#' @param x an available frType value
+#'
+#' @return an hdType value
+#'
+#' @examples
+#'
+#' x <- frType("Cat")
+#' class(x)
+#'
+#' x_hdt <- frType_hdTypes(x)
+#' class(x_hdt)
+#'
 #' @export
 frType_hdTypes <- function(x, chr = FALSE){
   if(!is_frType(x)) stop("x must be a frType")
@@ -79,6 +142,24 @@ frType_hdTypes <- function(x, chr = FALSE){
   hdt
 }
 
+
+
+#' @title frType Vectors
+#'
+#' @description convert frTypes value(s) into character
+#'
+#' @param x an available frType value, frType dataframe or hd_tbl dataframe
+#'
+#' @return a character value
+#'
+#' @examples
+#'
+#' x <- frType("Cat")
+#' class(x)
+#'
+#' x_chr <- frType_str(x)
+#' class(x_chr)
+#'
 #' @export
 frType_str <- function(x){
   if(is_frType(x)){
