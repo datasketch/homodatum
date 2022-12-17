@@ -41,6 +41,18 @@ expand_frGroup <- function(frGroup){
 }
 
 
+#' @title frType Vectors
+#'
+#' @description Creates or coerces objects of type "frType"
+#'
+#' @param x object to be created or coerced
+#'
+#' @return returns a frType value
+#'
+#' @examples
+#'
+#' frType("Cat")
+#'
 #' @export
 frType <- function(x = character()) {
   if(is_hdType(x)){
