@@ -24,7 +24,7 @@ new_Cat <- function(x = character(), categories = NULL,
 
 
 #' @title Category Vectors
-#' @description Creates objects of type "hd_Cat".
+#' @description Creates objects of type "hd_Cat". hd_Cat objects contain three main attributes: categories, n_categories and stats. With categories you can check wich values are valid for the variable. With n_categories you can check how many of valid values are valid for the variable. With the last attribute, stats, you can check different basic operations to describe the varaible (n_unique, n_na, pct_na and summary).
 #'
 #' @param x object to be created as Cat type
 #'
@@ -46,7 +46,6 @@ Cat <- function(x = character(), categories = NULL, skip_stats = FALSE) {
 }
 
 #' @title Category Vectors
-#'
 #' @description test for objects of type "hd_Cat"
 #'
 #' @param x object to be coerced or tested
