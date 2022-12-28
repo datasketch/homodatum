@@ -38,6 +38,22 @@ Dat_formats <- function(order = c("dmy","mdy","ymd"), sep = "-"){
   c("YYYY-MM-DD", "MM/DD/YYYY")
 }
 
+#' @title Date Vectors
+#' @description Creates objects of type "hd_Dat". hd_Dat objects contain three main attributes: categories, n_categories and stats. With categories you can check wich values are valid for the variable. With n_categories you can check how many of valid values are valid for the variable. With the last attribute, stats, you can check different basic operations to describe the varaible (n_unique, n_na, pct_na and summary).
+#'
+#' @param x object to be created as Dat type
+#'
+#' @param format a character vector of date-time formats. Default is "%-m/%-d/%Y"
+#' @param skip_stats a logical evaluating to TRUE or FALSE indicating whether variable stats should be calculated and added to the hd_Dat object. The stats are n of unique categories, n of NA values, percentage of NA values and a frequency table.
+#'
+#' @examples
+#' x <-   c("2000-12-04","2010-20-04")
+#' dat <- Dat(x, format = "%Y-%d-%m")
+#' dat
+#' class(dat)
+#' attr(dat, "stats")
+#'
+#' @export
 Dat <- function(x = character(), format = NULL, skip_stats = FALSE) {
   if(inherits(x, "POSIXct")){
     x <- as.character(x)
@@ -51,6 +67,18 @@ Dat <- function(x = character(), format = NULL, skip_stats = FALSE) {
           skip_stats = skip_stats)
 }
 
+#' @title Date Vectors
+#' @description test for objects of type "hd_Dat"
+#'
+#' @param x object to be coerced or tested
+#'
+#' @return returns TRUE or FALSE depending on whether its argument is of type hd_Dat or not.
+#'
+#' @examples
+#' x <-   c("2000-12-04","2010-20-04")
+#' dat <- Dat(x, format = "%Y-%d-%m")
+#' is_Dat(dat)
+#'
 #' @export
 is_Dat <- function(x) {
   inherits(x, "hd_Dat")
