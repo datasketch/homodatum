@@ -12,12 +12,36 @@ new_Yea <- function(x = integer(), skip_stats = FALSE){
   vctrs::new_vctr(x, stats = stats, class = "hd_Yea")
 }
 
+#' @title Year Vectors
+#' @description Creates objects of type "hd_Yea". hd_Yea objects contain a "stats" attribute, with the following information: NA values (n_na), percentage weight of NA values (prop_na) and if (TRUE or FALSE) the set of given values conform a sequence (is_sequence).
+#'
+#' @param x object to be created as Yea type
+#'
+#' @examples
+#' x <- c(1800:1803, NA)
+#' year_values <- Yea(x)
+#' year_values
+#' class(year_values)
+#' attr(year_values, "stats")$is_sequence
+#'
 #' @export
 Yea <- function(x = integer()) {
   x <- vctrs::vec_cast(x, integer())
   new_Yea(x)
 }
 
+#' @title Year Vectors
+#' @description test for objects of type "hd_Yea"
+#'
+#' @param x object to be coerced or tested
+#'
+#' @return returns TRUE or FALSE depending on whether its argument is of type hd_Yea or not.
+#'
+#' @examples
+#' x <- c(1800:1803, NA)
+#' year_values <- Yea(x)
+#' is_Yea(year_values)
+#'
 #' @export
 is_Yea <- function(x) {
   inherits(x, "hd_Yea")
