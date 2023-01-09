@@ -18,6 +18,24 @@ new_Pct <- function(x = double(), skip_stats = FALSE){
   vctrs::new_vctr(x, class = "hd_Pct")
 }
 
+#' @title Percetage Vectors
+#' @description Creates objects of type "hd_Pct". hd_Pct format accepts anything coercible from double(). It also recognizes number with percentage symbol in a character value, as it could be "20%".
+#'
+#' @param x object to be created as Num type
+#'
+#' @examples
+#'
+#' ## Example 1
+#' pct_value <- Pct(c("1","0.2"))
+#' pct_value
+#' class(pct_value)
+#'
+#' ## Example 2
+#' pct_value <- Pct(c("30 (%)", "(%)200", NA))
+#' pct_value
+#' class(pct_value)
+#'
+#' @export
 Pct <- function(x = double()) {
 
   # x <- tryCatch(vctrs::vec_cast(x, double()),
@@ -45,6 +63,17 @@ Pct <- function(x = double()) {
   new_Pct(x)
 }
 
+#' @title Percentage Vectors
+#' @description test for objects of type "hd_Pct"
+#'
+#' @param x object to be coerced or tested
+#'
+#' @return returns TRUE or FALSE depending on whether its argument is of type hd_Pct or not.
+#'
+#' @examples
+#' pct_value <- Pct(c("1","0.2"))
+#' is_Pct(pct_value)
+#'
 #' @export
 is_Pct <- function(x) {
   inherits(x, "hd_Pct")

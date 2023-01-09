@@ -16,6 +16,18 @@ new_Num <- function(x, skip_stats = FALSE){
   vctrs::new_vctr(x, stats = stats, class = "hd_Num")
 }
 
+#' @title Numeric Vectors
+#' @description Creates objects of type "hd_Num". hd_Num objects contain a "stats" attribute, with the following information: unique values (n_unique), NA values (n_na), percentage weight of NA values (pct_na), lowest value (min) and highest value (max).
+#'
+#' @param x object to be created as Num type
+#'
+#' @examples
+#' x <-   c(1, 54, 678, NA, NA)
+#' num <- Num(x)
+#' num
+#' class(num)
+#' attr(num, "stats")
+#'
 #' @export
 Num <- function(x = double()) {
   if(is.character(x)){
@@ -28,6 +40,18 @@ Num <- function(x = double()) {
   new_Num(x)
 }
 
+#' @title Numeric Vectors
+#' @description test for objects of type "hd_Num"
+#'
+#' @param x object to be coerced or tested
+#'
+#' @return returns TRUE or FALSE depending on whether its argument is of type hd_Num or not.
+#'
+#' @examples
+#' x <-   c(1, 54, 678, NA, NA)
+#' num <- Num(x)
+#' is_Num(num)
+#'
 #' @export
 is_Num <- function(x) {
   inherits(x, "hd_Num")

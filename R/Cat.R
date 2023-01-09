@@ -23,6 +23,21 @@ new_Cat <- function(x = character(), categories = NULL,
 }
 
 
+#' @title Category Vectors
+#' @description Creates objects of type "hd_Cat". hd_Cat objects contain three main attributes: categories, n_categories and stats. With categories you can check wich values are valid for the variable. With n_categories you can check how many of valid values are valid for the variable. With the last attribute, stats, you can check different basic operations to describe the varaible (n_unique, n_na, pct_na and summary).
+#'
+#' @param x object to be created as Cat type
+#'
+#' @param categories an optional character vector of labels for the categories
+#' @param skip_stats a logical evaluating to TRUE or FALSE indicating whether variable stats should be calculated and added to the hd_Cat object. The stats are n of unique categories, n of NA values, percentage of NA values and a frequency table.
+#'
+#' @examples
+#' x <- c("Apple","Banana", "Banana", "Lemons", NA)
+#' cats <- new_Cat(x)
+#' class(cats)
+#' attr(cats, "stats")
+#' attr(cats, "categories")
+#'
 #' @export
 Cat <- function(x = character(), categories = NULL, skip_stats = FALSE) {
   # x <- vctrs::vec_cast(x, character())
@@ -30,6 +45,17 @@ Cat <- function(x = character(), categories = NULL, skip_stats = FALSE) {
   new_Cat(x, categories = categories, skip_stats = skip_stats)
 }
 
+#' @title Category Vectors
+#' @description test for objects of type "hd_Cat"
+#'
+#' @param x object to be coerced or tested
+#'
+#' @return returns TRUE or FALSE depending on whether its argument is of type hd_Cat or not.
+#'
+#' @examples
+#' some_value <- Cat(c("Cat1", "Cat2"))
+#' is_Cat(some_value)
+#'
 #' @export
 is_Cat <- function(x) {
   inherits(x, "hd_Cat")
