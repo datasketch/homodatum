@@ -21,6 +21,3 @@ data frame or a fringe according to input.
 cast_ctypes
 Convert Ctypes
 }
-\examples{
-cast_ctypes(iris,"","")
-}
