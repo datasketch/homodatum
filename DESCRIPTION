@@ -21,19 +21,19 @@ Imports:
     vctrs,
     lubridate,
     magrittr (>= 1.5),
-    dstools,
+    dstools (>= 0.1.0),
     makeup,
     readr,
     yaml,
     purrr,
     jsonlite,
     openxlsx,
-    tidyr
+    tidyr,
+    geodata
 Suggests:
     testthat (>= 2.1.0),
     knitr,
-    rmarkdown,
-    geodata
+    rmarkdown
 Additional_repositories: http://pablotis.github.io/drat
 VignetteBuilder: knitr
 RoxygenNote: 7.2.1

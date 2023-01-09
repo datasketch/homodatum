@@ -219,52 +219,52 @@ availableGeoScops <- function(){
 }
 
 
-geoDataframe <- function(scope){
-  scope <- scope %||% "world"
-  if(scope == "world")
-    countries <- readr::read_csv(system.file("data/world-countries.csv",
-                                             package = "homodatum"),
-                                 col_types = readr::cols())
-  else{
-    if (!require("geodata"))
-      stop("Please install package geodata")
-    if(!scope %in% geodata::availableGeodata())
-      stop("Check available scopes with geodata::availableGeodata()")
-    geodata::geodataCsv(scope)
-  }
-}
-
-#' @export
-sampleGcd <- function(n, addNA = TRUE, scope = "world", ...){
-  df <- geoDataframe(scope)
-  v <- sample2(df$id,n)
-  if(addNA) v[sample(n,round(n/10))] <- NA
-  Gcd(v)
-}
-
-#' @export
-sampleGnm <- function(n,addNA = TRUE, scope = "world", ...){
-  df <- geoDataframe(scope)
-  v <- sample2(df$name,n)
-  if(addNA) v[sample(n,round(n/10))] <- NA
-  Gnm(v)
-}
-
-#' @export
-sampleGlt <- function(n,addNA = TRUE, scope = "world", ...){
-  df <- geoDataframe(scope)
-  v <- sample2(df$lat,n)
-  if(addNA) v[sample(n,round(n/10))] <- NA
-  Glt(v)
-}
-
-#' @export
-sampleGln <- function(n,addNA = TRUE, scope = "world", ...){
-  df <- geoDataframe(scope)
-  v <- sample2(df$lon,n)
-  if(addNA) v[sample(n,round(n/10))] <- NA
-  Gln(v)
-}
+#' geoDataframe <- function(scope){
+#'   scope <- scope %||% "world"
+#'   if(scope == "world")
+#'     countries <- readr::read_csv(system.file("data/world-countries.csv",
+#'                                              package = "homodatum"),
+#'                                  col_types = readr::cols())
+#'   else{
+#'     if (!require("geodata"))
+#'       stop("Please install package geodata")
+#'     if(!scope %in% geodata::availableGeodata())
+#'       stop("Check available scopes with geodata::availableGeodata()")
+#'     geodata::geodataCsv(scope)
+#'   }
+#' }
+#'
+#' #' @export
+#' sampleGcd <- function(n, addNA = TRUE, scope = "world", ...){
+#'   df <- geoDataframe(scope)
+#'   v <- sample2(df$id,n)
+#'   if(addNA) v[sample(n,round(n/10))] <- NA
+#'   Gcd(v)
+#' }
+#'
+#' #' @export
+#' sampleGnm <- function(n,addNA = TRUE, scope = "world", ...){
+#'   df <- geoDataframe(scope)
+#'   v <- sample2(df$name,n)
+#'   if(addNA) v[sample(n,round(n/10))] <- NA
+#'   Gnm(v)
+#' }
+#'
+#' #' @export
+#' sampleGlt <- function(n,addNA = TRUE, scope = "world", ...){
+#'   df <- geoDataframe(scope)
+#'   v <- sample2(df$lat,n)
+#'   if(addNA) v[sample(n,round(n/10))] <- NA
+#'   Glt(v)
+#' }
+#'
+#' #' @export
+#' sampleGln <- function(n,addNA = TRUE, scope = "world", ...){
+#'   df <- geoDataframe(scope)
+#'   v <- sample2(df$lon,n)
+#'   if(addNA) v[sample(n,round(n/10))] <- NA
+#'   Gln(v)
+#' }
 
 #' @export
 sampleImg <- function(n,addNA = TRUE,...){
