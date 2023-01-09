@@ -38,11 +38,6 @@ is_hdType <- function(x) {
 
 
 #' @export
-is_any_hdType <- function(x){
-  sum(grepl("hd_", class(x))) > 0
-}
-
-#' @export
 which_hdType <- function(x){
   gsub("hd_","",class(x)[grep("hd_", class(x))])
 }
