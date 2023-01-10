@@ -14,18 +14,50 @@ new_frType <- function(x = character()){
   vctrs::new_vctr(x, hdTypes = hdTypes, group = group, class = "frType")
 }
 
+#' @title frType Vectors
+#'
+#' @description a grouped way of reading frTypes values
+#'
+#' @param frType_str a string value showing a grouped frTypes view
+#'
+#' @return a grouped view of given frTypes values
+#'
+#' @examples
+#'
+#' x <- c("Cat-Num-Cat")
+#' fr <- frType(x)
+#' get_frGroup(fr)
+
+#'
 #' @export
 get_frGroup <- function(frType_str){
   ctps <- strsplit(frType_str,"-")
-  f <- function(ctypes){
-    ct <- dplyr::count(tibble::tibble(ctypes = ctypes),ctypes)
+  f <- function(hdtypes){
+    ct <- dplyr::count(tibble::tibble(hdtypes = hdtypes),hdtypes)
     ct$n[ct$n == 1] <- ""
-    ctv <- tidyr::unite(ct,ctype,ctypes,n,sep="") %>% .[[1]] %>% sort()
+    ctv <- tidyr::unite(ct,hdtype,hdtypes,n,sep="") %>% .[[1]] %>% sort()
     paste(ctv,collapse="-")
   }
   purrr::map_chr(ctps, f)
 }
 
+
+
+#' @title frType Vectors
+#'
+#' @description Reverses the effect of [get_frGroup()] and split every single frType from an object.
+#'
+#' @param frGroup a grouped frType object
+#'
+#' @return a string value showing all the frType values of an object
+#'
+#' @examples
+#'
+#' x <- c("Cat-Num-Cat")
+#' fr <- frType(x)
+#' grouped_fr <- get_frGroup(fr)
+#' expand_frGroup(grouped_fr)
+#'
 #' @export
 expand_frGroup <- function(frGroup){
   ft1 <- strsplit(frGroup,"-",fixed = TRUE)[[1]]
@@ -108,25 +140,11 @@ as_frType <- function(x) {
 
 
 
-#' @title frType Vectors
-#'
-#' @description a grouped way of reading frTypes values
-#'
-#' @param x several (more than one) available frTypes values
-#'
-#' @return a grouped view of given frTypes values
-#'
-#' @examples
-#'
-#' x <- c("Cat-Num-Cat")
-#' fr <- frType(x)
-#' frType_group(fr)
-#'
-#' @export
-frType_group <- function(x){
-  if(!is_frType(x)) stop("x must be a frType")
-  attr(x, "group")
-}
+
+# frType_group <- function(x){
+#   if(!is_frType(x)) stop("x must be a frType")
+#   attr(x, "group")
+# }
 
 
 

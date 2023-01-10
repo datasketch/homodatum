@@ -1,12 +1,5 @@
 
-#' cast_ctypes
-#' Convert Ctypes
-#' @name cast_ctypes
-#' @param data frame or a fringe.
-#' @param from string of Ctypes.
-#' @param to string of Ctypes.
-#' @export
-#' @return data frame or a fringe according to input.
+
 cast_ctypes <- function(data, from, to){
   f <- fringe(data)
   data <- f$d
@@ -14,7 +7,6 @@ cast_ctypes <- function(data, from, to){
   return(weekdays)
 }
 
-#' @export
 castable_list <- function(ctypes){
   f <- function(ctype){
     c(ctype,castable_ctype(ctype))

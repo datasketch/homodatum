@@ -36,28 +36,50 @@ is_hdType <- function(x) {
 }
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 99bbccc55a261007385e5da1fef8b888fbb5acbc
 #' @title hdType Vectors
 #'
 #' @description test for objects of type "hdType"
 #'
-#' @param x object to be coerced or tested
+#' @param x hdType object to be coerced or tested
 #'
-#' @return returns TRUE or FALSE depending on whether its argument is of type hdType or not.
+#' @return returns TRUE or FALSE depending on whether its argument is one of the [available_hdTypes()] or not.
 #'
 #' @examples
 #'
-#' some_value <- hdType("Cat")
-#' is_hdType(some_value)
+#' some_cat_value <- Cat("value1")
+#' is_any_hdType(some_cat_value)
 #'
 #' @export
 is_any_hdType <- function(x){
   sum(grepl("hd_", class(x))) > 0
 }
 
+
+
+#' @title hdType Vectors
+#'
+#' @description Detect which hdType is the value.
+#'
+#' @param x hdType object to be coerced or tested
+#'
+#' @return returns the name of the hdType value. You can see the valid hdTypes with [available_hdTypes()]
+#'
+#' @examples
+#'
+#' some_cat_value <- Cat("value1")
+#' which_hdType(some_cat_value)
+#'
 #' @export
 which_hdType <- function(x){
-  gsub("hd_","",class(x)[grep("hd_", class(x))])
+  if(is_any_hdType(x)){
+    gsub("hd_","",class(x)[grep("hd_", class(x))])
+  } else {
+    cat("The value is not a valid hdType.")
+  }
 }
 
 
