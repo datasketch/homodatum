@@ -1,0 +1,62 @@
+
+## Overview
+
+"fringe: un dataset adornado"
+
+homodatum helps to manage dataframes in a more human way. This package mainly adds information to data (metadata) by creating new classes for values (hdTypes) and dataframes (hdFringe)
+
+The main function of this package is `makeup()`. It takes a date, number o character value and returns it into a human readable format
+
+
+## Installation
+
+Install the development version of makeup from GitHub with:
+
+``` r
+# install.packages("devtools")
+remotes::install_github("datasketch/makeup")
+```
+
+## Example
+
+This is a basic example which shows you how this packages work:
+
+Let´s load `makeup` package
+
+```{r library}
+library(makeup)
+library(dstools)
+```
+
+### Making _number_ values human readable
+
+```{r num example}
+x <- c(1234.56, 432141, 0.12)
+
+makeup(x, 
+       sample = "1,432.1")
+```
+
+### Making _character_ values human readable
+
+```{r chr example}
+x <- c("hello", "WoRlD","Hello world")
+
+makeup(x, sample = "down")
+
+makeup(x, sample = "UPPER")
+
+makeup(x, sample = "Title phrase")
+
+makeup(x, sample = "Title Case")
+```
+
+### Making _date_ values human readable
+
+```{r date example}
+x <- as.Date(c("2020-03-05","2020-06-20"))
+
+makeup(x)
+```
+
+Learn about the many ways to work with formatting dates values in `vignette("working-with-dates")`

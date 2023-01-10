@@ -20,7 +20,7 @@ new_fringe <- function(d = new_data_frame(),
   }
   dd <- list(data = d, dic = dic)
   dd$frtype <- frType(paste0(dic$hdType, collapse = "-"))
-  dd$group <- frType_group(dd$frtype)
+  dd$group <- get_frGroup(dd$frtype)
   dd$name <- name
   dd$description <- description
   dd$slug <- slug
@@ -31,8 +31,33 @@ new_fringe <- function(d = new_data_frame(),
 }
 
 
+
+
+
+#' @title Create a Fringe data frame
+#' @description Create a Fringe object from a data frame. The main value of a fringe is its metadata. When creating it, fringe will add to the data frame the following information:
+#'
+#' - data: original data frame data. When it is created, the fringe will convert original variable R types onto homodatum ones (Num, Cat, Pct, etc. -see [available_hdTypes()])
+#' - dic: A diccionary is created with three variable characteristics: id, label and hdType
+#' - frType: Shows all variable types based in homodatum schema
+#' - group: A grouped view of frType
+#' - name: Name for the fringe data frame, setted on _name_ argument
+#' - description: Description for the fringe data frame, setted on _description_ argument
+#' - slug: a custom slug can be added
+#' - stats: Depending on the variable type given by homodatum, the fringe will generate different kind of statistics: nrow, ncol, n_unique, n_na, pct_na, min, max
+#' @param x A data frame
+#' @param frtype The type of fringe to create
+#' @param dic a custom variable dictionary can be added. [create_dic()] can help you with that.
+#' @param name a custom name can be added
+#' @param nam a custom description can be added
+#' @param slug a custom slug can be added. If not, fringe will try creating one.
+#' @param meta Custom Metadata can be added
+#'
+#' @examples
+#' fringe(mtcars, frtype = "Num", name = "MTCars")
+#'
+#' @return A Fringe object
 #' @export
-#' @importFrom dstools %||%
 fringe <- function(x = new_data_frame(),
                    frtype = NULL, dic = NULL,
                    name = NULL, description = NULL,
@@ -51,6 +76,17 @@ fringe <- function(x = new_data_frame(),
              meta = modifyList(meta %||% list(), list(...)))
 }
 
+#' @title Fringe data frame
+#' @description test for objects of type "fringe"
+#'
+#' @param x object to be coerced or tested
+#'
+#' @return returns TRUE or FALSE depending on whether its argument is of type fringe or not.
+#'
+#' @examples
+#' some_df <- fringe(mtcars)
+#' is_fringe(some_df)
+#'
 #' @export
 is_fringe <- function(x) {
   inherits(x, "fringe")
