@@ -117,7 +117,7 @@ test_that("frType",{
   #vectorized
   frts <- c("Num-Cat-Cat", "Yea-Yea")
   fr <- frType(frts)
-  expect_equal(frType_group(fr),c("Cat2-Num","Yea2"))
+  expect_equal(get_frGroup(fr),c("Cat2-Num","Yea2"))
 
   ## Sample Data
 

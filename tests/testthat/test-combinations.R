@@ -26,7 +26,7 @@ test_that("frtype combinations work",{
   #
   # sub <- sub_hdTypesVars(hdtypes, group = "Cat2-Num")
   # frtypes <- lapply(sub, frType)
-  # expect_equal(unique(lapply(frtypes, frType_group))[[1]], "Cat2-Num")
+  # expect_equal(unique(lapply(frtypes, get_frGroup))[[1]], "Cat2-Num")
 
 })
 
