@@ -37,6 +37,19 @@ is_hdType <- function(x) {
 
 
 
+#' @title hdType Vectors
+#'
+#' @description test for objects of type "hdType"
+#'
+#' @param x object to be coerced or tested
+#'
+#' @return returns TRUE or FALSE depending on whether its argument is of type hdType or not.
+#'
+#' @examples
+#'
+#' some_value <- hdType("Cat")
+#' is_hdType(some_value)
+#'
 #' @export
 is_any_hdType <- function(x){
   sum(grepl("hd_", class(x))) > 0
