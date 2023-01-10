@@ -35,10 +35,10 @@ guess_hdType <- function(v){
     return(hdType("___"))
 
   if(any(class(v) %in% c("integer","numeric"))){
-    ctype <- hdType("Num")
-    if(all(v %in% 1500L:2200L)) ctype <- hdType("Yea")
-    if(maybePct(v)) ctype <- hdType("Pct")
-    return(ctype)
+    hdtype <- hdType("Num")
+    if(all(v %in% 1500L:2200L)) hdtype <- hdType("Yea")
+    if(maybePct(v)) hdtype <- hdType("Pct")
+    return(hdtype)
   }
   if(any(class(v) == "Date") | any(c("POSIXt", "POSIXct") %in% class(v)))
     return(hdType("Dat"))
@@ -49,7 +49,7 @@ guess_hdType <- function(v){
 
   #dth <- whichDTH(v)
   # if(!is.null(dth))
-  #   ctype <- hdType(dth)
+  #   hdtype <- hdType(dth)
   if(isDate(v)){
     return(hdType("Dat"))
   }
@@ -61,14 +61,14 @@ guess_hdType <- function(v){
     if(maybePct(v)){
       return(hdType("Pct"))
     }
-    ctype <- hdType("Cat")
-    if(ctype == hdType("Cat") && maybeImgUrl(v)){
-      ctype <- hdType("Img")
+    hdtype <- hdType("Cat")
+    if(hdtype == hdType("Cat") && maybeImgUrl(v)){
+      hdtype <- hdType("Img")
     }
-    if(ctype == hdType("Cat") && maybeTxt(v))
-      ctype <- hdType("Txt")
+    if(hdtype == hdType("Cat") && maybeTxt(v))
+      hdtype <- hdType("Txt")
   }
-  ctype
+  hdtype
 }
 
 maybeNum <- function(v){
