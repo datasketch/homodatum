@@ -10,8 +10,6 @@
 
 ## Overview
 
-“fringe: un dataset adornado”
-
 homodatum helps to manage dataframes in a more human way. This package
 mainly adds information to data frames (metadata) by creating new
 classes for variables (hdTypes) and dataframes (hdFringe) and add them
@@ -43,492 +41,247 @@ variables, in order to offer ones with (more) metadata and information.
 The valid available variable new types from `homodatum` can be viewed
 with `available_hdTypes()`:
 
-<div id="wmwdcbbean" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
-}
-
-#wmwdcbbean .gt_table {
-  display: table;
-  border-collapse: collapse;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-#wmwdcbbean .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#wmwdcbbean .gt_caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-#wmwdcbbean .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#wmwdcbbean .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 0;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#wmwdcbbean .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#wmwdcbbean .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#wmwdcbbean .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-#wmwdcbbean .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#wmwdcbbean .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-#wmwdcbbean .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-#wmwdcbbean .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-#wmwdcbbean .gt_group_heading {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  text-align: left;
-}
-
-#wmwdcbbean .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#wmwdcbbean .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#wmwdcbbean .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#wmwdcbbean .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-#wmwdcbbean .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#wmwdcbbean .gt_stub_row_group {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-  vertical-align: top;
-}
-
-#wmwdcbbean .gt_row_group_first td {
-  border-top-width: 2px;
-}
-
-#wmwdcbbean .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#wmwdcbbean .gt_first_summary_row {
-  border-top-style: solid;
-  border-top-color: #D3D3D3;
-}
-
-#wmwdcbbean .gt_first_summary_row.thick {
-  border-top-width: 2px;
-}
-
-#wmwdcbbean .gt_last_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#wmwdcbbean .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#wmwdcbbean .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-#wmwdcbbean .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#wmwdcbbean .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#wmwdcbbean .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#wmwdcbbean .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding-left: 4px;
-  padding-right: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#wmwdcbbean .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#wmwdcbbean .gt_sourcenote {
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#wmwdcbbean .gt_left {
-  text-align: left;
-}
-
-#wmwdcbbean .gt_center {
-  text-align: center;
-}
-
-#wmwdcbbean .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#wmwdcbbean .gt_font_normal {
-  font-weight: normal;
-}
-
-#wmwdcbbean .gt_font_bold {
-  font-weight: bold;
-}
-
-#wmwdcbbean .gt_font_italic {
-  font-style: italic;
-}
-
-#wmwdcbbean .gt_super {
-  font-size: 65%;
-}
-
-#wmwdcbbean .gt_footnote_marks {
-  font-style: italic;
-  font-weight: normal;
-  font-size: 75%;
-  vertical-align: 0.4em;
-}
-
-#wmwdcbbean .gt_asterisk {
-  font-size: 100%;
-  vertical-align: 0;
-}
-
-#wmwdcbbean .gt_indent_1 {
-  text-indent: 5px;
-}
-
-#wmwdcbbean .gt_indent_2 {
-  text-indent: 10px;
-}
-
-#wmwdcbbean .gt_indent_3 {
-  text-indent: 15px;
-}
-
-#wmwdcbbean .gt_indent_4 {
-  text-indent: 20px;
-}
-
-#wmwdcbbean .gt_indent_5 {
-  text-indent: 25px;
-}
-</style>
-<table class="gt_table">
-  <thead class="gt_header">
-    <tr>
-      <td colspan="2" class="gt_heading gt_title gt_font_normal gt_bottom_border" style><strong>Available hdTypes for variables</strong></td>
-    </tr>
-    
-  </thead>
-  <thead class="gt_col_headings">
-    <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="id">id</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="label">label</th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr><td headers="id" class="gt_row gt_center">___</td>
-<td headers="label" class="gt_row gt_center">Null</td></tr>
-    <tr><td headers="id" class="gt_row gt_center">Uid</td>
-<td headers="label" class="gt_row gt_center">Uid</td></tr>
-    <tr><td headers="id" class="gt_row gt_center">Cat</td>
-<td headers="label" class="gt_row gt_center">Categorical</td></tr>
-    <tr><td headers="id" class="gt_row gt_center">Bin</td>
-<td headers="label" class="gt_row gt_center">Binary</td></tr>
-    <tr><td headers="id" class="gt_row gt_center">Seq</td>
-<td headers="label" class="gt_row gt_center">Sequential</td></tr>
-    <tr><td headers="id" class="gt_row gt_center">Num</td>
-<td headers="label" class="gt_row gt_center">Numeric</td></tr>
-    <tr><td headers="id" class="gt_row gt_center">Pct</td>
-<td headers="label" class="gt_row gt_center">Percentage</td></tr>
-    <tr><td headers="id" class="gt_row gt_center">Dst</td>
-<td headers="label" class="gt_row gt_center">Distribution</td></tr>
-    <tr><td headers="id" class="gt_row gt_center">Dat</td>
-<td headers="label" class="gt_row gt_center">Date</td></tr>
-    <tr><td headers="id" class="gt_row gt_center">Yea</td>
-<td headers="label" class="gt_row gt_center">Year</td></tr>
-    <tr><td headers="id" class="gt_row gt_center">Mon</td>
-<td headers="label" class="gt_row gt_center">Month</td></tr>
-    <tr><td headers="id" class="gt_row gt_center">Day</td>
-<td headers="label" class="gt_row gt_center">Day</td></tr>
-    <tr><td headers="id" class="gt_row gt_center">Wdy</td>
-<td headers="label" class="gt_row gt_center">Day of week</td></tr>
-    <tr><td headers="id" class="gt_row gt_center">Ywe</td>
-<td headers="label" class="gt_row gt_center">Week in year</td></tr>
-    <tr><td headers="id" class="gt_row gt_center">Dtm</td>
-<td headers="label" class="gt_row gt_center">Date time</td></tr>
-    <tr><td headers="id" class="gt_row gt_center">Hms</td>
-<td headers="label" class="gt_row gt_center">Time HMS</td></tr>
-    <tr><td headers="id" class="gt_row gt_center">Min</td>
-<td headers="label" class="gt_row gt_center">Minutes</td></tr>
-    <tr><td headers="id" class="gt_row gt_center">Sec</td>
-<td headers="label" class="gt_row gt_center">Seconds</td></tr>
-    <tr><td headers="id" class="gt_row gt_center">Hie</td>
-<td headers="label" class="gt_row gt_center">Hierarchy</td></tr>
-    <tr><td headers="id" class="gt_row gt_center">Grp</td>
-<td headers="label" class="gt_row gt_center">Group</td></tr>
-    <tr><td headers="id" class="gt_row gt_center">Txt</td>
-<td headers="label" class="gt_row gt_center">Text</td></tr>
-    <tr><td headers="id" class="gt_row gt_center">Mny</td>
-<td headers="label" class="gt_row gt_center">Money</td></tr>
-    <tr><td headers="id" class="gt_row gt_center">Gnm</td>
-<td headers="label" class="gt_row gt_center">Geo name</td></tr>
-    <tr><td headers="id" class="gt_row gt_center">Gcd</td>
-<td headers="label" class="gt_row gt_center">Geo code</td></tr>
-    <tr><td headers="id" class="gt_row gt_center">Glt</td>
-<td headers="label" class="gt_row gt_center">Geo latitude</td></tr>
-    <tr><td headers="id" class="gt_row gt_center">Gln</td>
-<td headers="label" class="gt_row gt_center">Geo longitude</td></tr>
-    <tr><td headers="id" class="gt_row gt_center">Img</td>
-<td headers="label" class="gt_row gt_center">Image</td></tr>
-    <tr><td headers="id" class="gt_row gt_center">Aud</td>
-<td headers="label" class="gt_row gt_center">Audio</td></tr>
-  </tbody>
-  
-  
+<table>
+<caption>
+Available hdTypes for variables
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+id
+</th>
+<th style="text-align:left;">
+label
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+\_\_\_
+</td>
+<td style="text-align:left;">
+Null
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Uid
+</td>
+<td style="text-align:left;">
+Uid
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cat
+</td>
+<td style="text-align:left;">
+Categorical
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bin
+</td>
+<td style="text-align:left;">
+Binary
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Seq
+</td>
+<td style="text-align:left;">
+Sequential
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num
+</td>
+<td style="text-align:left;">
+Numeric
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pct
+</td>
+<td style="text-align:left;">
+Percentage
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Dst
+</td>
+<td style="text-align:left;">
+Distribution
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Dat
+</td>
+<td style="text-align:left;">
+Date
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Yea
+</td>
+<td style="text-align:left;">
+Year
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mon
+</td>
+<td style="text-align:left;">
+Month
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Day
+</td>
+<td style="text-align:left;">
+Day
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Wdy
+</td>
+<td style="text-align:left;">
+Day of week
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Ywe
+</td>
+<td style="text-align:left;">
+Week in year
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Dtm
+</td>
+<td style="text-align:left;">
+Date time
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Hms
+</td>
+<td style="text-align:left;">
+Time HMS
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Min
+</td>
+<td style="text-align:left;">
+Minutes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sec
+</td>
+<td style="text-align:left;">
+Seconds
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Hie
+</td>
+<td style="text-align:left;">
+Hierarchy
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Grp
+</td>
+<td style="text-align:left;">
+Group
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Txt
+</td>
+<td style="text-align:left;">
+Text
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mny
+</td>
+<td style="text-align:left;">
+Money
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Gnm
+</td>
+<td style="text-align:left;">
+Geo name
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Gcd
+</td>
+<td style="text-align:left;">
+Geo code
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Glt
+</td>
+<td style="text-align:left;">
+Geo latitude
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Gln
+</td>
+<td style="text-align:left;">
+Geo longitude
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Img
+</td>
+<td style="text-align:left;">
+Image
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Aud
+</td>
+<td style="text-align:left;">
+Audio
+</td>
+</tr>
+</tbody>
 </table>
-</div>
 
 <br>
 

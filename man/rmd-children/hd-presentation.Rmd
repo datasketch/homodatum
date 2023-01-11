@@ -27,7 +27,7 @@ library(homodatum)
 
 One of the main properties of this package is to add new type of variables, in order to offer ones with (more) metadata and information. The valid available variable new types from `homodatum` can be viewed with `available_hdTypes()`:
 
-```{r echo = FALSE}
+```{r echo = FALSE, warning=FALSE, message=FALSE}
 hdType_table <- tibble::tribble(
           ~`id`,        ~`label`,
           "___",          "Null",
@@ -60,9 +60,8 @@ hdType_table <- tibble::tribble(
           "Aud",         "Audio") 
 
 hdType_table |> 
-  gt::gt() |> 
-  gt::tab_header(gt::md("**Available hdTypes for variables**")) |> 
-  gt::cols_align(align = "center")
+  knitr::kable(format = "html",
+               caption = "Available hdTypes for variables")
 ```
 
 <br>
