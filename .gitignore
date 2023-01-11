@@ -23,3 +23,4 @@ vignettes/*.pdf
 homodatum.Rcheck/
 homodatum*.tar.gz
 homodatum*.tgz
+docs
