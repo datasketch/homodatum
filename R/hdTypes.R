@@ -36,10 +36,6 @@ is_hdType <- function(x) {
 }
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 99bbccc55a261007385e5da1fef8b888fbb5acbc
 #' @title hdType Vectors
 #'
 #' @description test for objects of type "hdType"

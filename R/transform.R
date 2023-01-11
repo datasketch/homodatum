@@ -58,15 +58,15 @@
 #' }
 #'
 #' #' @export
-#' selectFringeCtypes <- function(f,ctypes){
-#'   dic <- selectDicCtypes(f,ctypes)
+#' selectFringehdtypes <- function(f,hdtypes){
+#'   dic <- selectDichdtypes(f,hdtypes)
 #'   data <- f$data %>%  select_(.dots = dic$id)
 #'   fringe(data,dic)
 #' }
 #'
 #' #' @export
-#' selectDicCtypes <- function(f,ctypes, as_list = FALSE, filter = NULL){
-#'   out <- f$dic_$d %>% filter(ctype %in% ctypes)
+#' selectDichdtypes <- function(f,hdtypes, as_list = FALSE, filter = NULL){
+#'   out <- f$dic_$d %>% filter(ctype %in% hdtypes)
 #'   if(!is.null(filter)){
 #'     if(!filter %in% names(out)) stop("Filter not in diccionary")
 #'     filter_criteria <- interp(~ filter == TRUE, filter = as.name(filter))

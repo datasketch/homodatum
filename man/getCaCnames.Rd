@@ -6,7 +6,7 @@
 sameFringes <- function(f1,f2){
 all(
 identical(getCnames(f1),getCnames(f2)),
-identical(getCtypes(f1),getCtypes(f2)),
+identical(gethdtypes(f1),gethdtypes(f2)),
 identical(getCformats(f1),getCformats(f2)),
 identical(f1$dic_$d,f2$dic_$d),
 identical(f1$d,f2$d)
@@ -47,7 +47,7 @@ fringe$dic_$d$cdescription
 }
 
 #' @export
-getCtypes <- function(fringe, cols = NULL){
+gethdtypes <- function(fringe, cols = NULL){
 if(!isFringe(fringe))
 fringe <- fringe(fringe)
 fringe$dic_$d$ctype
