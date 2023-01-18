@@ -13,33 +13,14 @@ knitr::opts_chunk$set(
 )
 ```
 
+
 # homodatum
+
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of homodatum is to ...
+<br>
 
-## Installation
-
-You can install the released version of homodatum from [CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("homodatum")
+```{r, child = "man/rmd-children/hd-presentation.Rmd"}
 ```
-
-And the development version from [GitHub](https://github.com/) with:
-
-``` r
-# install.packages("devtools")
-devtools::install_github("datasketch/homodatum")
-```
-## Example
-
-This is a basic example which shows you how to solve a common problem:
-
-```{r example}
-library(homodatum)
-## basic example code
-```
-

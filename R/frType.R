@@ -14,18 +14,50 @@ new_frType <- function(x = character()){
   vctrs::new_vctr(x, hdTypes = hdTypes, group = group, class = "frType")
 }
 
+#' @title frType Vectors
+#'
+#' @description a grouped way of reading frTypes values
+#'
+#' @param frType_str a string value showing a grouped frTypes view
+#'
+#' @return a grouped view of given frTypes values
+#'
+#' @examples
+#'
+#' x <- c("Cat-Num-Cat")
+#' fr <- frType(x)
+#' get_frGroup(fr)
+
+#'
 #' @export
 get_frGroup <- function(frType_str){
   ctps <- strsplit(frType_str,"-")
-  f <- function(ctypes){
-    ct <- dplyr::count(tibble::tibble(ctypes = ctypes),ctypes)
+  f <- function(hdtypes){
+    ct <- dplyr::count(tibble::tibble(hdtypes = hdtypes),hdtypes)
     ct$n[ct$n == 1] <- ""
-    ctv <- tidyr::unite(ct,ctype,ctypes,n,sep="") %>% .[[1]] %>% sort()
+    ctv <- tidyr::unite(ct,hdtype,hdtypes,n,sep="") %>% .[[1]] %>% sort()
     paste(ctv,collapse="-")
   }
   purrr::map_chr(ctps, f)
 }
 
+
+
+#' @title frType Vectors
+#'
+#' @description Reverses the effect of [get_frGroup()] and split every single frType from an object.
+#'
+#' @param frGroup a grouped frType object
+#'
+#' @return a string value showing all the frType values of an object
+#'
+#' @examples
+#'
+#' x <- c("Cat-Num-Cat")
+#' fr <- frType(x)
+#' grouped_fr <- get_frGroup(fr)
+#' expand_frGroup(grouped_fr)
+#'
 #' @export
 expand_frGroup <- function(frGroup){
   ft1 <- strsplit(frGroup,"-",fixed = TRUE)[[1]]
@@ -41,6 +73,18 @@ expand_frGroup <- function(frGroup){
 }
 
 
+#' @title frType Vectors
+#'
+#' @description Creates or coerces objects of type "frType"
+#'
+#' @param x object to be created or coerced
+#'
+#' @return returns a frType value
+#'
+#' @examples
+#'
+#' frType("Cat")
+#'
 #' @export
 frType <- function(x = character()) {
   if(is_hdType(x)){
@@ -52,12 +96,43 @@ frType <- function(x = character()) {
   new_frType(x)
 }
 
+
+
+#' @title frType Vectors
+#'
+#' @description Creates or test for objects of type "frType"
+#'
+#' @param x object to be coerced or tested
+#'
+#' @return returns TRUE or FALSE depending on whether its argument is of type frType or not.
+#'
+#' @examples
+#'
+#' value <- frType("Cat")
+#' is_frType(value)
+#'
 #' @export
 is_frType <- function(x) {
   inherits(x, "frType")
 }
 
 
+#' @title frType Vectors
+#'
+#' @description coerces its argument to a frType. It is an abbreviated form of frType.
+#'
+#' @param x object to be coerced
+#'
+#' @return attempts to coerce its argument to frType type
+#'
+#' @examples
+#'
+#' some_chr_value <- "Cat"
+#' class(some_chr_value)
+#'
+#' some_frt_value <- as_frType(some_chr_value)
+#' class(some_frt_value)
+#'
 #' @export
 as_frType <- function(x) {
   vctrs::vec_cast(x, new_frType())
@@ -65,12 +140,30 @@ as_frType <- function(x) {
 
 
 
-#' @export
-frType_group <- function(x){
-  if(!is_frType(x)) stop("x must be a frType")
-  attr(x, "group")
-}
 
+# frType_group <- function(x){
+#   if(!is_frType(x)) stop("x must be a frType")
+#   attr(x, "group")
+# }
+
+
+
+#' @title frType Vectors
+#'
+#' @description convert frTypes value(s) into hdType
+#'
+#' @param x an available frType value
+#'
+#' @return an hdType value
+#'
+#' @examples
+#'
+#' x <- frType("Cat")
+#' class(x)
+#'
+#' x_hdt <- frType_hdTypes(x)
+#' class(x_hdt)
+#'
 #' @export
 frType_hdTypes <- function(x, chr = FALSE){
   if(!is_frType(x)) stop("x must be a frType")
@@ -79,6 +172,24 @@ frType_hdTypes <- function(x, chr = FALSE){
   hdt
 }
 
+
+
+#' @title frType Vectors
+#'
+#' @description convert frTypes value(s) into character
+#'
+#' @param x an available frType value, frType dataframe or hd_tbl dataframe
+#'
+#' @return a character value
+#'
+#' @examples
+#'
+#' x <- frType("Cat")
+#' class(x)
+#'
+#' x_chr <- frType_str(x)
+#' class(x_chr)
+#'
 #' @export
 frType_str <- function(x){
   if(is_frType(x)){

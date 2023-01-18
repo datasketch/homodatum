@@ -1,4 +1,3 @@
-# context("ftypes")
 #
 # test_that("Ftypes",{
 #

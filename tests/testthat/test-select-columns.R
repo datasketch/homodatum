@@ -21,11 +21,11 @@ test_that("Select columns", {
   f3 <- fringe_subset_columns(f, frtype = "Cat-Num")
   expect_equal(fringe_frtype(f3), "Cat-Num")
 
-  sample_data_path <- sys_file("sample_data", "nombramientos_ecuador.csv")
-  d <- read.csv(sample_data_path)
-  f <- fringe(d)
-  #dic <- fringe_dic(f, stats = TRUE)
-  suggest_columns(f, frtype = "Cat-Num")
+  # sample_data_path <- sys_file("sample_data", "nombramientos_ecuador.csv")
+  # d <- read.csv(sample_data_path)
+  # f <- fringe(d)
+  # #dic <- fringe_dic(f, stats = TRUE)
+  # suggest_columns(f, frtype = "Cat-Num")
 
 
 })

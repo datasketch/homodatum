@@ -1,5 +1,5 @@
 Package: homodatum
-Title: Data types for humans.
+Title: Data types for humans
 Version: 0.8.2
 Authors@R: 
     person(given = "Juan Pablo",
@@ -20,10 +20,21 @@ Imports:
     dplyr,
     vctrs,
     lubridate,
-    magrittr (>= 1.5)
+    magrittr (>= 1.5),
+    dstools (>= 0.1.0),
+    makeup,
+    readr,
+    yaml,
+    purrr,
+    jsonlite,
+    openxlsx,
+    tidyr,
+    geodata
 Suggests:
     testthat (>= 2.1.0),
     knitr,
     rmarkdown
+Additional_repositories: http://pablotis.github.io/drat
 VignetteBuilder: knitr
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
+Roxygen: list(markdown = TRUE)

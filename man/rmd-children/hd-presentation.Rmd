@@ -1,0 +1,110 @@
+
+## Overview
+
+homodatum helps to manage dataframes in a more human way. This package mainly adds information to data frames (metadata) by creating new classes for variables (hdTypes) and dataframes (hdFringe) and add them more descriptive properties.
+
+
+## Installation
+
+Install the development version of makeup from GitHub with:
+
+``` r
+# install.packages("devtools")
+remotes::install_github("datasketch/homodatum")
+```
+
+## Example
+
+This is a basic example which shows you how this packages work:
+
+Let´s load `homodatum` package
+
+```{r library}
+library(homodatum)
+```
+
+### New type of values
+
+One of the main properties of this package is to add new type of variables, in order to offer ones with (more) metadata and information. The valid available variable new types from `homodatum` can be viewed with `available_hdTypes()`:
+
+```{r echo = FALSE, warning=FALSE, message=FALSE}
+hdType_table <- tibble::tribble(
+          ~`id`,        ~`label`,
+          "___",          "Null",
+          "Uid",           "Uid",
+          "Cat",   "Categorical",
+          "Bin",        "Binary",
+          "Seq",    "Sequential",
+          "Num",       "Numeric",
+          "Pct",    "Percentage",
+          "Dst",  "Distribution",
+          "Dat",          "Date",
+          "Yea",          "Year",
+          "Mon",         "Month",
+          "Day",           "Day",
+          "Wdy",   "Day of week",
+          "Ywe",  "Week in year",
+          "Dtm",     "Date time",
+          "Hms",      "Time HMS",
+          "Min",       "Minutes",
+          "Sec",       "Seconds",
+          "Hie",     "Hierarchy",
+          "Grp",         "Group",
+          "Txt",          "Text",
+          "Mny",         "Money",
+          "Gnm",      "Geo name",
+          "Gcd",      "Geo code",
+          "Glt",  "Geo latitude",
+          "Gln", "Geo longitude",
+          "Img",         "Image",
+          "Aud",         "Audio") 
+
+hdType_table |> 
+  knitr::kable(format = "html",
+               caption = "Available hdTypes for variables")
+```
+
+<br>
+
+### New type of data frame
+
+In order to offer a more detailed information about a data frame, `homodatum` offers the function `fringe()`, which takes a data frame and converts it into a more informative object adding properties such as a dictionary, value type information, data frame name and description and several summary calculation from de variables, depending on their type.
+
+
+### Creating a _fringe_ object:
+
+```{r num example}
+# Create a dataframe
+df <- data.frame(name = c("Roberta", "Ruby", "Roberta", "Maria"),
+                 age  = c(98, 43, 98, 12))
+
+# Create a fringe object
+fr <- fringe(df)
+```
+
+This is how it looks with all the properties added:
+```{r}
+str(fr)
+```
+
+<br>
+
+#### You can inspect specifics attibutes of the fringe object such as:
+
+- Data:
+```{r}
+fr$data
+```
+
+- Dictionary:
+```{r}
+fr$dic
+```
+
+- Summary stats for the fringe object and its variables:
+```{r}
+fr$stats
+```
+
+
+Learn about the many ways to work with formatting dates values in `vignette("set-name")`

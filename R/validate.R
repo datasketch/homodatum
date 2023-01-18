@@ -33,13 +33,13 @@
 #'   any(getFtype(fringe) %in% ftype)
 #' }
 #'
-#' #' fringeVal_hasCtypes
-#' #' @name fringeVal_hasCtypes
-#' #' @description fringeVal_hasCtypes
+#' #' fringeVal_hashdtypes
+#' #' @name fringeVal_hashdtypes
+#' #' @description fringeVal_hashdtypes
 #' #' @export
-#' fringeVal_hasCtypes <- function(fringe,ctypes){
-#'   if(missing(ctypes)) stop("need ctypes as a parameter")
-#'   identical(getCtypes(fringe),ctypes)
+#' fringeVal_hashdtypes <- function(fringe,hdtypes){
+#'   if(missing(hdtypes)) stop("need hdtypes as a parameter")
+#'   identical(gethdtypes(fringe),hdtypes)
 #' }
 #'
 #' #' fringeVal_allNumeric
@@ -47,7 +47,7 @@
 #' #' @description fringeVal_allNumeric
 #' #' @export
 #' fringeVal_allNumeric <- function(fringe){
-#'   identical(unique(getCtypes(fringe)),"Nu")
+#'   identical(unique(gethdtypes(fringe)),"Nu")
 #' }
 #'
 #'
@@ -141,16 +141,17 @@
 #' #' @description fringeColVal_hasCtype
 #' #' @export
 #' fringeColVal_hasCtype <- function(fringe,cols,ctype){
-#'   ctypes <- getCtypes(fringe)
+#'   hdtypes <- gethdtypes(fringe)
 #'   idx <- match(cols,getCnames(fringe))
-#'   ctypes <- ctypes[idx]
+#'   hdtypes <- hdtypes[idx]
 #'   fringe <- selectFringeCols(fringe,cols)
-#'   all(getCtypes(fringe) %in% ctype)
+#'   all(gethdtypes(fringe) %in% ctype)
 #' }
 #'
 #'
 #'
 #' #' @export
+#' @importFrom dstools %||%
 #' fringeColValidate <- function(t, cols = NULL, validation, ...){
 #'   availableValidations <- fringeColValidateFuns()
 #'   if(!validation %in% availableValidations)

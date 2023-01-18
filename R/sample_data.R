@@ -86,6 +86,7 @@ sampleBin <- function(n, addNA = TRUE,...){
 }
 
 #' @export
+#' @importFrom dstools %||%
 sampleNum <- function(n,gt0 = NULL, addNA = TRUE,...){
   gt0 <- gt0 %||% FALSE
   v <- round(rnorm(n,1000,300)*1)
@@ -157,7 +158,7 @@ sampleDay<- function(n, rep = TRUE, addNA = TRUE,...){
 #' @export
 sampleWdy<- function(n, rep = FALSE, lang = "en", locale = NULL, addNA = TRUE,...){
   dates <- sampleDat(n, addNA = addNA)
-  weekdaysLangs <- read_csv(system.file("data/weekdays-lang.csv",package = "homodatum"))
+  weekdaysLangs <- readr::read_csv(system.file("data/weekdays-lang.csv",package = "homodatum"))
   wd_translation <- weekdaysLangs %>%
     filter(language == lang) %>%
     select(-language) %>% as_vector()
@@ -166,6 +167,7 @@ sampleWdy<- function(n, rep = FALSE, lang = "en", locale = NULL, addNA = TRUE,..
 }
 
 #' @export
+#' @importFrom dstools %||%
 sampleDtm <- function(n, start = NULL, end = NULL, addNA = TRUE,...){
   st <- start %||% Sys.Date()- 180
   et <- end %||% Sys.Date()
@@ -217,52 +219,52 @@ availableGeoScops <- function(){
 }
 
 
-geoDataframe <- function(scope){
-  scope <- scope %||% "world"
-  if(scope == "world")
-    countries <- readr::read_csv(system.file("data/world-countries.csv",
-                                             package = "homodatum"),
-                                 col_types = readr::cols())
-  else{
-    if (!require("geodata"))
-      stop("Please install package geodata")
-    if(!scope %in% geodata::availableGeodata())
-      stop("Check available scopes with geodata::availableGeodata()")
-    geodata::geodataCsv(scope)
-  }
-}
-
-#' @export
-sampleGcd <- function(n, addNA = TRUE, scope = "world", ...){
-  df <- geoDataframe(scope)
-  v <- sample2(df$id,n)
-  if(addNA) v[sample(n,round(n/10))] <- NA
-  Gcd(v)
-}
-
-#' @export
-sampleGnm <- function(n,addNA = TRUE, scope = "world", ...){
-  df <- geoDataframe(scope)
-  v <- sample2(df$name,n)
-  if(addNA) v[sample(n,round(n/10))] <- NA
-  Gnm(v)
-}
-
-#' @export
-sampleGlt <- function(n,addNA = TRUE, scope = "world", ...){
-  df <- geoDataframe(scope)
-  v <- sample2(df$lat,n)
-  if(addNA) v[sample(n,round(n/10))] <- NA
-  Glt(v)
-}
-
-#' @export
-sampleGln <- function(n,addNA = TRUE, scope = "world", ...){
-  df <- geoDataframe(scope)
-  v <- sample2(df$lon,n)
-  if(addNA) v[sample(n,round(n/10))] <- NA
-  Gln(v)
-}
+#' geoDataframe <- function(scope){
+#'   scope <- scope %||% "world"
+#'   if(scope == "world")
+#'     countries <- readr::read_csv(system.file("data/world-countries.csv",
+#'                                              package = "homodatum"),
+#'                                  col_types = readr::cols())
+#'   else{
+#'     if (!require("geodata"))
+#'       stop("Please install package geodata")
+#'     if(!scope %in% geodata::availableGeodata())
+#'       stop("Check available scopes with geodata::availableGeodata()")
+#'     geodata::geodataCsv(scope)
+#'   }
+#' }
+#'
+#' #' @export
+#' sampleGcd <- function(n, addNA = TRUE, scope = "world", ...){
+#'   df <- geoDataframe(scope)
+#'   v <- sample2(df$id,n)
+#'   if(addNA) v[sample(n,round(n/10))] <- NA
+#'   Gcd(v)
+#' }
+#'
+#' #' @export
+#' sampleGnm <- function(n,addNA = TRUE, scope = "world", ...){
+#'   df <- geoDataframe(scope)
+#'   v <- sample2(df$name,n)
+#'   if(addNA) v[sample(n,round(n/10))] <- NA
+#'   Gnm(v)
+#' }
+#'
+#' #' @export
+#' sampleGlt <- function(n,addNA = TRUE, scope = "world", ...){
+#'   df <- geoDataframe(scope)
+#'   v <- sample2(df$lat,n)
+#'   if(addNA) v[sample(n,round(n/10))] <- NA
+#'   Glt(v)
+#' }
+#'
+#' #' @export
+#' sampleGln <- function(n,addNA = TRUE, scope = "world", ...){
+#'   df <- geoDataframe(scope)
+#'   v <- sample2(df$lon,n)
+#'   if(addNA) v[sample(n,round(n/10))] <- NA
+#'   Gln(v)
+#' }
 
 #' @export
 sampleImg <- function(n,addNA = TRUE,...){

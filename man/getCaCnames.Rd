@@ -4,13 +4,13 @@
 \alias{getCaCnames}
 \title{#' @export
 sameFringes <- function(f1,f2){
-  all(
-    identical(getCnames(f1),getCnames(f2)),
-    identical(getCtypes(f1),getCtypes(f2)),
-    identical(getCformats(f1),getCformats(f2)),
-    identical(f1$dic_$d,f2$dic_$d),
-    identical(f1$d,f2$d)
-  )
+all(
+identical(getCnames(f1),getCnames(f2)),
+identical(gethdtypes(f1),gethdtypes(f2)),
+identical(getCformats(f1),getCformats(f2)),
+identical(f1$dic_$d,f2$dic_$d),
+identical(f1$d,f2$d)
+)
 }}
 \usage{
 getCaCnames(fringe, n = 4)
@@ -18,45 +18,45 @@ getCaCnames(fringe, n = 4)
 \description{
 #' @export
 getDatafringe <- function(fringe, withNames = TRUE){
-  if(!isFringe(fringe)) stop('class is not Fringe')
-  if(withNames) return(fringe$data)
-  else return(fringe$d)
+if(!isFringe(fringe)) stop('class is not Fringe')
+if(withNames) return(fringe$data)
+else return(fringe$d)
 }
 }
 \details{
 #' @export
 getCnames <- function(fringe){
-  if(isFringe(fringe))
-    return(fringe$dic_$d$id)
-  if(is.data.frame(fringe))
-    return(names(fringe))
+if(isFringe(fringe))
+return(fringe$dic_$d$id)
+if(is.data.frame(fringe))
+return(names(fringe))
 }
 
 #' @export
 getClabels <- function(fringe){
-  if(isFringe(fringe))
-    return(fringe$dic_$d$label)
-  if(is.data.frame(fringe))
-    return(names(fringe))
+if(isFringe(fringe))
+return(fringe$dic_$d$label)
+if(is.data.frame(fringe))
+return(names(fringe))
 }
 
 #' @export
 getCdescriptions <- function(fringe){
-  if(!isFringe(fringe)) stop('class is not Fringe')
-  fringe$dic_$d$cdescription
+if(!isFringe(fringe)) stop('class is not Fringe')
+fringe$dic_$d$cdescription
 }
 
 #' @export
-getCtypes <- function(fringe, cols = NULL){
-  if(!isFringe(fringe))
-    fringe <- fringe(fringe)
-  fringe$dic_$d$ctype
+gethdtypes <- function(fringe, cols = NULL){
+if(!isFringe(fringe))
+fringe <- fringe(fringe)
+fringe$dic_$d$ctype
 }
 
 #' @export
 getCformats <- function(fringe){
-  if(!isFringe(fringe))
-    fringe <- fringe(fringe)
-  fringe$dic_$d$cformat
+if(!isFringe(fringe))
+fringe <- fringe(fringe)
+fringe$dic_$d$cformat
 }
 }

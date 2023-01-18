@@ -1,4 +1,26 @@
 
+#' @title hdType
+#' @description evaluates which of the available_hdTypes is the object
+#'
+#' @param v a value for which you want to evaluate
+#'
+#' @return An available_hdType value
+#'
+#' @examples
+#'
+#' # Num hdType
+#' value <- c("1",NA,"2")
+#' guess_hdType(value)
+#'
+#' # Cat hdType
+#' value <- c("MSPS-CD-166-2020", "003-2020", "0811 - 2020")
+#' guess_hdType(value)
+#'
+#' # Pct hdType
+#' value <- c(0.3, 0.4, 1)
+#' guess_hdType(value)
+#'
+#'
 #' @export
 guess_hdType <- function(v){
   # if("data.frame" %in% class(v))
@@ -13,10 +35,10 @@ guess_hdType <- function(v){
     return(hdType("___"))
 
   if(any(class(v) %in% c("integer","numeric"))){
-    ctype <- hdType("Num")
-    if(all(v %in% 1500L:2200L)) ctype <- hdType("Yea")
-    if(maybePct(v)) ctype <- hdType("Pct")
-    return(ctype)
+    hdtype <- hdType("Num")
+    if(all(v %in% 1500L:2200L)) hdtype <- hdType("Yea")
+    if(maybePct(v)) hdtype <- hdType("Pct")
+    return(hdtype)
   }
   if(any(class(v) == "Date") | any(c("POSIXt", "POSIXct") %in% class(v)))
     return(hdType("Dat"))
@@ -27,7 +49,7 @@ guess_hdType <- function(v){
 
   #dth <- whichDTH(v)
   # if(!is.null(dth))
-  #   ctype <- hdType(dth)
+  #   hdtype <- hdType(dth)
   if(isDate(v)){
     return(hdType("Dat"))
   }
@@ -39,14 +61,14 @@ guess_hdType <- function(v){
     if(maybePct(v)){
       return(hdType("Pct"))
     }
-    ctype <- hdType("Cat")
-    if(ctype == hdType("Cat") && maybeImgUrl(v)){
-      ctype <- hdType("Img")
+    hdtype <- hdType("Cat")
+    if(hdtype == hdType("Cat") && maybeImgUrl(v)){
+      hdtype <- hdType("Img")
     }
-    if(ctype == hdType("Cat") && maybeTxt(v))
-      ctype <- hdType("Txt")
+    if(hdtype == hdType("Cat") && maybeTxt(v))
+      hdtype <- hdType("Txt")
   }
-  ctype
+  hdtype
 }
 
 maybeNum <- function(v){
@@ -59,7 +81,7 @@ maybeNum <- function(v){
   if(inherits(nums, "warning")){
     return(FALSE)
   }
-  if(na_proportion(nums) > 0.8){
+  if(dstools::na_proportion(nums) > 0.8){
     return(FALSE)
   }
   TRUE

@@ -36,15 +36,9 @@ permutations <- function(n){
 }
 
 
-remove_accents <- function (string) {
-  accents <- "àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝäëïöüÄËÏÖÜâêîôûÂÊÎÔÛñÑç"
-  translation <- "aeiouAEIOUaeiouyAEIOUYaeiouAEIOUaeiouAEIOUnNc"
-  chartr(accents, translation, string)
-}
-
 col_ids_from_name <- function (x, sep = "_"){
   x <- gsub("[^[:alnum:]]", "_", x)
-  x <- remove_accents(x)
+  x <- dstools::remove_accents(x)
   x <- tolower(x)
   x <- gsub("-+", "_", x)
   x <- gsub("[[:punct:]]+","_",x)
@@ -54,7 +48,7 @@ col_ids_from_name <- function (x, sep = "_"){
 
 
   # x <- gsub("[^[:alnum:]]", "-", x)
-  # x <- remove_accents(tolower(x))
+  # x <- dstools::remove_accents(tolower(x))
   # x <- gsub("-+", "-", x)
   # x <- gsub("^-.", "", x)
   # x
@@ -121,17 +115,22 @@ has_warning <- function(expr) {
 
 which_in <- function (x, y) x[x %in% y]
 
-na_proportion <- function(x){
-  if(length(x) < 4) return(0)
-  sum(is.na(x))/length(x)
-}
+
+## Se importa de dstools
+# na_proportion <- function(x){
+#   if(length(x) < 4) return(0)
+#   sum(is.na(x))/length(x)
+# }
+
+
 
 many_words_proportion <- function(x) sum(grepl("[^\\s]([ ]{1,})[^\\s]",x))/length(x)
 
-na_to_chr <- function(x, na){
-  x[is.na(x)] <- na
-  x
-}
+## Se importa de dstools
+# na_to_chr <- function(x, na){
+#   x[is.na(x)] <- na
+#   x
+# }
 
 insert_column <- function(d, vector, target, col_name){
   if(ncol(d) == 1){
@@ -149,7 +148,7 @@ insert_column <- function(d, vector, target, col_name){
 
 make_slug <- function(x){
   x <- gsub("[^[:alnum:]]", "-", x)
-  x <- remove_accents(tolower(x))
+  x <- dstools::remove_accents(tolower(x))
   x <- gsub("-+", "-", x)
   x <- gsub("+[[:punct:]]$", "", x)
   x <- gsub("^-.", "", x)
@@ -161,22 +160,23 @@ sys_file <- function(...){
   system.file(..., package = "homodatum")
 }
 
+## Se importa de dstools
+# `%||%` <- function (x, y){
+#   suppressWarnings({
+#     if (is.empty(x))
+#       return(y)
+#     else if (is.null(x) || is.na(x))
+#       return(y)
+#     else if (class(x) == "character" && all(nchar(x) == 0))
+#       return(y)
+#     else x
+#   })
+# }
 
-`%||%` <- function (x, y){
-  suppressWarnings({
-    if (is.empty(x))
-      return(y)
-    else if (is.null(x) || is.na(x))
-      return(y)
-    else if (class(x) == "character" && all(nchar(x) == 0))
-      return(y)
-    else x
-  })
-}
-
-is.empty <- function (x) {
-  !as.logical(length(x))
-}
+## Se importa de dstools
+# is.empty <- function (x) {
+#   !as.logical(length(x))
+# }
 
 
 #' @importFrom magrittr %>%
