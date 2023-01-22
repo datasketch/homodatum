@@ -12,7 +12,7 @@ isDate <- function(v){
   if(inherits(guess_date, "try-warning")){
     return(FALSE)
   }
-  if(na_proportion(guess_date) > 0.6){ # failed to parse 60% of dates
+  if(dstools::na_proportion(guess_date) > 0.6){ # failed to parse 60% of dates
     return(FALSE)
   }
   # if(length((guess))< length(v))
