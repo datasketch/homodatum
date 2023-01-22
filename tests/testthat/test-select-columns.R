@@ -28,4 +28,7 @@ test_that("Select columns", {
   suggest_columns(f, frtype = "Cat-Num")
 
 
+  f <- sample_fringe("Cat-Dat")
+  f2 <- suggest_columns(f, frtype = "Cat-Num")
+
 })

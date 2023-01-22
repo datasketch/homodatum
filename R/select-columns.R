@@ -77,6 +77,7 @@ dic_suggest_cat <- function(dic, n = 1, random = FALSE){
 
 dic_suggest_num <- function(dic, n = 1, random = FALSE){
   nums <- dic |> filter(hdType == "Num")
+  if(nrow(nums) == 0) return()
   if(!random){
     nums <- nums |> dplyr::slice(1)
   }else{
