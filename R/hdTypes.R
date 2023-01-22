@@ -13,22 +13,90 @@ hdType <- function(x = character()) {
   new_hdType(x)
 }
 
+
+
+# hdType ------------------------------------------------------------------
+
+#' @title hdType Vectors
+#'
+#' @description test for objects of type "hdType"
+#'
+#' @param x object to be coerced or tested
+#'
+#' @return returns TRUE or FALSE depending on whether its argument is of type hdType or not.
+#'
+#' @examples
+#'
+#' some_value <- hdType("Cat")
+#' is_hdType(some_value)
+#'
 #' @export
 is_hdType <- function(x) {
   inherits(x, "hdType")
 }
 
+
+#' @title hdType Vectors
+#'
+#' @description test for objects of type "hdType"
+#'
+#' @param x hdType object to be coerced or tested
+#'
+#' @return returns TRUE or FALSE depending on whether its argument is one of the [available_hdTypes()] or not.
+#'
+#' @examples
+#'
+#' some_cat_value <- Cat("value1")
+#' is_any_hdType(some_cat_value)
+#'
 #' @export
 is_any_hdType <- function(x){
   sum(grepl("hd_", class(x))) > 0
 }
 
+
+
+#' @title hdType Vectors
+#'
+#' @description Detect which hdType is the value.
+#'
+#' @param x hdType object to be coerced or tested
+#'
+#' @return returns the name of the hdType value. You can see the valid hdTypes with [available_hdTypes()]
+#'
+#' @examples
+#'
+#' some_cat_value <- Cat("value1")
+#' which_hdType(some_cat_value)
+#'
 #' @export
 which_hdType <- function(x){
-  gsub("hd_","",class(x)[grep("hd_", class(x))])
+  if(is_any_hdType(x)){
+    gsub("hd_","",class(x)[grep("hd_", class(x))])
+  } else {
+    cat("The value is not a valid hdType.")
+  }
 }
 
 
+# hdType ------------------------------------------------------------------
+
+#' @title hdType Vectors
+#'
+#' @description coerces its argument to a hdType. It is an abbreviated form of hdType.
+#'
+#' @param x object to be coerced
+#'
+#' @return attempts to coerce its argument to hdType type
+#'
+#' @examples
+#'
+#' some_chr_value <- "Cat"
+#' class(some_chr_value)
+#'
+#' some_hdt_value <- as_hdType(some_chr_value)
+#' class(some_hdt_value)
+#'
 #' @export
 as_hdType <- function(x) {
   if(any(class(x) == "factor")){

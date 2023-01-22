@@ -59,7 +59,7 @@ hdTypes_permute <- function(hdtypes, nms = NULL){
   }
   nms <- nms %||% names(hdt)
   if(is.null(nms))
-    stop("ctypes must have names")
+    stop("hdtypes must have names")
   y <- permuteVector(nms) %>% t()
   colnames(y) <- 1:ncol(y)
   y <- y %>% tibble::as_tibble(.name_repair = "unique") %>% as.list()
@@ -71,13 +71,13 @@ hdTypes_permute <- function(hdtypes, nms = NULL){
 
 
 #' #' @export
-#' possibleCtypes <- function(ctypes, castable = FALSE, combine = FALSE){
-#'   #ctypes <- c("Cat","Cat","Num","Cat")
+#' possiblehdtypes <- function(hdtypes, castable = FALSE, combine = FALSE){
+#'   #hdtypes <- c("Cat","Cat","Num","Cat")
 #'   if(castable & !combine){
-#'     return(castable_list(ctypes))
+#'     return(castable_list(hdtypes))
 #'   }
 #'   if(combine){
-#'     comb <- powerSet(ctypes)
+#'     comb <- powerSet(hdtypes)
 #'     if(!castable){
 #'       return(comb)
 #'     }else{
@@ -86,56 +86,56 @@ hdTypes_permute <- function(hdtypes, nms = NULL){
 #'       return(l)
 #'     }
 #'   }
-#'   ctypes
+#'   hdtypes
 #' }
 
 
 #' #' @export
-#' possibleNamedCtypes <- function(namedCtypes, permute = TRUE, castable = FALSE, ncol = NULL) {
-#'   subdata <- powerSet(namedCtypes)
+#' possibleNamedhdtypes <- function(namedhdtypes, permute = TRUE, castable = FALSE, ncol = NULL) {
+#'   subdata <- powerSet(namedhdtypes)
 #'   if (!is.null(ncol)) {subdata <- subdata[purrr::map_lgl(subdata, ~length(.x) <= ncol)]}
 #'   if(!permute)
 #'     l <- subdata
 #'   else{
-#'     l <- purrr::map(subdata, permuteCtypes)
+#'     l <- purrr::map(subdata, permutehdtypes)
 #'     l <- unlist(l, recursive = FALSE) %>% unname()
 #'   }
 #'   if(castable){
-#'     l <- purrr::map(l, possibleCtypes, castable = TRUE)
+#'     l <- purrr::map(l, possiblehdtypes, castable = TRUE)
 #'   }
 #'   names(l) <- purrr::map(l,function(x) paste0(names(x),collapse="|"))
 #'   l
 #' }
 #'
 #' #' @export
-#' possibleNamedCtypesStr <- function(namedCtypes, permute = TRUE, castable = FALSE, ncol = NULL){
-#'   l <- possibleNamedCtypes(namedCtypes, permute = TRUE, castable = castable, ncol = ncol)
+#' possibleNamedhdtypesStr <- function(namedhdtypes, permute = TRUE, castable = FALSE, ncol = NULL){
+#'   l <- possibleNamedhdtypes(namedhdtypes, permute = TRUE, castable = castable, ncol = ncol)
 #'   if(!castable){
-#'     ctypesStr <- purrr::map(l, paste, collapse = "-")
+#'     hdtypesStr <- purrr::map(l, paste, collapse = "-")
 #'   }else{
-#'     ctypesStr <- purrr::map(l, function(s) map_chr(transpose(s),paste, collapse = "-"))
+#'     hdtypesStr <- purrr::map(l, function(s) map_chr(transpose(s),paste, collapse = "-"))
 #'   }
-#'   ctypesStr
+#'   hdtypesStr
 #' }
 #'
 #'
 #' #' @export
-#' whichSubdata <- function(data, outCtypes, castable = FALSE){
-#'   ctypes <- guessCtypes(data, named = TRUE)
+#' whichSubdata <- function(data, outhdtypes, castable = FALSE){
+#'   hdtypes <- guesshdtypes(data, named = TRUE)
 #'   if(castable && (ncol(data) > 5))
 #'     stop("Too many columns for castable combinations")
-#'   ctypesStr <- possibleNamedCtypesStr(ctypes, permute = TRUE, castable = castable)
-#'   outCtypesStr <- paste(outCtypes, collapse = "-")
-#'   #if(is.null(outCtypes)){
-#'   #  cnames <- names(ctypesStr)
+#'   hdtypesStr <- possibleNamedhdtypesStr(hdtypes, permute = TRUE, castable = castable)
+#'   outhdtypesStr <- paste(outhdtypes, collapse = "-")
+#'   #if(is.null(outhdtypes)){
+#'   #  cnames <- names(hdtypesStr)
 #'   #}else{
-#'     cnames <- ctypesStr %>% keep(function(s){outCtypesStr %in% s}) %>% names
+#'     cnames <- hdtypesStr %>% keep(function(s){outhdtypesStr %in% s}) %>% names
 #'   #}
 #'   strsplit(cnames,"|", fixed = TRUE)
 #' }
 #'
 #' # #' @export
-#' # whichSubCtypes <- function(data, as_string = FALSE){
+#' # whichSubhdtypes <- function(data, as_string = FALSE){
 #' #   l <- possibleSubdata(data, permute = TRUE) # TODO ctype casts
 #' #   l <- l %>% map("ctype") %>% map(unname) %>% unique()
 #' #   if(as_string) return(map(l, paste, collapse = "-"))
@@ -146,15 +146,15 @@ hdTypes_permute <- function(hdtypes, nms = NULL){
 #'
 #'
 #' #' @export
-#' belongingCtypesCombinations <- function (dt, vectorOfPosibilities, names = FALSE, numP = TRUE) {
+#' belonginghdtypesCombinations <- function (dt, vectorOfPosibilities, names = FALSE, numP = TRUE) {
 #'   if ("data.frame" %in% class(dt)) {
-#'     namedCtypes <- guessCtypes(dt, as_string = FALSE, named = TRUE)
-#'     namedCtypes[namedCtypes == "Pct"] <- "Num"
+#'     namedhdtypes <- guesshdtypes(dt, as_string = FALSE, named = TRUE)
+#'     namedhdtypes[namedhdtypes == "Pct"] <- "Num"
 #'   }
 #'   if (is.atomic(dt)) {
-#'     namedCtypes <- dt
+#'     namedhdtypes <- dt
 #'   }
-#'   pr <- possibleNamedCtypes(namedCtypes)
+#'   pr <- possibleNamedhdtypes(namedhdtypes)
 #'   pr0 <- pr
 #'   if (numP) {
 #'     pr0 <- purrr::map(pr, function(z) {
@@ -191,14 +191,14 @@ hdTypes_permute <- function(hdtypes, nms = NULL){
 #' #' @export
 #' whichFunction <- function (d, colReturn = "name", meta) {
 #'   if ("data.frame" %in% class(d)) {
-#'     ctp <- guessCtypes(d, as_string = FALSE)
+#'     ctp <- guesshdtypes(d, as_string = FALSE)
 #'     ctp[ctp == "Pct"] <- "Num"
 #'     ctp <- paste0(ctp, collapse = "-")
 #'   }
 #'   if (is.atomic(d)) {
 #'     ctp <- paste0(d, collapse = "-")
 #'   }
-#'   meta <- meta %>% dplyr::filter(ctypes == ctp)
+#'   meta <- meta %>% dplyr::filter(hdtypes == ctp)
 #'   nms <- meta[[colReturn]]
 #'   meta %>% pull(colReturn) %>% set_names(nms)
 #' }

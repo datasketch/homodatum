@@ -1,4 +1,3 @@
-context("combinations")
 
 test_that("frtype combinations work",{
 
@@ -20,18 +19,18 @@ test_that("frtype combinations work",{
   expect_equal(sub[[2]], hdType(c(B = "Cat", C = "Num")))
   sub2 <- sub_hdTypesVars(hdtypes, frtype = frType("Cat-Num"))
   expect_equal(sub, sub2)
-  #
+
   # sub <- sub_hdTypesVars(hdtypes, frtype = c("Cat","Cat-Num"))
   # expect_equal(sub[[2]], hdType(c(B = "Cat")))
   # expect_equal(sub[[4]], hdType(c(B = "Cat", C = "Num")))
   #
   # sub <- sub_hdTypesVars(hdtypes, group = "Cat2-Num")
   # frtypes <- lapply(sub, frType)
-  # expect_equal(unique(lapply(frtypes, frType_group))[[1]], "Cat2-Num")
+  # expect_equal(unique(lapply(frtypes, get_frGroup))[[1]], "Cat2-Num")
 
 })
 
-test_that("subFringe works", {
+# test_that("subFringe works", {
 
   # x <- sample_data("Cat-Num-Cat-Gnm", names = c("cat1", "num", "cat2", "gnm"))
   # fr <- fringe(x)
@@ -42,6 +41,6 @@ test_that("subFringe works", {
   # sub_fringe_cols(fr, group = "Cat2-Gnm", show_hdType = TRUE)
 
 
-})
+# })
 
 

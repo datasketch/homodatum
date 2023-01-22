@@ -11,9 +11,9 @@ select_columns <- function(f, columns){
   if(!by_id && by_label){
     columns <- dic |>
       filter(label %in% columns) |>
-      pull(id)
+      dplyr::pull(id)
   }
-  dic2 <- dic |> filter(id %in% columns)
+  dic2 <- dic |> dplyr::filter(id %in% columns)
   fringe(f$data[columns], dic = dic2,
          name = f$name, description = f$description)
 }
@@ -61,29 +61,29 @@ dic_suggest_cat <- function(dic, n = 1, random = FALSE){
   if(is.null(dic$stats))
     stop("Need dic with stats")
   cats <- dic |>
-    filter(hdType == "Cat")
+    dplyr::filter(hdType == "Cat")
   cats$n_unique <- purrr::map_dbl(cats$stats, "n_unique")
   cats <- cats |>
-    filter(n_unique > 1, n_unique < 11)
+    dplyr::filter(n_unique > 1, n_unique < 11)
   if(!random){
    cats <- cats |> dplyr::slice(1:n)
   }else{
     cats <- cats |> dplyr::sample_n(n)
   }
-  columns <- cats |> pull(id)
-  names(columns) <- cats |> pull(label)
+  columns <- cats |> dplyr::pull(id)
+  names(columns) <- cats |> dplyr::pull(label)
   columns
 }
 
 dic_suggest_num <- function(dic, n = 1, random = FALSE){
-  nums <- dic |> filter(hdType == "Num")
+  nums <- dic |> dplyr::filter(hdType == "Num")
   if(nrow(nums) == 0) return()
   if(!random){
     nums <- nums |> dplyr::slice(1)
   }else{
     nums <- nums |> dplyr::sample_n(1)
   }
-  columns <- nums |> pull(id)
-  names(columns) <- nums |> pull(label)
+  columns <- nums |> dplyr::pull(id)
+  names(columns) <- nums |> dplyr::pull(label)
   columns
 }

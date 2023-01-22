@@ -2,7 +2,6 @@
 
 # Constructor function for the class
 
-#' @export
 ftype <- function(x, ...)  {
   args <- list(...)
   if(!"character" %in% class(x)) stop("x must be a character vector of ftypes or ctypes names")
@@ -20,13 +19,11 @@ ftype <- function(x, ...)  {
   return (f)
 }
 
-#' @export
 print.ftype <- function(f){
   cat("Ftype:  ", f$ftype, "\n")
   cat("Ctypes: ", f$ctypes)
 }
 
-#' @export
 is_ftype <- function(x){
   inherits(x, "ftype")
 }
@@ -37,7 +34,6 @@ is_ftype <- function(x){
 #'     map()
 #' }
 
-#' @export
 to_ftype <- function(ctypes){
   if(!"ctype" %in% class(ctypes)) stop("Input must be ctypes")
   paste0(sort(strsplit(ftype,"-")[[1]]), collapse = "-")

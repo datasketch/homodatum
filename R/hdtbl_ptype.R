@@ -1,13 +1,14 @@
 
 
 #' @export
-fringeske<- function(ctypes=NULL,cformats=NULL,cnames = NULL,
+#' @importFrom dstools %||%
+fringeske<- function(hdtypes=NULL,cformats=NULL,cnames = NULL,
                      name = NULL, description = NULL,
                      validators = NULL, sample_data = NULL, useCnames = TRUE){
   if(!is.null(sample_data))
     name <- name %||% deparse(substitute(sample_data))
   fringeske <- FringeSke$new(
-    ctypes=ctypes,
+    hdtypes=hdtypes,
     cformats=cformats,
     cnames=cnames,
     name = name,
@@ -24,7 +25,7 @@ fringeske<- function(ctypes=NULL,cformats=NULL,cnames = NULL,
 #' sameFringes <- function(f1,f2){
 #'   all(
 #'     identical(getCnames(f1),getCnames(f2)),
-#'     identical(getCtypes(f1),getCtypes(f2)),
+#'     identical(gethdtypes(f1),gethdtypes(f2)),
 #'     identical(getCformats(f1),getCformats(f2)),
 #'     identical(f1$dic_$d,f2$dic_$d),
 #'     identical(f1$d,f2$d)
@@ -61,7 +62,7 @@ fringeske<- function(ctypes=NULL,cformats=NULL,cnames = NULL,
 #' }
 #'
 #' #' @export
-#' getCtypes <- function(fringe, cols = NULL){
+#' gethdtypes <- function(fringe, cols = NULL){
 #'   if(!isFringe(fringe))
 #'     fringe <- fringe(fringe)
 #'   fringe$dic_$d$ctype
@@ -94,12 +95,12 @@ getFtype <- function(fringe){
 
 #' @export
 fringeHasFringeSkeleton <- function(fringe,fringeSke){
-  # Check ctypes and cnames
+  # Check hdtypes and cnames
   cfringe <- getCnames(fringe)
-  names(cfringe) <- getCtypes(fringe)
+  names(cfringe) <- gethdtypes(fringe)
   cske <- fringeSke$cnames
-  names(cske) <- fringeSke$ctypes
-  ctypesCnamesCheck <- identical(cfringe,cske)
+  names(cske) <- fringeSke$hdtypes
+  hdtypesCnamesCheck <- identical(cfringe,cske)
 
   # Check validators
   validators <- fringeSke$validators
@@ -115,7 +116,7 @@ fringeHasFringeSkeleton <- function(fringe,fringeSke){
     validatorCheck <- TRUE
   }
   # Return validations
-  ctypesCnamesCheck && validatorCheck
+  hdtypesCnamesCheck && validatorCheck
 }
 
 

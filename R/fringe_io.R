@@ -63,6 +63,7 @@ fringe_write_json <- function(x, path = "", overwrite_dic = FALSE, preview_nrows
 
 
 #' @export
+#' @importFrom dstools %||%
 fringe_write_xlsx <- function(x, path = "", overwrite_dic = FALSE,
                               credits = NULL, more_info = NULL){
   if(!is_fringe(x))
