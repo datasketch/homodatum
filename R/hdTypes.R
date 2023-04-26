@@ -174,4 +174,9 @@ vec_cast.hdType.character <- function(x, to, ...) hdType(x)
 vec_cast.character.hdType <- function(x, to, ...) vctrs::vec_data(x)
 
 
+#' @method as.character hdType
+#' @export
+as.character.hdType <- function(x) as.character(vctrs::vec_data(x))
+
+
 

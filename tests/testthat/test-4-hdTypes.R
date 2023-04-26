@@ -20,6 +20,7 @@ test_that("create hdTypes",{
 
 
 
+
   # Data Frames
 
   # data <-tibble::tibble(a = as.Date(c("2016-04-03", "2016-05-04")),
@@ -43,6 +44,9 @@ test_that("create hdTypes",{
   # data <- sample_data("Cat-Dat-Yea-Num-Pct")
   hdTypes <- c(a = "Cat",b = "Dat", c = "Yea", d = "Num", e = "Pct")
   expect_equal(purrr::map_chr(data, guess_hdType),hdTypes)
+
+  expect_equal(as.character(hdTypes), c("Cat", "Dat", "Yea", "Num", "Pct"))
+
 
   # expect_equal(guessFtype(data),"Cat-Dat-Yea-Num-Pct")
 
